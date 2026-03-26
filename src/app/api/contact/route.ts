@@ -53,7 +53,7 @@ function isRateLimited(ip: string): boolean {
 // Handler
 // ---------------------------------------------------------------------------
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy");
 
 /**
  * Falls back to a hardcoded address when the environment variable is missing.
