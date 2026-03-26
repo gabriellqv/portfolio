@@ -128,7 +128,9 @@ export default function Skills() {
 
   return (
     <section id="skills" className="py-20" ref={sectionRef}>
-      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-3xl font-bold text-transparent">{t.skills.title}</h2>
+      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-3xl font-bold text-transparent">
+        {t.skills.title}
+      </h2>
       <p className="text-fg-secondary mb-12 text-sm">{t.skills.subtitle}</p>
 
       <div className="grid gap-8 md:grid-cols-2">
@@ -156,14 +158,14 @@ export default function Skills() {
                     </span>
                     <span className="group text-fg-secondary relative cursor-help text-xs font-medium">
                       {t.skills.levels[skill.levelKey] || skill.levelKey}
-                      <span className="border-edge text-fg-highlight pointer-events-none absolute bottom-full left-0 z-10 mb-2 w-48 rounded-lg border bg-surface/90 p-2 text-[0.625rem] leading-relaxed opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 sm:right-0 sm:left-auto">
+                      <span className="border-edge text-fg-highlight bg-surface/90 pointer-events-none absolute bottom-full left-0 z-10 mb-2 w-48 rounded-lg border p-2 text-[0.625rem] leading-relaxed opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 sm:right-0 sm:left-auto">
                         {t.skills.tooltips[skill.levelKey] || ""}
                       </span>
                     </span>
                   </div>
                   <div className="bg-surface-subtle h-1.5 w-full overflow-hidden rounded-full">
                     <div
-                      className="h-full rounded-full bg-fg-secondary transition-all duration-1500 ease-out group-hover/skill:bg-fg-primary"
+                      className="bg-fg-secondary group-hover/skill:bg-fg-primary h-full rounded-full transition-all duration-1500 ease-out"
                       style={{
                         width: isVisible ? `${LEVEL_PERCENT[skill.levelKey] ?? 50}%` : "0%",
                         transitionDelay: `${i * 100}ms`,

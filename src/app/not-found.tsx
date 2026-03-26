@@ -28,7 +28,7 @@ export default function NotFound() {
       <FadeIn delay={400}>
         <Link
           href="/"
-          className="border-edge bg-surface-subtle text-fg-secondary hover:border-edge-hover hover:text-fg-primary hover:shadow-glow rounded-xl border px-6 py-3 font-mono text-sm transition-all hover:bg-surface-subtle"
+          className="border-edge bg-surface-subtle text-fg-secondary hover:border-edge-hover hover:text-fg-primary hover:shadow-glow hover:bg-surface-subtle rounded-xl border px-6 py-3 font-mono text-sm transition-all"
         >
           {t.notFound.backHome}
         </Link>

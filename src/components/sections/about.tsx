@@ -20,24 +20,26 @@ export default function About() {
 
   return (
     <section id="about" className="py-20">
-      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-3xl font-bold text-transparent">{t.about.title}</h2>
+      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-3xl font-bold text-transparent">
+        {t.about.title}
+      </h2>
       <p className="text-fg-secondary mb-12 text-sm">{t.about.subtitle}</p>
 
       <div className="border-edge bg-surface hover:border-edge-hover hover:shadow-glow rounded-xl border p-4 shadow-lg backdrop-blur-[2px] transition-all duration-200 min-[20rem]:p-6 md:p-10">
         {/* Bio — condensed to first paragraph only */}
-        <p className="text-fg-secondary mb-8 leading-relaxed">
-          {t.about.bio[0]}
-        </p>
+        <p className="text-fg-secondary mb-8 leading-relaxed">{t.about.bio[0]}</p>
 
         {/* Highlight badges — visual scanning */}
         <div className="mb-10 grid grid-cols-2 gap-3 md:grid-cols-4">
           {HIGHLIGHTS.map(({ icon: Icon, labelKey, value }) => (
             <div
               key={labelKey}
-              className="border-edge bg-surface rounded-lg border p-3 transition-all hover:border-edge-hover"
+              className="border-edge bg-surface hover:border-edge-hover rounded-lg border p-3 transition-all"
             >
               <Icon className="text-fg-secondary mb-2 h-4 w-4" strokeWidth={1.5} />
-              <p className="text-fg-primary text-xs font-semibold">{t.about.highlights[labelKey]}</p>
+              <p className="text-fg-primary text-xs font-semibold">
+                {t.about.highlights[labelKey]}
+              </p>
               <p className="text-fg-tertiary mt-0.5 text-[0.625rem] leading-snug">{value}</p>
             </div>
           ))}
@@ -52,7 +54,7 @@ export default function About() {
             </h3>
             <div className="border-edge border-l pl-4 min-[20rem]:pl-6">
               <div className="relative">
-                <div className="absolute top-1.5 -left-[1.8125rem] h-2 w-2 rounded-full border border-edge-hover bg-surface-subtle" />
+                <div className="border-edge-hover bg-surface-subtle absolute top-1.5 -left-[1.8125rem] h-2 w-2 rounded-full border" />
                 <p className="text-fg-secondary text-sm">{t.about.experience.period}</p>
                 <p className="text-fg-primary mt-1 font-medium">{t.about.experience.role}</p>
                 <ul className="text-fg-secondary mt-3 space-y-2 text-sm">
@@ -74,7 +76,7 @@ export default function About() {
               </h3>
               <div className="border-edge border-l pl-4 min-[20rem]:pl-6">
                 <div className="relative">
-                  <div className="absolute top-1.5 -left-[1.8125rem] h-2 w-2 rounded-full border border-edge-hover bg-surface-subtle" />
+                  <div className="border-edge-hover bg-surface-subtle absolute top-1.5 -left-[1.8125rem] h-2 w-2 rounded-full border" />
                   <p className="text-fg-secondary text-sm">{t.about.education.period}</p>
                   <p className="text-fg-primary mt-1 font-medium">{t.about.education.degree}</p>
                   <p className="text-fg-secondary mt-1 text-sm">{t.about.education.institution}</p>
@@ -106,7 +108,7 @@ export default function About() {
         </div>
 
         {/* Social links */}
-        <div className="mt-10 flex gap-4 border-t border-surface-subtle pt-6">
+        <div className="border-surface-subtle mt-10 flex gap-4 border-t pt-6">
           <a
             href={siteConfig.links.github}
             target="_blank"

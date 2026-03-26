@@ -211,13 +211,11 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div 
+      <div
         className="text-fg-secondary absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 transition-opacity duration-300 hover:opacity-100"
         style={{ opacity: parallaxOpacity === 1 ? 0.5 : parallaxOpacity }}
       >
-        <span className="text-[10px] font-medium tracking-[0.3em] uppercase">
-          {t.hero.scroll}
-        </span>
+        <span className="text-[10px] font-medium tracking-[0.3em] uppercase">{t.hero.scroll}</span>
         <div className="border-fg-secondary flex h-8 w-5 justify-center rounded-full border-2 p-1">
           <div className="bg-fg-secondary h-1.5 w-1.5 animate-bounce rounded-full" />
         </div>

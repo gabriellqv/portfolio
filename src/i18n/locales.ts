@@ -180,8 +180,7 @@ export const pt: Translations = {
         "Utilizado diariamente em produção. Confortável tomando decisões de arquitetura e design.",
       proficient:
         "Experiência sólida em projetos reais. Capaz de resolver problemas complexos de forma independente.",
-      working:
-        "Utilizado em projetos pessoais e profissionais com bom entendimento dos conceitos.",
+      working: "Utilizado em projetos pessoais e profissionais com bom entendimento dos conceitos.",
       familiar: "Conhecimento básico e experiência inicial. Em constante aprendizado.",
     },
   },
@@ -315,8 +314,7 @@ export const en: Translations = {
       advanced: "Used daily in production. Comfortable making architecture and design decisions.",
       proficient:
         "Solid experience in real projects. Able to solve complex problems independently.",
-      working:
-        "Used in personal and professional projects with good understanding of concepts.",
+      working: "Used in personal and professional projects with good understanding of concepts.",
       familiar: "Basic knowledge and initial experience. Continuously learning.",
     },
   },

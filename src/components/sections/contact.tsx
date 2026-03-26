@@ -89,7 +89,9 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-20">
-      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl">{t.contact.title}</h2>
+      <h2 className="mb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl">
+        {t.contact.title}
+      </h2>
       <p className="text-fg-secondary mb-10">{t.contact.subtitle}</p>
 
       <div className="grid gap-8 md:grid-cols-2">
@@ -138,7 +140,7 @@ export default function Contact() {
                 required
                 placeholder={t.contact.form.namePlaceholder}
                 disabled={isSending}
-                className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary w-full rounded-xl border px-4 py-3 text-sm transition outline-none focus:border-edge-hover disabled:opacity-50"
+                className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary focus:border-edge-hover w-full rounded-xl border px-4 py-3 text-sm transition outline-none disabled:opacity-50"
               />
             </div>
             <div>
@@ -152,7 +154,7 @@ export default function Contact() {
                 required
                 placeholder={t.contact.form.emailPlaceholder}
                 disabled={isSending}
-                className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary w-full rounded-xl border px-4 py-3 text-sm transition outline-none focus:border-edge-hover disabled:opacity-50"
+                className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary focus:border-edge-hover w-full rounded-xl border px-4 py-3 text-sm transition outline-none disabled:opacity-50"
               />
             </div>
           </div>
@@ -169,7 +171,7 @@ export default function Contact() {
               placeholder={t.contact.form.messagePlaceholder}
               rows={5}
               disabled={isSending}
-              className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary w-full resize-none rounded-xl border px-4 py-3 text-sm transition outline-none focus:border-edge-hover disabled:opacity-50"
+              className="border-edge bg-surface text-fg-primary placeholder-fg-tertiary focus:border-edge-hover w-full resize-none rounded-xl border px-4 py-3 text-sm transition outline-none disabled:opacity-50"
             />
           </div>
 

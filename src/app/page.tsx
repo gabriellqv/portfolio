@@ -31,7 +31,7 @@ export default function Home() {
           <About />
         </FadeIn>
       </Container>
-      
+
       <Divider />
 
       {/* Projects */}
@@ -40,7 +40,7 @@ export default function Home() {
           <Projects />
         </FadeIn>
       </Container>
-      
+
       <Divider />
 
       {/* Skills */}
@@ -49,7 +49,7 @@ export default function Home() {
           <Skills />
         </FadeIn>
       </Container>
-      
+
       <Divider />
 
       {/* Contact */}

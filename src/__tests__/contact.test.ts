@@ -8,11 +8,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 // --- HTML escape -----------------------------------------------------------
 
 const esc = (s: string) =>
-  s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 describe("esc (HTML entity escaping)", () => {
   it("escapes ampersands", () => {
@@ -20,9 +16,7 @@ describe("esc (HTML entity escaping)", () => {
   });
 
   it("escapes angle brackets", () => {
-    expect(esc("<script>alert('xss')</script>")).toBe(
-      "&lt;script&gt;alert('xss')&lt;/script&gt;"
-    );
+    expect(esc("<script>alert('xss')</script>")).toBe("&lt;script&gt;alert('xss')&lt;/script&gt;");
   });
 
   it("escapes double quotes", () => {
@@ -30,9 +24,7 @@ describe("esc (HTML entity escaping)", () => {
   });
 
   it("handles all special characters together", () => {
-    expect(esc('A & B < C > D "E"')).toBe(
-      "A &amp; B &lt; C &gt; D &quot;E&quot;"
-    );
+    expect(esc('A & B < C > D "E"')).toBe("A &amp; B &lt; C &gt; D &quot;E&quot;");
   });
 
   it("returns clean strings unchanged", () => {
@@ -107,9 +99,7 @@ describe("isRateLimited", () => {
     limiter.isRateLimited("1.2.3.4", now + 1);
     limiter.isRateLimited("1.2.3.4", now + 2);
     expect(limiter.isRateLimited("1.2.3.4", now + 3)).toBe(true);
-    expect(
-      limiter.isRateLimited("1.2.3.4", now + RATE_LIMIT_WINDOW_MS + 1)
-    ).toBe(false);
+    expect(limiter.isRateLimited("1.2.3.4", now + RATE_LIMIT_WINDOW_MS + 1)).toBe(false);
   });
 });
 

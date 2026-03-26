@@ -10,7 +10,9 @@
 
 import dynamic from "next/dynamic";
 
-const StarfieldPixel = dynamic(() => import("@/components/effects/starfield-pixel"), { ssr: false });
+const StarfieldPixel = dynamic(() => import("@/components/effects/starfield-pixel"), {
+  ssr: false,
+});
 
 export default function LazyStarfield() {
   return <StarfieldPixel />;

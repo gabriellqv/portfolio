@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 border-t border-surface-subtle pt-4 text-center">
+        <div className="border-surface-subtle mt-6 border-t pt-4 text-center">
           <p className="text-fg-tertiary text-xs">
             &copy; {new Date().getFullYear()} {siteConfig.name}. {t.footer.copyright}
           </p>
