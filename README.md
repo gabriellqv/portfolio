@@ -2,7 +2,7 @@
 
 Personal portfolio built with Next.js 16, React 19 and TypeScript. A single-page application with animated pixel starfield background, bilingual support (PT/EN), server-side rendered pages, and a functional contact form powered by Resend.
 
-**Live:** [gabriellqv.dev](https://gabriellqv.dev)
+**Live:** [portfolio](https://gabriellqv.vercel.app/)
 
 ## Table of Contents
 
