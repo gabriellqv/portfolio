@@ -117,7 +117,7 @@ function SkillsCarousel() {
 }
 
 export default function Hero() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollOffset, setScrollOffset] = useState(0);
 
@@ -180,14 +180,14 @@ export default function Hero() {
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Link
               href="#projects"
-              className="rounded-xl border border-white bg-white px-5 py-2.5 font-mono text-sm font-medium text-black transition-all hover:bg-gray-200"
+              className="rounded-xl border border-white bg-white px-5 py-2.5 text-center font-mono text-sm font-medium text-black transition-all hover:bg-gray-200"
             >
               {t.hero.viewProjects}
             </Link>
             <a
-              href="/cv.pdf"
-              download
-              className="border-edge bg-surface text-fg-secondary hover:border-edge-hover hover:shadow-glow-strong hover:text-fg-primary rounded-xl border px-5 py-2.5 font-mono text-sm backdrop-blur-[2px] transition-all hover:bg-white/5"
+              href={`/cv-gabriellqv-${locale}.pdf`}
+              download={`cv-gabriellqv-${locale}.pdf`}
+              className="border-edge bg-surface text-fg-secondary hover:border-edge-hover hover:text-fg-primary hover:shadow-glow-strong flex-1 rounded-xl border px-5 py-2.5 text-center font-mono text-sm backdrop-blur-[2px] transition-all hover:bg-white/5 sm:flex-none"
             >
               {t.hero.downloadCv}
             </a>
