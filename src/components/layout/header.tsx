@@ -104,12 +104,15 @@ export default function Header() {
       >
         <Container className="text-fg-primary flex items-center justify-between py-4">
           {/* Brand */}
-          <Link
-            href="/"
-            className="text-fg-secondary hover:text-fg-primary font-mono text-base transition min-[20rem]:text-xl"
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="text-fg-secondary hover:text-fg-primary cursor-pointer font-mono text-base transition min-[20rem]:text-xl"
           >
             {siteConfig.handle}
-          </Link>
+          </button>
 
           {/* Desktop nav + locale toggle */}
           <div className="hidden items-center gap-6 md:flex">
