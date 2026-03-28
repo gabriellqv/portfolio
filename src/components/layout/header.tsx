@@ -1,9 +1,10 @@
 /**
- * Sticky site header with responsive navigation and locale toggle.
+ * Fixed site header with responsive navigation and locale toggle.
  *
- * Mobile menu uses CSS `grid-template-rows` for open/close transitions.
- * This technique is GPU-composited (unlike `max-height` hacks) and does
- * not require knowing the content height in advance.
+ * Mobile menu renders a fullscreen overlay (`fixed inset-0`) outside
+ * the `<header>` element to avoid nested fixed-positioning bugs on
+ * mobile browsers. Body scroll is locked via `position: fixed` on
+ * the body element, with scroll position saved/restored via a ref.
  *
  * Active section detection uses `IntersectionObserver` with asymmetric
  * margins (`-40% 0px -55% 0px`) that bias the trigger point toward the
@@ -13,7 +14,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Container from "./container";
 import { Github, Linkedin, Mail, X, Menu } from "lucide-react";
 import { NAV_ITEMS, SOCIAL_LINKS } from "@/config/navigation";
@@ -67,79 +68,99 @@ function useActiveSection() {
 // ---------------------------------------------------------------------------
 
 /**
- * Sticky site header with responsive navigation and locale toggle.
+ * Fixed site header with responsive navigation and locale toggle.
  *
  * Desktop: horizontal nav links + bordered language button.
- * Mobile: compact toggle + hamburger with animated slide-down menu
- * using CSS `grid-template-rows` for smooth open/close transitions.
+ * Mobile: compact toggle + hamburger with fullscreen overlay menu.
+ * Body scroll is locked when the menu is open.
  */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { locale, t, toggleLocale } = useLocale();
   const activeSection = useActiveSection();
 
+  const scrollYRef = useRef(0);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      scrollYRef.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollYRef.current}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollYRef.current);
+    }
+  }, [isMenuOpen]);
+
   return (
-    <header className="border-edge bg-surface sticky top-0 z-50 border-b backdrop-blur-[2px]">
-      <Container className="text-fg-primary flex items-center justify-between py-4">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="text-fg-secondary hover:text-fg-primary font-mono text-base transition min-[20rem]:text-xl"
-        >
-          {siteConfig.handle}
-        </Link>
-
-        {/* Desktop nav + locale toggle */}
-        <div className="hidden items-center gap-6 md:flex">
-          <nav className="flex items-center space-x-6">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`transition ${
-                  activeSection === item.sectionId
-                    ? "text-fg-primary"
-                    : "text-fg-secondary hover:text-fg-primary"
-                }`}
-              >
-                {t.nav[item.key]}
-              </Link>
-            ))}
-          </nav>
-          <button
-            onClick={toggleLocale}
-            className="border-edge text-fg-secondary hover:border-edge-hover hover:text-fg-primary cursor-pointer rounded-lg border px-2.5 py-1 font-mono text-xs transition-all"
-            aria-label={locale === "pt" ? "Switch to English" : "Trocar para Português"}
-          >
-            {locale === "pt" ? "EN" : "PT"}
-          </button>
-        </div>
-
-        {/* Mobile controls */}
-        <div className="flex items-center gap-1 md:hidden">
-          <button
-            onClick={toggleLocale}
-            className="text-fg-tertiary hover:text-fg-primary cursor-pointer px-2 py-1 font-mono text-xs transition-colors"
-            aria-label={locale === "pt" ? "Switch to English" : "Trocar para Português"}
-          >
-            {locale === "pt" ? "EN" : "PT"}
-          </button>
-          <button
-            className="text-fg-secondary hover:text-fg-primary flex h-11 w-11 items-center justify-center transition"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? t.a11y.closeMenu : t.a11y.openMenu}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-      </Container>
-
-      {/* Collapsible mobile menu — uses CSS grid-rows for GPU-accelerated transition */}
-      <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-out md:hidden ${isMenuOpen ? "border-edge bg-surface grid-rows-[1fr] border-b backdrop-blur-[2px]" : "grid-rows-[0fr]"}`}
+    <>
+      <header
+        className={`border-edge fixed top-0 z-50 w-full border-b ${isMenuOpen ? "bg-black backdrop-blur-xl" : "bg-surface backdrop-blur-[2px]"}`}
       >
-        <div className="overflow-hidden">
+        <Container className="text-fg-primary flex items-center justify-between py-4">
+          {/* Brand */}
+          <Link
+            href="/"
+            className="text-fg-secondary hover:text-fg-primary font-mono text-base transition min-[20rem]:text-xl"
+          >
+            {siteConfig.handle}
+          </Link>
+
+          {/* Desktop nav + locale toggle */}
+          <div className="hidden items-center gap-6 md:flex">
+            <nav className="flex items-center space-x-6">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`transition ${
+                    activeSection === item.sectionId
+                      ? "text-fg-primary"
+                      : "text-fg-secondary hover:text-fg-primary"
+                  }`}
+                >
+                  {t.nav[item.key]}
+                </Link>
+              ))}
+            </nav>
+            <button
+              onClick={toggleLocale}
+              className="border-edge text-fg-secondary hover:border-edge-hover hover:text-fg-primary cursor-pointer rounded-lg border px-2.5 py-1 font-mono text-xs transition-all"
+              aria-label={locale === "pt" ? "Switch to English" : "Trocar para Português"}
+            >
+              {locale === "pt" ? "EN" : "PT"}
+            </button>
+          </div>
+
+          {/* Mobile controls */}
+          <div className="flex items-center gap-1 md:hidden">
+            <button
+              onClick={toggleLocale}
+              className="text-fg-tertiary hover:text-fg-primary cursor-pointer px-2 py-1 font-mono text-xs transition-colors"
+              aria-label={locale === "pt" ? "Switch to English" : "Trocar para Português"}
+            >
+              {locale === "pt" ? "EN" : "PT"}
+            </button>
+            <button
+              className="text-fg-secondary hover:text-fg-primary flex h-11 w-11 items-center justify-center transition"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? t.a11y.closeMenu : t.a11y.openMenu}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </Container>
+      </header>
+
+      {/* Fullscreen mobile menu overlay — rendered outside header to avoid nested fixed issues */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 top-(--header-h) z-40 touch-none overflow-hidden overscroll-none bg-black backdrop-blur-xl md:hidden">
           <nav className="flex flex-col space-y-4 p-4">
             {NAV_ITEMS.map((item) => (
               <Link
@@ -174,7 +195,7 @@ export default function Header() {
             </div>
           </nav>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 }

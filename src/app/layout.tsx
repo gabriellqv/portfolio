@@ -63,14 +63,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
         style={{ background: "#000" }}
       >
         <Providers>
           <SkipToContent />
           <LazyStarfield />
           <Header />
-          <main id="main-content">{children}</main>
+          <main id="main-content" className="pt-(--header-h)">
+            {children}
+          </main>
           <ScrollToTop />
           <Footer />
         </Providers>
