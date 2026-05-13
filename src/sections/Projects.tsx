@@ -4,9 +4,18 @@ import Link from "next/link";
 
 const projects = [
   {
+    title: "HydroTrack",
+    description: "Aplicação voltada para a gestão de recursos hídricos. Combina a reatividade do Vue.js com Leaflet para monitoramento geolocalizado, apoiada por um ecossistema de alta performance.",
+    techs: ["Vue 3", "Laravel", "TypeScript", "Leaflet", "Pinia", "Pest"],
+    github: "https://github.com/gabriellqv/hydrotrack",
+    deploy: "#",
+    image: "/hydrotrack.webp",
+    status: "Concluído"
+  },
+  {
     title: "FlowERP",
     description: "Sistema de Gestão Empresarial (ERP) completo para controle de vendas, clientes e produtos. Interface altamente interativa com painéis administrativos e relatórios gerenciais dinâmicos. Arquitetura com forte foco em testes automatizados e regras de negócio sólidas.",
-    techs: ["Vue 3", "Pinia", "Laravel", "MySQL", "Pest", "TailwindCSS"],
+    techs: ["Vue 3", "Laravel", "TypeScript", "Pinia", "Pest", "TailwindCSS"],
     github: "https://github.com/gabriellqv/flowerp",
     deploy: "#",
     image: "",
@@ -15,20 +24,11 @@ const projects = [
   {
     title: "StockSnap",
     description: "Plataforma de gerenciamento de estoque em tempo real. Desenvolvida utilizando os princípios SOLID, focando em uma comunicação RESTful otimizada, autenticação segura via JWT e forte controle de permissões (RBAC).",
-    techs: ["Next.js", "NestJS", "Prisma", "PostgreSQL", "Redis", "TailwindCSS"],
+    techs: ["Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL", "TailwindCSS"],
     github: "https://github.com/gabriellqv/stocksnap",
     deploy: "#",
     image: "/stocksnap.webp",
     status: "Versão 2.0"
-  },
-  {
-    title: "HydroTrack",
-    description: "Aplicação voltada para a gestão de recursos hídricos. Combina a reatividade do Vue.js com Leaflet para monitoramento geolocalizado, apoiada por um ecossistema de alta performance.",
-    techs: ["Vue 3", "TailwindCSS", "Leaflet", "Vite", "Pinia", "Chart.js"],
-    github: "https://github.com/gabriellqv/hydrotrack",
-    deploy: "#",
-    image: "/hydrotrack.webp",
-    status: "Concluído"
   }
 ];
 
