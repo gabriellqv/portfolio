@@ -61,11 +61,11 @@
     hanging-punctuation: first last;
     scroll-behavior: smooth;
   }
-  
+
   html.dark {
     color-scheme: dark;
   }
-  
+
   html:not(.dark) {
     color-scheme: light;
   }
@@ -74,11 +74,7 @@
     min-height: 100svh;
     background-color: var(--background);
     background-image:
-      radial-gradient(
-        ellipse 60% 40% at 50% 0%,
-        var(--glow-color),
-        transparent
-      ),
+      radial-gradient(ellipse 60% 40% at 50% 0%, var(--glow-color), transparent),
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
     background-size:
@@ -177,8 +173,12 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @utility animate-marquee {
@@ -189,11 +189,25 @@
   animation-play-state: paused;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @utility card-base {
-  @apply bg-card border border-border/40 rounded-3xl shadow-xl
-         hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all;
+  @apply bg-card border-border/40 rounded-3xl border shadow-xl transition-all hover:shadow-2xl dark:hover:bg-white/[0.04];
 }
 
 @utility section-wrapper {
-  @apply w-full max-w-5xl mx-auto px-4 py-24;
+  @apply mx-auto w-full max-w-5xl px-4 py-24;
 }

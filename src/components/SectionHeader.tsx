@@ -1,7 +1,4 @@
-interface SectionHeaderProps {
-  title: string;
-  subtitle?: string;
-}
+import type { SectionHeaderProps } from "@/types";
 
 export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
   return (
@@ -9,11 +6,9 @@ export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
       <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
         {title}
       </h2>
-      <div className="w-20 h-1 bg-neutral-700 rounded-full"></div>
+      <div className="w-20 h-1 bg-foreground/20 rounded-full" />
       {subtitle && (
-        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-          {subtitle}
-        </p>
+        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">{subtitle}</p>
       )}
     </div>
   );
