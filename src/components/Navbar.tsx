@@ -2,11 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,19 +74,43 @@ const Navbar = () => {
           </Link>
           <Link 
             href="#contact" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-black/10 dark:bg-white/10 text-foreground' : 'hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Contato
           </Link>
+          
+          <div className="w-px h-4 bg-border/50 mx-1"></div>
+          
+          {mounted && (
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-1.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              aria-label="Alternar tema"
+            >
+              {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            </button>
+          )}
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden z-10 p-2 -mr-2 text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        {/* Mobile controls (Theme Toggle + Hamburger) */}
+        <div className="flex items-center gap-1 md:hidden z-10">
+          {mounted && (
+            <button 
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              aria-label="Alternar tema"
+            >
+              {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
+            </button>
+          )}
+
+          <button 
+            className="p-2 -mr-2 text-foreground"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
 
         {/* Mobile Dropdown Menu */}
         {isMobileMenuOpen && (
@@ -98,7 +127,7 @@ const Navbar = () => {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-white/5 hover:text-foreground'}`}
+                className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-black/10 dark:bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground'}`}
               >
                 {item.label}
               </Link>
