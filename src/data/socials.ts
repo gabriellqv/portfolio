@@ -5,6 +5,14 @@ import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 import { SITE } from "@/constants";
 import type { SocialLink } from "@/types";
 
+/**
+ * Centralized social media and contact link definitions.
+ * Both the Footer and the Contact section consume this same array,
+ * ensuring link URLs, icons, and labels stay consistent across the site.
+ *
+ * For `mailto:` links, the `target="_blank"` attribute is conditionally
+ * omitted by consumers to avoid opening a blank tab for email clients.
+ */
 export const socials: SocialLink[] = [
   {
     href: `https://github.com/${SITE.githubUsername}`,

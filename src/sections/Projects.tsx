@@ -8,6 +8,16 @@ import SectionHeader from "@/components/SectionHeader";
 import { projects } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
+/**
+ * Projects section displaying each portfolio entry as a two-column card.
+ *
+ * Cards with an image use next/image with fill layout and responsive sizes.
+ * Cards without an image (empty string) render a gradient background with
+ * a FolderGit2 placeholder icon and the project title instead.
+ *
+ * The "Ver Projeto" link handles the "#" deploy placeholder gracefully
+ * by keeping the link non-functional until a real URL is provided.
+ */
 export default function Projects() {
   return (
     <section id="projects" className="section-wrapper">

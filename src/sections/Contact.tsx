@@ -9,6 +9,20 @@ import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
 import { cn } from "@/lib/utils";
 
+/**
+ * Contact section with social links and a client-side email form.
+ *
+ * Form submission uses a `mailto:` link strategy: on submit, the user's
+ * default email client opens with a pre-filled subject and body. A 600ms
+ * artificial delay provides visual feedback (sending state) before the
+ * browser navigates to the mailto handler.
+ *
+ * After the mailto opens, the form resets with a "sent" success badge
+ * that auto-clears after 4 seconds, returning to the idle state.
+ *
+ * Social links reuse the centralized `socials` data array shared with
+ * the Footer, ensuring URL consistency across the site.
+ */
 export default function Contact() {
   const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle");
   const [formData, setFormData] = useState({

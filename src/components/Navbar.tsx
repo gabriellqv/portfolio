@@ -12,6 +12,19 @@ import { useActiveSection } from "@/hooks/useActiveSection";
 import { useMounted } from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";
 
+/**
+ * Fixed top navigation bar with desktop and mobile layouts.
+ *
+ * Desktop: horizontal link list with an active state driven by
+ * IntersectionObserver tracking which section is in view.
+ *
+ * Mobile: hamburger toggle opens a dropdown menu that closes when any
+ * link is clicked. Both layouts include a dark/light theme toggle, gated
+ * behind the `mounted` flag to prevent hydration mismatches.
+ *
+ * The navbar is horizontally centered via `left-1/2 -translate-x-1/2`
+ * and uses a pill-shaped rounded-full container with backdrop blur.
+ */
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const activeSection = useActiveSection([...SECTION_IDS]);

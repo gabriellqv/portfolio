@@ -2,6 +2,12 @@ import Image from "next/image";
 
 import SectionHeader from "@/components/SectionHeader";
 
+/**
+ * Education section with a vertical timeline layout.
+ * Uses an absolute-positioned line and dot on the left edge to create
+ * a timeline visual, with the date range on the left and the degree
+ * card on the right at larger breakpoints.
+ */
 export default function Education() {
   return (
     <section id="education" className="section-wrapper">

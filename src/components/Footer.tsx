@@ -1,6 +1,13 @@
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
 
+/**
+ * Site footer rendered as a Server Component.
+ *
+ * Displays the brand name, a dynamic copyright year (computed at request/build time),
+ * and social media links from the centralized socials data source.
+ * mailto links intentionally skip the target="_blank" attribute.
+ */
 const Footer = () => {
   return (
     <footer className="mt-auto w-full py-12 border-t border-border/40 bg-background">

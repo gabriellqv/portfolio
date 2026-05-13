@@ -4,6 +4,15 @@ import { useMemo } from "react";
 
 import { getSkillsForCarousel } from "@/data/skills";
 
+/**
+ * Auto-scrolling infinite marquee of technology skill icons.
+ *
+ * Renders the skill list twice consecutively inside a CSS-masked container.
+ * The first copy scrolls fully out of view just as the second copy reaches
+ * the same position, creating a seamless loop without visible gaps.
+ *
+ * Uses `useMemo` to avoid regenerating the doubled array on every render.
+ */
 export default function SkillsCarousel() {
   const skills = useMemo(() => getSkillsForCarousel(), []);
 

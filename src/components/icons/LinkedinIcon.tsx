@@ -1,3 +1,9 @@
+/**
+ * LinkedIn brand icon rendered as an inline SVG.
+ *
+ * Extracted to a shared component to avoid duplication between Footer and Contact.
+ * Uses `aria-hidden="true"` because the parent anchor always provides an aria-label.
+ */
 export function LinkedinIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">

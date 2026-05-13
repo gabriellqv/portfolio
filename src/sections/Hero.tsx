@@ -6,6 +6,11 @@ import SkillsCarousel from "@/components/SkillsCarousel";
 import { SITE } from "@/constants";
 import { cn } from "@/lib/utils";
 
+/**
+ * Hero section with name, tagline, skill carousel, and two CTA buttons.
+ * Uses a CSS gradient text effect on the main heading via bg-clip-text.
+ * Links to the projects section and the downloadable CV PDF file.
+ */
 export default function Hero() {
   return (
     <section

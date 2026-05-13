@@ -4,6 +4,14 @@ import { useEffect } from "react";
 
 import Link from "next/link";
 
+/**
+ * Global error boundary rendered when an unhandled error occurs
+ * during rendering or data fetching.
+ *
+ * Receives the error object and a reset function from Next.js.
+ * Logs the error to the console for debugging and offers the user
+ * a retry button (calls reset()) and a back-to-home link.
+ */
 export default function Error({
   error,
   reset,

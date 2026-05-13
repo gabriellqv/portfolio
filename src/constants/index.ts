@@ -1,3 +1,8 @@
+/**
+ * Central source of truth for all site-wide configuration values.
+ * Components and data files reference these instead of hardcoding strings,
+ * ensuring a single place to update personal info, URLs, and filenames.
+ */
 export const SITE = {
   name: "Gabriel Queiroz",
   title: "Desenvolvedor Full Stack",
@@ -13,6 +18,11 @@ export const SITE = {
   siteUrl: "https://gabrielqueiroz.dev",
 } as const;
 
+/**
+ * Ordered list of all page section IDs used by the IntersectionObserver
+ * for active-section tracking and by the navbar for link rendering.
+ * Order determines the default active section (first item) and the nav link order.
+ */
 export const SECTION_IDS = [
   "home",
   "about",
@@ -22,6 +32,10 @@ export const SECTION_IDS = [
   "contact",
 ] as const;
 
+/**
+ * Navigation items derived from SECTION_IDS with Portuguese labels.
+ * Used by both the desktop nav bar and the mobile dropdown menu.
+ */
 export const NAV_ITEMS: { id: (typeof SECTION_IDS)[number]; label: string }[] = [
   { id: "home", label: "Início" },
   { id: "about", label: "Sobre" },
