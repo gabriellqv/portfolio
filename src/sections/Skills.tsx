@@ -1,3 +1,7 @@
+"use client";
+
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { 
   SiTypescript, SiReact, SiNextdotjs, SiVuedotjs, 
   SiNodedotjs, SiNestjs, SiPhp, SiLaravel, 
@@ -74,6 +78,14 @@ const skillCategories = [
 ];
 
 export default function Skills() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  
+  const isLight = mounted && resolvedTheme === "light";
+  const bgOpacity = isLight ? "25" : "15";
+  const borderOpacity = isLight ? "40" : "30";
+
   return (
     <section id="skills" className="w-full max-w-5xl mx-auto px-4 py-24">
       <div className="flex flex-col mb-16">
@@ -90,13 +102,13 @@ export default function Skills() {
         {skillCategories.map((category, idx) => (
           <div 
             key={idx} 
-            className={`flex flex-col p-8 rounded-3xl bg-muted/5 border border-border/40 hover:bg-muted/10 transition-colors ${idx === 4 ? 'md:col-span-2' : ''}`}
+            className={`flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-xl dark:hover:bg-muted/10 transition-all shadow-lg ${idx === 4 ? 'md:col-span-2' : ''}`}
           >
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
-              <div className="p-2 bg-neutral-800/50 rounded-lg border border-border/50">
-                <category.icon className="size-5 text-neutral-400" />
+              <div className="p-2 bg-white dark:bg-neutral-800/50 rounded-lg border border-border/50">
+                <category.icon className="size-5 text-neutral-600 dark:text-neutral-400" />
               </div>
-              <h3 className="text-lg font-semibold text-neutral-200">
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
                 {category.title}
               </h3>
             </div>
@@ -104,17 +116,19 @@ export default function Skills() {
             <div className={`grid gap-3 ${idx === 4 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2'}`}>
               {category.skills.map((skill, skillIdx) => {
                 const Icon = skill.icon;
+                const isWhite = skill.hex === "#FFFFFF";
+                
                 return (
                   <div 
                     key={skillIdx} 
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all hover:scale-105"
-                    style={{ 
-                      backgroundColor: `${skill.hex}15`, 
-                      borderColor: `${skill.hex}30` 
+                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all hover:scale-105 ${isWhite ? 'border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10' : ''}`}
+                    style={isWhite ? undefined : { 
+                      backgroundColor: `${skill.hex}${bgOpacity}`, 
+                      borderColor: `${skill.hex}${borderOpacity}` 
                     }}
                   >
-                    <Icon size={18} style={{ color: skill.hex }} className="shrink-0" />
-                    <span className="text-sm font-medium text-neutral-200">
+                    <Icon size={18} style={isWhite ? undefined : { color: skill.hex }} className={`shrink-0 ${isWhite ? 'text-neutral-900 dark:text-white' : ''}`} />
+                    <span className="text-sm font-medium text-neutral-900 dark:text-neutral-200">
                       {skill.name}
                     </span>
                   </div>
