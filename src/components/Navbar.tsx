@@ -36,44 +36,44 @@ const Navbar = () => {
   return (
     <header className="fixed top-6 z-50 w-full max-w-4xl px-4 left-1/2 -translate-x-1/2">
       <nav className={`relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/40 transition-colors ${isMobileMenuOpen ? 'bg-background' : 'bg-background/50 backdrop-blur-md'}`}>
-        <Link href="#home" className="text-sm font-semibold tracking-wide text-foreground z-10">
+        <Link href="/#home" className="text-sm font-semibold tracking-wide text-foreground z-10">
           <span className="">Gabriellqv</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
           <Link 
-            href="#home" 
+            href="/#home" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'home' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Início
           </Link>
           <Link 
-            href="#about" 
+            href="/#about" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'about' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Sobre
           </Link>
           <Link 
-            href="#projects" 
+            href="/#projects" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'projects' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Projetos
           </Link>
           <Link 
-            href="#skills" 
+            href="/#skills" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'skills' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Habilidades
           </Link>
           <Link 
-            href="#education" 
+            href="/#education" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'education' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Educação
           </Link>
           <Link 
-            href="#contact" 
+            href="/#contact" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Contato
@@ -123,7 +123,7 @@ const Navbar = () => {
             ].map((item) => (
               <Link 
                 key={item.id}
-                href={`#${item.id}`}
+                href={`/#${item.id}`}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground'}`}
               >
