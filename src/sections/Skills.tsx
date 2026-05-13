@@ -13,6 +13,7 @@ import {
 } from "react-icons/si";
 
 import { Code2, LayoutTemplate, Server, Database, Wrench } from "lucide-react";
+import SectionHeader from "@/components/SectionHeader";
 
 const skillCategories = [
   {
@@ -87,22 +88,17 @@ export default function Skills() {
   const borderOpacity = isLight ? "40" : "30";
 
   return (
-    <section id="skills" className="w-full max-w-5xl mx-auto px-4 py-24">
-      <div className="flex flex-col mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-          Habilidades Técnicas
-        </h2>
-        <div className="w-20 h-1 bg-neutral-700 rounded-full"></div>
-        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-          Especializado em desenvolvimento moderno de software, utilizo as melhores tecnologias do mercado para construir sistemas escaláveis, seguros e de alta performance.
-        </p>
-      </div>
+    <section id="skills" className="section-wrapper">
+      <SectionHeader
+        title="Habilidades Técnicas"
+        subtitle="Especializado em desenvolvimento moderno de software, utilizo as melhores tecnologias do mercado para construir sistemas escaláveis, seguros e de alta performance."
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {skillCategories.map((category, idx) => (
           <div 
             key={idx} 
-            className={`flex flex-col p-8 rounded-3xl bg-card border border-border/40 hover:shadow-xl dark:hover:bg-white/[0.04] transition-all shadow-lg ${idx === 4 ? 'md:col-span-2' : ''}`}
+            className={`flex flex-col p-8 card-base ${idx === 4 ? 'md:col-span-2' : ''}`}
           >
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
               <div className="p-2 bg-white dark:bg-neutral-800/50 rounded-lg border border-border/50">

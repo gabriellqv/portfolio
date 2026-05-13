@@ -3,6 +3,7 @@
 import { useState, type FormEvent, type ComponentType } from "react";
 import { Mail, MapPin, ArrowUpRight, Loader2, CheckCircle2, Send } from "lucide-react";
 import { SiGithub } from "react-icons/si";
+import SectionHeader from "@/components/SectionHeader";
 
 const LinkedinIcon = ({ className }: { className?: string }) => (
   <svg
@@ -66,23 +67,17 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="w-full max-w-5xl mx-auto px-4 py-24">
-      <div className="flex flex-col mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-          Contato
-        </h2>
-        <div className="w-20 h-1 bg-neutral-700 rounded-full"></div>
-        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-          Interessado em trabalhar junto ou tem uma proposta? Fique à vontade para
-          entrar em contato, estou sempre aberto a novas oportunidades e conversas.
-        </p>
-      </div>
+    <section id="contact" className="section-wrapper">
+      <SectionHeader
+        title="Contato"
+        subtitle="Interessado em trabalhar junto ou tem uma proposta? Fique à vontade para entrar em contato, estou sempre aberto a novas oportunidades e conversas."
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
         {/* Informações de contato */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Card de localização */}
-          <div className="bg-card border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+          <div className="card-base p-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-200/80 dark:bg-white/5 border border-border/30">
                 <MapPin className="size-5 text-neutral-700 dark:text-neutral-300" />
@@ -102,7 +97,7 @@ export default function Contact() {
           </div>
 
           {/* Links sociais */}
-          <div className="flex-1 bg-card border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+          <div className="flex-1 card-base p-8">
             <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-200 mb-5">
               Onde me encontrar
             </h3>
@@ -113,7 +108,7 @@ export default function Contact() {
                   href={href}
                   target={href.startsWith("mailto") ? undefined : "_blank"}
                   rel="noreferrer"
-                  className="group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors"
+                  className="group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
                     <Icon className="size-4 text-neutral-700 dark:text-neutral-300" />
@@ -134,7 +129,7 @@ export default function Contact() {
         </div>
 
         {/* Formulário de contato */}
-        <div className="lg:col-span-3 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="lg:col-span-3 card-base p-8 lg:p-10">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200 mb-2">
             Envie uma mensagem
           </h3>
@@ -213,7 +208,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={formState !== "idle"}
-              className="group/btn flex items-center justify-center gap-2 w-full sm:w-auto sm:self-end px-6 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none"
+              className="group/btn flex items-center justify-center gap-2 w-full sm:w-auto sm:self-end px-6 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {formState === "idle" && (
                 <>
