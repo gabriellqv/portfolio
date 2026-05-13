@@ -1,37 +1,12 @@
+import Image from "next/image";
+import Link from "next/link";
+
 import { ExternalLink, FolderGit2 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import Link from "next/link";
-import SectionHeader from "@/components/SectionHeader";
 
-const projects = [
-  {
-    title: "HydroTrack",
-    description: "Aplicação voltada para a gestão de recursos hídricos. Combina a reatividade do Vue.js com Leaflet para monitoramento geolocalizado, apoiada por um ecossistema de alta performance.",
-    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Leaflet", "Pinia"],
-    github: "https://github.com/gabriellqv/hydrotrack",
-    deploy: "#",
-    image: "/hydrotrack.webp",
-    status: "Concluído"
-  },
-  {
-    title: "FlowERP",
-    description: "Sistema de Gestão Empresarial (ERP) completo para controle de vendas, clientes e produtos. Interface altamente interativa com painéis administrativos e relatórios gerenciais dinâmicos. Arquitetura com forte foco em testes automatizados e regras de negócio sólidas.",
-    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Pinia", "TailwindCSS"],
-    github: "https://github.com/gabriellqv/flowerp",
-    deploy: "#",
-    image: "",
-    status: "Em Produção"
-  },
-  {
-    title: "StockSnap",
-    description: "Plataforma de gerenciamento de estoque em tempo real. Desenvolvida utilizando os princípios SOLID, focando em uma comunicação RESTful otimizada, autenticação segura via JWT e forte controle de permissões (RBAC).",
-    techs: ["Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL", "TailwindCSS"],
-    github: "https://github.com/gabriellqv/stocksnap",
-    deploy: "#",
-    image: "/stocksnap.webp",
-    status: "Versão 2.0"
-  }
-];
+import SectionHeader from "@/components/SectionHeader";
+import { projects } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
 export default function Projects() {
   return (
@@ -42,50 +17,50 @@ export default function Projects() {
       />
 
       <div className="grid grid-cols-1 gap-12">
-        {projects.map((project, idx) => (
-          <div 
-            key={idx} 
+        {projects.map((project) => (
+          <div
+            key={project.title}
             className="flex flex-col lg:flex-row group card-base overflow-hidden"
           >
-            {/* Image Section */}
             <div className="w-full lg:w-1/2 min-h-[16rem] bg-card relative overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40 flex items-center justify-center">
               {project.image ? (
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="absolute inset-0 w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 />
               ) : (
                 <>
-                  <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/30 to-neutral-900/10"></div>
-                  <div className="relative z-10 flex flex-col items-center justify-center text-neutral-600 group-hover:scale-105 transition-transform duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/30 to-neutral-900/10" />
+                  <div className="relative z-10 flex flex-col items-center justify-center text-muted-foreground group-hover:scale-105 transition-transform duration-500">
                     <FolderGit2 className="size-16 mb-4 opacity-50" />
-                    <span className="text-xl font-bold tracking-widest uppercase opacity-40">{project.title}</span>
+                    <span className="text-xl font-bold tracking-widest uppercase opacity-40">
+                      {project.title}
+                    </span>
                   </div>
                 </>
               )}
             </div>
 
-            {/* Content Section */}
             <div className="w-full lg:w-1/2 p-8 md:p-10 flex flex-col">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
-                  {project.title}
-                </h3>
-                <span className="px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider">
+                <h3 className="text-2xl font-bold text-foreground">{project.title}</h3>
+                <span className="px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-foreground tracking-wider">
                   {project.status}
                 </span>
               </div>
 
-              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed mb-8 flex-1">
+              <p className="text-muted-foreground leading-relaxed mb-8 flex-1">
                 {project.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-8">
-                {project.techs.map(tech => (
-                  <span 
-                    key={tech} 
-                    className="px-3 py-1 rounded-md border border-border/20 bg-white dark:bg-neutral-900/50 text-xs font-medium text-neutral-700 dark:text-neutral-300"
+                {project.techs.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded-md border border-border/20 bg-white dark:bg-neutral-900/50 text-xs font-medium text-muted-foreground"
                   >
                     {tech}
                   </span>
@@ -93,17 +68,23 @@ export default function Projects() {
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-auto">
-                <Link 
-                  href={project.deploy} 
-                  className="flex justify-center items-center gap-2 py-2 px-4 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-neutral-800 dark:hover:bg-neutral-200 hover:scale-[1.02] active:scale-95 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                <Link
+                  href={project.deploy}
+                  className={cn(
+                    "flex justify-center items-center gap-2 py-2 px-4 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-neutral-800 dark:hover:bg-neutral-200 hover:scale-[1.02] active:scale-95 whitespace-nowrap",
+                    "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  )}
                 >
                   <ExternalLink className="size-3.5 shrink-0" />
                   <span>Ver Projeto</span>
                 </Link>
-                
-                <Link 
-                  href={project.github} 
-                  className="flex justify-center items-center gap-2 py-2 px-4 rounded-full border border-border/50 bg-white dark:bg-transparent hover:bg-neutral-100 dark:hover:bg-white/5 text-neutral-900 dark:text-neutral-300 font-medium text-sm transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+
+                <Link
+                  href={project.github}
+                  className={cn(
+                    "flex justify-center items-center gap-2 py-2 px-4 rounded-full border border-border/50 bg-white dark:bg-transparent hover:bg-neutral-100 dark:hover:bg-white/5 text-foreground font-medium text-sm transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap",
+                    "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  )}
                 >
                   <SiGithub className="size-3.5 shrink-0" />
                   <span>Repositório</span>
