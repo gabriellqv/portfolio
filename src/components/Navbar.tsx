@@ -79,8 +79,6 @@ const Navbar = () => {
             Contato
           </Link>
           
-          <div className="w-px h-4 bg-border/50 mx-1"></div>
-          
           {mounted && (
             <button 
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
