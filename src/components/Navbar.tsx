@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,12 +30,13 @@ const Navbar = () => {
 
   return (
     <header className="fixed top-6 z-50 w-full max-w-4xl px-4 left-1/2 -translate-x-1/2">
-      <nav className="flex items-center justify-between px-8 py-4 rounded-full border border-border/40 bg-background/50 backdrop-blur-md">
-        <Link href="#home" className="text-sm font-semibold tracking-wide text-foreground">
+      <nav className={`relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/40 transition-colors ${isMobileMenuOpen ? 'bg-background' : 'bg-background/50 backdrop-blur-md'}`}>
+        <Link href="#home" className="text-sm font-semibold tracking-wide text-foreground z-10">
           <span className="">Gabriellqv</span>
         </Link>
 
-        <div className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
           <Link 
             href="#home" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'home' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
@@ -64,7 +67,6 @@ const Navbar = () => {
           >
             Educação
           </Link>
-          {/* O Contato ainda não existe, então o spy não vai pegar ele por enquanto */}
           <Link 
             href="#contact" 
             className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
@@ -72,6 +74,37 @@ const Navbar = () => {
             Contato
           </Link>
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="md:hidden z-10 p-2 -mr-2 text-foreground"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-border/40 bg-background flex flex-col gap-2 shadow-2xl md:hidden">
+            {[
+              { id: 'home', label: 'Início' },
+              { id: 'about', label: 'Sobre' },
+              { id: 'projects', label: 'Projetos' },
+              { id: 'skills', label: 'Habilidades' },
+              { id: 'education', label: 'Educação' },
+              { id: 'contact', label: 'Contato' }
+            ].map((item) => (
+              <Link 
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-white/5 hover:text-foreground'}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </nav>
     </header>
   );

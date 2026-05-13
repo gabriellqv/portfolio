@@ -96,20 +96,20 @@ export default function Projects() {
                 ))}
               </div>
 
-              <div className="flex items-center gap-4 mt-auto">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-auto">
                 <Link 
                   href={project.deploy} 
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-neutral-200 text-neutral-900 hover:bg-white font-semibold transition-colors"
+                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl bg-neutral-200 text-neutral-900 hover:bg-white font-semibold transition-colors whitespace-nowrap"
                 >
-                  <ExternalLink className="size-4" />
+                  <ExternalLink className="size-4 shrink-0" />
                   <span>Ver Projeto</span>
                 </Link>
                 
                 <Link 
                   href={project.github} 
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border/50 bg-neutral-800/50 hover:bg-neutral-800 text-neutral-200 font-medium transition-colors"
+                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl border border-border/50 bg-neutral-800/50 hover:bg-neutral-800 text-neutral-200 font-medium transition-colors whitespace-nowrap"
                 >
-                  <SiGithub className="size-4" />
+                  <SiGithub className="size-4 shrink-0" />
                   <span>Repositório</span>
                 </Link>
               </div>

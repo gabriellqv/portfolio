@@ -29,20 +29,20 @@ export default function Home() {
 
         <SkillsCarousel />
 
-        <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-2 w-full max-w-[300px] sm:max-w-none mx-auto">
           <Link 
             href="#projects" 
-            className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95"
+            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
           >
-            Ver Projetos <ArrowRight className="size-4" />
+            Ver Projetos <ArrowRight className="size-4 shrink-0" />
           </Link>
           <a 
             href="/Curriculo_Gabriel_Queiroz.pdf" 
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm border border-border/50 bg-transparent hover:bg-white/5 transition-all text-neutral-300 hover:text-white font-medium hover:scale-[1.02] active:scale-95"
+            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm border border-border/50 bg-transparent hover:bg-white/5 transition-all text-neutral-300 hover:text-white font-medium hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
           >
-            <Download className="size-4" /> Baixar CV
+            <Download className="size-4 shrink-0" /> Baixar CV
           </a>
         </div>
       </section>
