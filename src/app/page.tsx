@@ -6,6 +6,7 @@ import Skills from "@/sections/Skills";
 import Education from "@/sections/Education";
 import Projects from "@/sections/Projects";
 import Contact from "@/sections/Contact";
+import ScrollToTop from "@/components/ScrollToTop";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 
@@ -55,6 +56,7 @@ export default function Home() {
       <Contact />
 
       <Footer />
+      <ScrollToTop />
     </main>
   );
 }

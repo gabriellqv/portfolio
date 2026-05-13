@@ -49,7 +49,7 @@ export default function Projects() {
         {projects.map((project, idx) => (
           <div 
             key={idx} 
-            className="flex flex-col lg:flex-row group rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-colors shadow-xl overflow-hidden"
+            className="flex flex-col lg:flex-row group rounded-3xl bg-card border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-colors shadow-xl overflow-hidden"
           >
             {/* Image Section */}
             <div className="w-full lg:w-1/2 min-h-[16rem] bg-[#0a0a0a] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40 flex items-center justify-center">

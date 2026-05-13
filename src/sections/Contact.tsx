@@ -82,7 +82,7 @@ export default function Contact() {
         {/* Informações de contato */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Card de localização */}
-          <div className="bg-card dark:bg-muted/15 border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+          <div className="bg-card border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-200/80 dark:bg-white/5 border border-border/30">
                 <MapPin className="size-5 text-neutral-700 dark:text-neutral-300" />
@@ -102,7 +102,7 @@ export default function Contact() {
           </div>
 
           {/* Links sociais */}
-          <div className="flex-1 bg-card dark:bg-muted/15 border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+          <div className="flex-1 bg-card border border-border/40 rounded-3xl p-8 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
             <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-200 mb-5">
               Onde me encontrar
             </h3>
@@ -134,7 +134,7 @@ export default function Contact() {
         </div>
 
         {/* Formulário de contato */}
-        <div className="lg:col-span-3 bg-card dark:bg-muted/15 border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="lg:col-span-3 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200 mb-2">
             Envie uma mensagem
           </h3>
@@ -162,7 +162,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-white/5 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
                 />
               </div>
 
@@ -183,7 +183,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))
                   }
-                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-white/5 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
                 />
               </div>
             </div>
@@ -205,7 +205,7 @@ export default function Contact() {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, message: e.target.value }))
                 }
-                className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-white/5 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all resize-none"
               />
             </div>
 

@@ -1,7 +1,0 @@
-feat: implement modern bento-box skills section
-
-- Refactor layout into 5 categorized bento boxes with Lucide icons
-- Implement dynamic colored pills using brand hex codes and subtle opacity
-- Restructure CSS Grid to maintain uniform pill sizing without text truncation
-- Comprehensively map full-stack tools (Vue, Pinia, Laravel, NestJS, GraphQL, Zod, etc.)
-- Establish professional dark mode identity for icons (e.g., white Linux)

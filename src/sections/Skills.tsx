@@ -102,7 +102,7 @@ export default function Skills() {
         {skillCategories.map((category, idx) => (
           <div 
             key={idx} 
-            className={`flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-xl dark:hover:bg-white/[0.04] transition-all shadow-lg ${idx === 4 ? 'md:col-span-2' : ''}`}
+            className={`flex flex-col p-8 rounded-3xl bg-card border border-border/40 hover:shadow-xl dark:hover:bg-white/[0.04] transition-all shadow-lg ${idx === 4 ? 'md:col-span-2' : ''}`}
           >
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
               <div className="p-2 bg-white dark:bg-neutral-800/50 rounded-lg border border-border/50">

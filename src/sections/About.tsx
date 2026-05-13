@@ -10,7 +10,7 @@ export default function About() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {/* Bloco 1: Quem eu sou */}
-        <div className="flex flex-col space-y-6 bg-card dark:bg-muted/15 border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="flex flex-col space-y-6 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200">
             Quem eu sou
           </h3>
@@ -23,7 +23,7 @@ export default function About() {
         </div>
 
         {/* Bloco 2: Jornada Profissional */}
-        <div className="flex flex-col space-y-6 bg-card dark:bg-muted/15 border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="flex flex-col space-y-6 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200">
             Minha Jornada
           </h3>
