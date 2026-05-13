@@ -1,4 +1,3 @@
-import { GraduationCap, Calendar, Award } from "lucide-react";
 
 export default function Education() {
   return (
@@ -30,7 +29,7 @@ export default function Education() {
 
           {/* Lado Direito: Cartão */}
           <div className="md:w-3/4">
-            <div className="flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all shadow-xl">
+            <div className="flex flex-col p-8 rounded-3xl bg-card border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all shadow-xl">
               
               {/* Header do Cartão */}
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">

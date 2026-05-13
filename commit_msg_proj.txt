@@ -1,8 +1,0 @@
-feat: implement projects showcase section
-
-- Implement large bento-style responsive project cards (grid-cols-1 lg:grid-cols-2 fallback)
-- Accurately map real tech stacks for StockSnap (Next/Nest/Prisma) and HydroTrack (Vue/Pinia/Leaflet)
-- Convert user-provided screenshots to optimized WebP format for high performance
-- Convert UNINOVE logo to WebP format for consistency and SEO optimization
-- Add subtle, premium hover micro-animations (opacity transitions and smooth scaling on images)
-- Integrate direct links to official GitHub repositories
