@@ -188,3 +188,12 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@utility card-base {
+  @apply bg-card border border-border/40 rounded-3xl shadow-xl
+         hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all;
+}
+
+@utility section-wrapper {
+  @apply w-full max-w-5xl mx-auto px-4 py-24;
+}

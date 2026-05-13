@@ -1,16 +1,13 @@
+import SectionHeader from "@/components/SectionHeader";
+
 export default function About() {
   return (
-    <section id="about" className="w-full max-w-5xl mx-auto px-4 py-24">
-      <div className="flex flex-col mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-          Sobre Mim
-        </h2>
-        <div className="w-20 h-1 bg-neutral-700 rounded-full"></div>
-      </div>
+    <section id="about" className="section-wrapper">
+      <SectionHeader title="Sobre Mim" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {/* Bloco 1: Quem eu sou */}
-        <div className="flex flex-col space-y-6 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="flex flex-col space-y-6 card-base p-8 lg:p-10">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200">
             Quem eu sou
           </h3>
@@ -23,7 +20,7 @@ export default function About() {
         </div>
 
         {/* Bloco 2: Jornada Profissional */}
-        <div className="flex flex-col space-y-6 bg-card border border-border/40 rounded-3xl p-8 lg:p-10 shadow-xl hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all">
+        <div className="flex flex-col space-y-6 card-base p-8 lg:p-10">
           <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-200">
             Minha Jornada
           </h3>

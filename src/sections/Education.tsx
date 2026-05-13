@@ -1,16 +1,12 @@
+import SectionHeader from "@/components/SectionHeader";
 
 export default function Education() {
   return (
-    <section id="education" className="w-full max-w-5xl mx-auto px-4 py-24">
-      <div className="flex flex-col mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-          Formação Acadêmica
-        </h2>
-        <div className="w-20 h-1 bg-neutral-700 rounded-full"></div>
-        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-          Base teórica sólida aliada ao pragmatismo da engenharia de software para construir soluções que resolvem problemas reais.
-        </p>
-      </div>
+    <section id="education" className="section-wrapper">
+      <SectionHeader
+        title="Formação Acadêmica"
+        subtitle="Base teórica sólida aliada ao pragmatismo da engenharia de software para construir soluções que resolvem problemas reais."
+      />
 
       <div className="relative pl-8 md:pl-12">
         {/* Linha do tempo na extremidade esquerda */}
@@ -29,13 +25,13 @@ export default function Education() {
 
           {/* Lado Direito: Cartão */}
           <div className="md:w-3/4">
-            <div className="flex flex-col p-8 rounded-3xl bg-card border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all shadow-xl">
+            <div className="flex flex-col p-8 card-base">
               
               {/* Header do Cartão */}
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                 <div className="flex gap-4 items-center">
                   {/* Logo */}
-                  <div className="p-3 bg-[#050505] rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
+                  <div className="p-3 bg-background rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
                     <img 
                       src="/uninove.webp" 
                       alt="UNINOVE Logo" 
