@@ -6,7 +6,7 @@ const projects = [
   {
     title: "HydroTrack",
     description: "Aplicação voltada para a gestão de recursos hídricos. Combina a reatividade do Vue.js com Leaflet para monitoramento geolocalizado, apoiada por um ecossistema de alta performance.",
-    techs: ["Vue 3", "Laravel", "TypeScript", "Leaflet", "Pinia", "Pest"],
+    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Leaflet", "Pinia"],
     github: "https://github.com/gabriellqv/hydrotrack",
     deploy: "#",
     image: "/hydrotrack.webp",
@@ -15,7 +15,7 @@ const projects = [
   {
     title: "FlowERP",
     description: "Sistema de Gestão Empresarial (ERP) completo para controle de vendas, clientes e produtos. Interface altamente interativa com painéis administrativos e relatórios gerenciais dinâmicos. Arquitetura com forte foco em testes automatizados e regras de negócio sólidas.",
-    techs: ["Vue 3", "Laravel", "TypeScript", "Pinia", "Pest", "TailwindCSS"],
+    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Pinia", "TailwindCSS"],
     github: "https://github.com/gabriellqv/flowerp",
     deploy: "#",
     image: "",
