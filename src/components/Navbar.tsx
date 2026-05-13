@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <header className="fixed top-6 z-50 w-full max-w-4xl px-4 left-1/2 -translate-x-1/2">
-      <nav className="relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/40 bg-background/50 backdrop-blur-md">
+      <nav className={`relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/40 transition-colors ${isMobileMenuOpen ? 'bg-background' : 'bg-background/50 backdrop-blur-md'}`}>
         <Link href="#home" className="text-sm font-semibold tracking-wide text-foreground z-10">
           <span className="">Gabriellqv</span>
         </Link>
@@ -85,7 +85,7 @@ const Navbar = () => {
 
         {/* Mobile Dropdown Menu */}
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-border/40 bg-background/50 backdrop-blur-md flex flex-col gap-2 shadow-2xl md:hidden">
+          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-border/40 bg-background flex flex-col gap-2 shadow-2xl md:hidden">
             {[
               { id: 'home', label: 'Início' },
               { id: 'about', label: 'Sobre' },
