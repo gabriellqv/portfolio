@@ -5,6 +5,7 @@ import About from "@/sections/About";
 import Skills from "@/sections/Skills";
 import Education from "@/sections/Education";
 import Projects from "@/sections/Projects";
+import Contact from "@/sections/Contact";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 
@@ -51,6 +52,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <Education />
+      <Contact />
 
       <Footer />
     </main>
