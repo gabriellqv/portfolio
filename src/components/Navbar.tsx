@@ -44,37 +44,37 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
           <Link 
             href="#home" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'home' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'home' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Início
           </Link>
           <Link 
             href="#about" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'about' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'about' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Sobre
           </Link>
           <Link 
             href="#projects" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'projects' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'projects' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Projetos
           </Link>
           <Link 
             href="#skills" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'skills' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'skills' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Habilidades
           </Link>
           <Link 
             href="#education" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'education' ? 'bg-white/10 text-foreground' : 'hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'education' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Educação
           </Link>
           <Link 
             href="#contact" 
-            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-black/10 dark:bg-white/10 text-foreground' : 'hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-full transition-all ${activeSection === 'contact' ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground'}`}
           >
             Contato
           </Link>
@@ -82,7 +82,7 @@ const Navbar = () => {
           {mounted && (
             <button 
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-1.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
               aria-label="Alternar tema"
             >
               {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
@@ -95,7 +95,7 @@ const Navbar = () => {
           {mounted && (
             <button 
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
               aria-label="Alternar tema"
             >
               {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
@@ -125,7 +125,7 @@ const Navbar = () => {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-black/10 dark:bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground'}`}
+                className={`px-4 py-3 rounded-xl transition-all font-medium text-sm ${activeSection === item.id ? 'bg-black/5 dark:bg-white/10 text-foreground' : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground'}`}
               >
                 {item.label}
               </Link>
