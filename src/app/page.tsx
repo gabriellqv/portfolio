@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import About from "@/sections/About";
 import Skills from "@/sections/Skills";
+import Education from "@/sections/Education";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 
@@ -47,6 +48,7 @@ export default function Home() {
 
       <About />
       <Skills />
+      <Education />
 
       <Footer />
     </main>
