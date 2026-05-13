@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillsCarousel from "@/components/SkillsCarousel";
+import About from "@/sections/About";
 import { ArrowRight, Download } from "lucide-react";
 import Link from "next/link";
 
@@ -9,7 +10,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center">
       <Navbar />
       
-      <section className="flex-1 w-full flex flex-col items-center justify-center text-center px-4 pt-24 pb-20 -mt-16">
+      <section className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600 pb-2">
           Gabriel Queiroz
         </h1>
@@ -42,6 +43,8 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      <About />
 
       <Footer />
     </main>
