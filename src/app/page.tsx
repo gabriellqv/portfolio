@@ -40,7 +40,7 @@ export default function Home() {
             href="/Curriculo_Gabriel_Queiroz.pdf" 
             target="_blank"
             rel="noopener noreferrer"
-            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm border border-border/50 bg-transparent hover:bg-white/5 transition-all text-neutral-300 hover:text-white font-medium hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
+            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm border border-border/50 bg-white dark:bg-transparent hover:bg-neutral-100 dark:hover:bg-white/5 transition-all text-neutral-900 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white font-medium hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
           >
             <Download className="size-4 shrink-0" /> Baixar CV
           </a>

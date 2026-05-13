@@ -22,7 +22,7 @@ export default function Education() {
         <div className="flex flex-col md:flex-row gap-8 md:gap-12">
           {/* Lado Esquerdo: Datas */}
           <div className="md:w-1/4 pt-8">
-            <h3 className="text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.1]">
+            <h3 className="text-4xl md:text-5xl font-black text-neutral-900 dark:text-white tracking-tight leading-[1.1]">
               2018 -<br />
               2023
             </h3>
@@ -30,7 +30,7 @@ export default function Education() {
 
           {/* Lado Direito: Cartão */}
           <div className="md:w-3/4">
-            <div className="flex flex-col p-8 rounded-3xl bg-muted/5 border border-border/40 hover:bg-muted/10 transition-colors shadow-xl">
+            <div className="flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-muted/10 transition-all shadow-xl">
               
               {/* Header do Cartão */}
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
@@ -45,23 +45,23 @@ export default function Education() {
                   </div>
                   {/* Título & Subtítulo */}
                   <div className="flex flex-col justify-center">
-                    <h3 className="text-xl font-bold text-neutral-100 leading-tight mb-1">
+                    <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 leading-tight mb-1">
                       Universidade Nove de Julho
                     </h3>
-                    <p className="text-sm text-neutral-400 font-medium">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
                       Graduação • Ciência da Computação
                     </p>
                   </div>
                 </div>
                 
                 {/* Badge */}
-                <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-muted/20 text-xs font-semibold text-neutral-300 tracking-wider uppercase">
+                <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-neutral-100 dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider uppercase">
                   Concluído
                 </div>
               </div>
 
               {/* Descrição */}
-              <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+              <p className="text-neutral-700 dark:text-neutral-400 text-sm leading-relaxed mb-6">
                 Formação abrangente com foco profundo em engenharia de software, algoritmos, estrutura de dados, redes e banco de dados. Base científica e matemática que provê o raciocínio analítico necessário para desenhar arquiteturas de sistemas distribuídos e criar soluções escaláveis.
               </p>
 
@@ -83,7 +83,7 @@ export default function Education() {
                 ].map((tag) => (
                   <span 
                     key={tag} 
-                    className="px-4 py-1.5 rounded-full border border-border/20 bg-muted/10 text-xs font-medium text-neutral-300 hover:bg-muted/20 transition-colors"
+                    className="px-4 py-1.5 rounded-full border border-border/20 bg-neutral-100 dark:bg-muted/10 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-muted/20 transition-colors"
                   >
                     {tag}
                   </span>

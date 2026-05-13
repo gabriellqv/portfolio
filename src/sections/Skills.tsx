@@ -90,13 +90,13 @@ export default function Skills() {
         {skillCategories.map((category, idx) => (
           <div 
             key={idx} 
-            className={`flex flex-col p-8 rounded-3xl bg-muted/5 border border-border/40 hover:bg-muted/10 transition-colors ${idx === 4 ? 'md:col-span-2' : ''}`}
+            className={`flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-xl dark:hover:bg-muted/10 transition-all shadow-lg ${idx === 4 ? 'md:col-span-2' : ''}`}
           >
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
-              <div className="p-2 bg-neutral-800/50 rounded-lg border border-border/50">
-                <category.icon className="size-5 text-neutral-400" />
+              <div className="p-2 bg-neutral-100 dark:bg-neutral-800/50 rounded-lg border border-border/50">
+                <category.icon className="size-5 text-neutral-600 dark:text-neutral-400" />
               </div>
-              <h3 className="text-lg font-semibold text-neutral-200">
+              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
                 {category.title}
               </h3>
             </div>
@@ -114,7 +114,7 @@ export default function Skills() {
                     }}
                   >
                     <Icon size={18} style={{ color: skill.hex }} className="shrink-0" />
-                    <span className="text-sm font-medium text-neutral-200">
+                    <span className="text-sm font-medium text-neutral-900 dark:text-neutral-200">
                       {skill.name}
                     </span>
                   </div>

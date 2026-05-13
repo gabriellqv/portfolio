@@ -49,7 +49,7 @@ export default function Projects() {
         {projects.map((project, idx) => (
           <div 
             key={idx} 
-            className="flex flex-col lg:flex-row group rounded-3xl bg-muted/5 border border-border/40 hover:bg-muted/10 transition-colors shadow-xl overflow-hidden"
+            className="flex flex-col lg:flex-row group rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-muted/10 transition-colors shadow-xl overflow-hidden"
           >
             {/* Image Section */}
             <div className="w-full lg:w-1/2 min-h-[16rem] bg-[#0a0a0a] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40 flex items-center justify-center">
@@ -73,7 +73,7 @@ export default function Projects() {
             {/* Content Section */}
             <div className="w-full lg:w-1/2 p-8 md:p-10 flex flex-col">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-2xl font-bold text-neutral-100">
+                <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
                   {project.title}
                 </h3>
                 <span className="px-3 py-1 rounded-full border border-border/30 bg-muted/20 text-xs font-semibold text-neutral-300 tracking-wider">
@@ -81,7 +81,7 @@ export default function Projects() {
                 </span>
               </div>
 
-              <p className="text-neutral-400 leading-relaxed mb-8 flex-1">
+              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed mb-8 flex-1">
                 {project.description}
               </p>
 
@@ -107,7 +107,7 @@ export default function Projects() {
                 
                 <Link 
                   href={project.github} 
-                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl border border-border/50 bg-neutral-800/50 hover:bg-neutral-800 text-neutral-200 font-medium transition-colors whitespace-nowrap"
+                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl border border-border/50 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-200 font-medium transition-colors whitespace-nowrap"
                 >
                   <SiGithub className="size-4 shrink-0" />
                   <span>Repositório</span>
