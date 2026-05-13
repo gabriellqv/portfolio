@@ -99,7 +99,7 @@ export default function Projects() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mt-auto">
                 <Link 
                   href={project.deploy} 
-                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl bg-neutral-200 text-neutral-900 hover:bg-white font-semibold transition-colors whitespace-nowrap"
+                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl bg-neutral-200 text-neutral-900 hover:bg-neutral-300 font-semibold transition-colors whitespace-nowrap"
                 >
                   <ExternalLink className="size-4 shrink-0" />
                   <span>Ver Projeto</span>

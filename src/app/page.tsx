@@ -32,7 +32,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-2 w-full max-w-[300px] sm:max-w-none mx-auto">
           <Link 
             href="#projects" 
-            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
+            className="flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto"
           >
             Ver Projetos <ArrowRight className="size-4 shrink-0" />
           </Link>
