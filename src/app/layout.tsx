@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Gabriel Queiroz | Portfolio",
   description: "Desenvolvedor Full Stack",
 };
 

@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillsCarousel from "@/components/SkillsCarousel";
+import { ArrowRight, Download } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -22,6 +24,23 @@ export default function Home() {
         </p>
 
         <SkillsCarousel />
+
+        <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+          <Link 
+            href="#projects" 
+            className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95"
+          >
+            Ver Projetos <ArrowRight className="size-4" />
+          </Link>
+          <a 
+            href="/Curriculo_Gabriel_Queiroz.pdf" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm border border-border/50 bg-transparent hover:bg-white/5 transition-all text-neutral-300 hover:text-white font-medium hover:scale-[1.02] active:scale-95"
+          >
+            <Download className="size-4" /> Baixar CV
+          </a>
+        </div>
       </section>
 
       <Footer />
