@@ -1,0 +1,7 @@
+feat: implement responsive education timeline section
+
+- Build premium timeline layout with vertical tracing and hollow nodes
+- Integrate 'Bento Box' styling for academic credentials (UNINOVE)
+- Add dark-mode customized university logo inside a geometric square container
+- Map relevant hard skill tags (HTML, CSS, JS, Python, Java, C/C++, etc.) to the academic experience
+- Optimize responsive behavior for mobile and desktop breakpoints
