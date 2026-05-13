@@ -55,7 +55,7 @@ export default function Education() {
                 </div>
                 
                 {/* Badge */}
-                <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-neutral-100 dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider uppercase">
+                <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider uppercase">
                   Concluído
                 </div>
               </div>
@@ -83,7 +83,7 @@ export default function Education() {
                 ].map((tag) => (
                   <span 
                     key={tag} 
-                    className="px-4 py-1.5 rounded-full border border-border/20 bg-neutral-100 dark:bg-muted/10 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-muted/20 transition-colors"
+                    className="px-4 py-1.5 rounded-full border border-border/20 bg-white dark:bg-muted/10 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-muted/20 transition-colors"
                   >
                     {tag}
                   </span>

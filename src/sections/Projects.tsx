@@ -76,7 +76,7 @@ export default function Projects() {
                 <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
                   {project.title}
                 </h3>
-                <span className="px-3 py-1 rounded-full border border-border/30 bg-neutral-100 dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider">
+                <span className="px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider">
                   {project.status}
                 </span>
               </div>
@@ -89,7 +89,7 @@ export default function Projects() {
                 {project.techs.map(tech => (
                   <span 
                     key={tech} 
-                    className="px-3 py-1 rounded-md border border-border/20 bg-neutral-100 dark:bg-neutral-900/50 text-xs font-medium text-neutral-700 dark:text-neutral-300"
+                    className="px-3 py-1 rounded-md border border-border/20 bg-white dark:bg-neutral-900/50 text-xs font-medium text-neutral-700 dark:text-neutral-300"
                   >
                     {tech}
                   </span>
@@ -107,7 +107,7 @@ export default function Projects() {
                 
                 <Link 
                   href={project.github} 
-                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl border border-border/50 bg-neutral-100 dark:bg-neutral-800/50 hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-200 font-medium transition-colors whitespace-nowrap"
+                  className="flex justify-center items-center gap-2 py-3 px-6 sm:px-5 sm:py-2.5 rounded-xl border border-border/50 bg-white dark:bg-neutral-800/50 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-200 font-medium transition-colors whitespace-nowrap"
                 >
                   <SiGithub className="size-4 shrink-0" />
                   <span>Repositório</span>
