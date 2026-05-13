@@ -30,7 +30,7 @@ export default function Education() {
 
           {/* Lado Direito: Cartão */}
           <div className="md:w-3/4">
-            <div className="flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-muted/10 transition-all shadow-xl">
+            <div className="flex flex-col p-8 rounded-3xl bg-card dark:bg-muted/5 border border-border/40 hover:shadow-2xl dark:hover:bg-white/[0.04] transition-all shadow-xl">
               
               {/* Header do Cartão */}
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
@@ -49,7 +49,7 @@ export default function Education() {
                       Universidade Nove de Julho
                     </h3>
                     <p className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
-                      Graduação • Ciência da Computação
+                      Graduação | Ciência da Computação
                     </p>
                   </div>
                 </div>
