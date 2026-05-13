@@ -13,7 +13,7 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center">
       <Navbar />
       
-      <section className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10">
+      <section id="home" className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600 pb-2">
           Gabriel Queiroz
         </h1>
@@ -48,9 +48,9 @@ export default function Home() {
       </section>
 
       <About />
+      <Projects />
       <Skills />
       <Education />
-      <Projects />
 
       <Footer />
     </main>

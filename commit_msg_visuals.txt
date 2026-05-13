@@ -1,0 +1,6 @@
+fix: implement navbar scroll spy and reorder portfolio sections
+
+- Implement IntersectionObserver in Navbar to actively highlight the current viewed section
+- Reorder main page sections to follow standard industry hierarchy (About -> Projects -> Skills -> Education)
+- Sync Navbar link sequence to mirror the updated section rendering sequence
+- Add 'home' anchor to the hero section for scroll tracking
