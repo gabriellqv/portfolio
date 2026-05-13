@@ -104,16 +104,18 @@ export default function Skills() {
             <div className={`grid gap-3 ${idx === 4 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2'}`}>
               {category.skills.map((skill, skillIdx) => {
                 const Icon = skill.icon;
+                const isWhite = skill.hex === "#FFFFFF";
+                
                 return (
                   <div 
                     key={skillIdx} 
-                    className="flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all hover:scale-105"
-                    style={{ 
+                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all hover:scale-105 ${isWhite ? 'border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10' : ''}`}
+                    style={isWhite ? undefined : { 
                       backgroundColor: `${skill.hex}15`, 
                       borderColor: `${skill.hex}30` 
                     }}
                   >
-                    <Icon size={18} style={{ color: skill.hex }} className="shrink-0" />
+                    <Icon size={18} style={isWhite ? undefined : { color: skill.hex }} className={`shrink-0 ${isWhite ? 'text-neutral-900 dark:text-white' : ''}`} />
                     <span className="text-sm font-medium text-neutral-900 dark:text-neutral-200">
                       {skill.name}
                     </span>
