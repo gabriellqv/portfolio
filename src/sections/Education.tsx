@@ -38,7 +38,7 @@ export default function Education() {
                   {/* Logo */}
                   <div className="p-3 bg-[#050505] rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
                     <img 
-                      src="/uninove.png" 
+                      src="/uninove.webp" 
                       alt="UNINOVE Logo" 
                       className="w-full h-full object-contain"
                     />
