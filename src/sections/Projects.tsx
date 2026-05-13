@@ -76,7 +76,7 @@ export default function Projects() {
                 <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
                   {project.title}
                 </h3>
-                <span className="px-3 py-1 rounded-full border border-border/30 bg-muted/20 text-xs font-semibold text-neutral-300 tracking-wider">
+                <span className="px-3 py-1 rounded-full border border-border/30 bg-neutral-100 dark:bg-muted/20 text-xs font-semibold text-neutral-800 dark:text-neutral-300 tracking-wider">
                   {project.status}
                 </span>
               </div>
@@ -89,7 +89,7 @@ export default function Projects() {
                 {project.techs.map(tech => (
                   <span 
                     key={tech} 
-                    className="px-3 py-1 rounded-md border border-border/20 bg-neutral-900/50 text-xs font-medium text-neutral-300"
+                    className="px-3 py-1 rounded-md border border-border/20 bg-neutral-100 dark:bg-neutral-900/50 text-xs font-medium text-neutral-700 dark:text-neutral-300"
                   >
                     {tech}
                   </span>
