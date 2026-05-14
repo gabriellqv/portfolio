@@ -1,20 +1,16 @@
+"use client";
+
 import Image from "next/image";
 
 import SectionHeader from "@/components/SectionHeader";
+import { useDictionary } from "@/i18n";
 
-/**
- * Education section with a vertical timeline layout.
- * Uses an absolute-positioned line and dot on the left edge to create
- * a timeline visual, with the date range on the left and the degree
- * card on the right at larger breakpoints.
- */
 export default function Education() {
+  const { dict } = useDictionary();
+
   return (
     <section id="education" className="section-wrapper">
-      <SectionHeader
-        title="Formação Acadêmica"
-        subtitle="Base teórica sólida aliada ao pragmatismo da engenharia de software para construir soluções que resolvem problemas reais."
-      />
+      <SectionHeader title={dict.education.title} subtitle={dict.education.subtitle} />
 
       <div className="relative pl-8 md:pl-12">
         <div className="absolute left-0 top-0 bottom-0 w-px bg-black/20 dark:bg-border/40" />
@@ -35,7 +31,7 @@ export default function Education() {
                   <div className="p-3 bg-background rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
                     <Image
                       src="/uninove.webp"
-                      alt="UNINOVE Logo"
+                      alt={dict.education.universityLogoAlt}
                       width={80}
                       height={80}
                       className="object-contain"
@@ -43,41 +39,25 @@ export default function Education() {
                   </div>
                   <div className="flex flex-col justify-center">
                     <h3 className="text-xl font-bold text-foreground leading-tight mb-1">
-                      Universidade Nove de Julho
+                      {dict.education.institution}
                     </h3>
                     <p className="text-sm text-muted-foreground font-medium">
-                      Graduação | Ciência da Computação
+                      {dict.education.degree}
                     </p>
                   </div>
                 </div>
 
                 <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-foreground tracking-wider uppercase">
-                  Concluído
+                  {dict.education.completed}
                 </div>
               </div>
 
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Formação abrangente com foco profundo em engenharia de software,
-                algoritmos, estrutura de dados, redes e banco de dados. Base científica e
-                matemática que provê o raciocínio analítico necessário para desenhar
-                arquiteturas de sistemas distribuídos e criar soluções escaláveis.
+                {dict.education.description}
               </p>
 
               <div className="flex flex-wrap gap-2.5">
-                {[
-                  "HTML",
-                  "CSS",
-                  "JavaScript",
-                  "Python",
-                  "Java",
-                  "C/C++",
-                  "Banco de Dados",
-                  "Engenharia de Software",
-                  "Estrutura de Dados",
-                  "Algoritmos",
-                  "Redes",
-                  "Arquitetura de Sistemas",
-                ].map((tag) => (
+                {dict.education.tags.map((tag) => (
                   <span
                     key={tag}
                     className="px-4 py-1.5 rounded-full border border-border/20 bg-white dark:bg-muted/10 text-xs font-medium text-muted-foreground hover:bg-neutral-50 dark:hover:bg-muted/20 transition-colors"

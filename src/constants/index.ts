@@ -15,7 +15,7 @@ export const SITE = {
   githubUsername: "gabriellqv",
   linkedinUsername: "gabriellqv",
   cvFilename: "CV_Gabriel_Queiroz_Desenvolvedor_Full_Stack.pdf",
-  siteUrl: "https://gabrielqueiroz.dev",
+  siteUrl: "https://gabriellqv.vercel.app",
 } as const;
 
 /**
@@ -31,16 +31,3 @@ export const SECTION_IDS = [
   "education",
   "contact",
 ] as const;
-
-/**
- * Navigation items derived from SECTION_IDS with Portuguese labels.
- * Used by both the desktop nav bar and the mobile dropdown menu.
- */
-export const NAV_ITEMS: { id: (typeof SECTION_IDS)[number]; label: string }[] = [
-  { id: "home", label: "Início" },
-  { id: "about", label: "Sobre" },
-  { id: "projects", label: "Projetos" },
-  { id: "skills", label: "Habilidades" },
-  { id: "education", label: "Educação" },
-  { id: "contact", label: "Contato" },
-];

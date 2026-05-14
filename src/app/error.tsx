@@ -4,14 +4,8 @@ import { useEffect } from "react";
 
 import Link from "next/link";
 
-/**
- * Global error boundary rendered when an unhandled error occurs
- * during rendering or data fetching.
- *
- * Receives the error object and a reset function from Next.js.
- * Logs the error to the console for debugging and offers the user
- * a retry button (calls reset()) and a back-to-home link.
- */
+import { useDictionary } from "@/i18n";
+
 export default function Error({
   error,
   reset,
@@ -19,6 +13,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { dict } = useDictionary();
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -26,22 +22,24 @@ export default function Error({
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex flex-col items-center gap-6 text-center px-4">
-        <h1 className="text-4xl font-bold text-foreground">Algo deu errado</h1>
+        <h1 className="text-4xl font-bold text-foreground">
+          {dict.errors.somethingWrong}
+        </h1>
         <p className="text-sm text-muted-foreground max-w-md">
-          Ocorreu um erro inesperado. Tente novamente ou volte para a página inicial.
+          {dict.errors.unexpectedError}
         </p>
         <div className="flex gap-3">
           <button
             onClick={reset}
             className="px-6 py-2.5 rounded-full bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all"
           >
-            Tentar novamente
+            {dict.errors.tryAgain}
           </button>
           <Link
             href="/"
             className="px-6 py-2.5 rounded-full border border-border/50 font-medium text-sm text-foreground hover:bg-neutral-100 dark:hover:bg-white/5 transition-all"
           >
-            Voltar ao início
+            {dict.errors.backHome}
           </Link>
         </div>
       </div>

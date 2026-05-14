@@ -7,23 +7,11 @@ import { ArrowUpRight, CheckCircle2, Loader2, MapPin, Send } from "lucide-react"
 import SectionHeader from "@/components/SectionHeader";
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
+import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-/**
- * Contact section with social links and a client-side email form.
- *
- * Form submission uses a `mailto:` link strategy: on submit, the user's
- * default email client opens with a pre-filled subject and body. A 600ms
- * artificial delay provides visual feedback (sending state) before the
- * browser navigates to the mailto handler.
- *
- * After the mailto opens, the form resets with a "sent" success badge
- * that auto-clears after 4 seconds, returning to the idle state.
- *
- * Social links reuse the centralized `socials` data array shared with
- * the Footer, ensuring URL consistency across the site.
- */
 export default function Contact() {
+  const { dict } = useDictionary();
   const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle");
   const [formData, setFormData] = useState({
     name: "",
@@ -35,9 +23,9 @@ export default function Contact() {
     e.preventDefault();
     setFormState("sending");
 
-    const subject = encodeURIComponent(`Contato via Portfolio - ${formData.name}`);
+    const subject = encodeURIComponent(`${dict.contact.subjectPrefix}${formData.name}`);
     const body = encodeURIComponent(
-      `Nome: ${formData.name}\nE-mail: ${formData.email}\n\n${formData.message}`,
+      `${dict.contact.bodyNameLabel}${formData.name}\n${dict.contact.bodyEmailLabel}${formData.email}\n\n${formData.message}`,
     );
 
     setTimeout(() => {
@@ -51,10 +39,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section-wrapper">
-      <SectionHeader
-        title="Contato"
-        subtitle="Interessado em trabalhar junto ou tem uma proposta? Fique à vontade para entrar em contato, estou sempre aberto a novas oportunidades e conversas."
-      />
+      <SectionHeader title={dict.contact.title} subtitle={dict.contact.subtitle} />
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
         <div className="lg:col-span-2 flex flex-col gap-6">
@@ -64,52 +49,61 @@ export default function Contact() {
                 <MapPin className="size-5 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-foreground">Localização</p>
-                <p className="text-xs text-muted-foreground">{SITE.location}</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {dict.contact.location}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {dict.contact.locationValue}
+                </p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Disponível para trabalho remoto e oportunidades internacionais.
+              {dict.contact.locationDesc}
             </p>
           </div>
 
           <div className="flex-1 card-base p-8">
             <h3 className="text-base font-semibold text-foreground mb-5">
-              Onde me encontrar
+              {dict.contact.findMe}
             </h3>
             <div className="flex flex-col gap-3">
-              {socials.map(({ href, icon: Icon, label, handle }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noreferrer"
-                  className={cn(
-                    "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
-                    "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                  )}
-                >
-                  <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
-                    <Icon className="size-4 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{label}</p>
-                    <p className="text-xs text-muted-foreground truncate">{handle}</p>
-                  </div>
-                  <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
-                </a>
-              ))}
+              {socials.map(({ href, icon: Icon, label, handle }) => {
+                const translatedLabel = dict.socialLabels[label] ?? label;
+
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noreferrer"
+                    className={cn(
+                      "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
+                      "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    )}
+                  >
+                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
+                      <Icon className="size-4 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">
+                        {translatedLabel}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{handle}</p>
+                    </div>
+                    <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
 
         <div className="lg:col-span-3 card-base p-8 lg:p-10">
           <h3 className="text-xl font-semibold text-foreground mb-2">
-            Envie uma mensagem
+            {dict.contact.sendMessage}
           </h3>
           <p className="text-sm text-muted-foreground mb-8">
-            Preencha o formulário abaixo e seu cliente de e-mail será aberto com a
-            mensagem pronta.
+            {dict.contact.sendMessageDesc}
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -119,13 +113,13 @@ export default function Contact() {
                   htmlFor="contact-name"
                   className="text-sm font-medium text-foreground"
                 >
-                  Nome
+                  {dict.contact.name}
                 </label>
                 <input
                   id="contact-name"
                   type="text"
                   required
-                  placeholder="Seu nome"
+                  placeholder={dict.contact.namePlaceholder}
                   value={formData.name}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -142,13 +136,13 @@ export default function Contact() {
                   htmlFor="contact-email"
                   className="text-sm font-medium text-foreground"
                 >
-                  E-mail
+                  {dict.contact.email}
                 </label>
                 <input
                   id="contact-email"
                   type="email"
                   required
-                  placeholder="seu@email.com"
+                  placeholder={dict.contact.emailPlaceholder}
                   value={formData.email}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -166,13 +160,13 @@ export default function Contact() {
                 htmlFor="contact-message"
                 className="text-sm font-medium text-foreground"
               >
-                Mensagem
+                {dict.contact.message}
               </label>
               <textarea
                 id="contact-message"
                 required
                 rows={7}
-                placeholder="Descreva seu projeto ou proposta..."
+                placeholder={dict.contact.messagePlaceholder}
                 value={formData.message}
                 onChange={(e) =>
                   setFormData((prev) => ({
@@ -195,19 +189,19 @@ export default function Contact() {
             >
               {formState === "idle" && (
                 <>
-                  Enviar Mensagem
+                  {dict.contact.send}
                   <Send className="size-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                 </>
               )}
               {formState === "sending" && (
                 <>
-                  Enviando...
+                  {dict.contact.sending}
                   <Loader2 className="size-4 animate-spin" />
                 </>
               )}
               {formState === "sent" && (
                 <>
-                  Mensagem Pronta!
+                  {dict.contact.sent}
                   <CheckCircle2 className="size-4" />
                 </>
               )}
