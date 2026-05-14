@@ -5,7 +5,6 @@
  * Matches the approach used by next-themes with attribute="class".
  */
 @custom-variant dark (&:where(.dark, .dark *));
-@layer theme, base, components, utilities;
 
 /**
  * Design tokens mapped to Tailwind utility classes via @theme inline.
@@ -25,7 +24,6 @@
   --color-card-foreground: var(--card-foreground);
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
-  --animate-marquee: marquee 80s linear infinite;
 }
 
 /**
@@ -251,6 +249,10 @@
   }
 }
 
+@utility animate-marquee {
+  animation: marquee 80s linear infinite;
+}
+
 /**
  * Pause the marquee on hover so the user can inspect individual skills.
  */
@@ -260,21 +262,15 @@
 
 /**
  * Respect the user's OS-level motion reduction preference.
- * Disables all animations, transitions, and smooth scrolling when
- * `prefers-reduced-motion: reduce` is active.
+ * Only disables the marquee animation; other animations remain unaffected.
  */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  html {
+    scroll-behavior: auto;
   }
 }
 
