@@ -18,9 +18,7 @@ export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
       </h2>
       <div className="w-20 h-1 bg-foreground/20 rounded-full reveal-line-grow" />
       {subtitle && (
-        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
-          {subtitle}
-        </p>
+        <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">{subtitle}</p>
       )}
     </div>
   );

@@ -24,9 +24,7 @@ export default function Hero() {
         className="hero-stagger text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 pb-2"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
-        <span className="animate-text-shine">
-          {SITE.name}
-        </span>
+        <span className="animate-text-shine">{SITE.name}</span>
       </h1>
 
       <h2

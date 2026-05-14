@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-
 import { cookies } from "next/headers";
+
 import { AppProviders } from "@/components/AppProviders";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE } from "@/constants";

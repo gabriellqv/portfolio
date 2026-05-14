@@ -30,8 +30,8 @@ export function useHeroFadeOut<T extends HTMLElement = HTMLElement>() {
         const progress = Math.min(scrollY / (heroHeight * 0.35), 1);
 
         if (progress === 0) {
-          el.style.opacity = '1';
-          el.style.transform = '';
+          el.style.opacity = "1";
+          el.style.transform = "";
         } else {
           el.style.opacity = String(1 - progress);
           el.style.transform = `scale(${1 - progress * 0.03}) translateY(${progress * 30}px)`;

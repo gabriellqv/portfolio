@@ -1,7 +1,6 @@
 "use client";
 
 // Cache buster: 123456
-
 import { useState } from "react";
 
 import { useTheme } from "next-themes";
@@ -37,7 +36,9 @@ const Navbar = () => {
       <nav
         className={cn(
           "relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-black/15 dark:border-white/10 transition-colors",
-          isMobileMenuOpen ? "bg-background" : "bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
+          isMobileMenuOpen
+            ? "bg-background"
+            : "bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
         )}
       >
         <Link
@@ -68,9 +69,7 @@ const Navbar = () => {
             <button
               onClick={() => setLang(lang === "pt" ? "en" : "pt")}
               className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
-              aria-label={
-                lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt
-              }
+              aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
               <Globe className="size-4" />
             </button>
@@ -80,7 +79,11 @@ const Navbar = () => {
               aria-label={dict.a11y.toggleTheme}
             >
               {mounted ? (
-                theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />
+                theme === "dark" ? (
+                  <Sun className="size-4" />
+                ) : (
+                  <Moon className="size-4" />
+                )
               ) : (
                 <div className="size-4" />
               )}
@@ -93,9 +96,7 @@ const Navbar = () => {
             <button
               onClick={() => setLang(lang === "pt" ? "en" : "pt")}
               className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
-              aria-label={
-                lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt
-              }
+              aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
               <Globe className="size-5" />
             </button>
@@ -105,7 +106,11 @@ const Navbar = () => {
               aria-label={dict.a11y.toggleTheme}
             >
               {mounted ? (
-                theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />
+                theme === "dark" ? (
+                  <Sun className="size-5" />
+                ) : (
+                  <Moon className="size-5" />
+                )
               ) : (
                 <div className="size-5" />
               )}

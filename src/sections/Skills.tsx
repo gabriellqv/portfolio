@@ -83,14 +83,9 @@ function SkillCategoryCard({
               <Icon
                 size={18}
                 {...(isWhite ? {} : { style: { color: skill.hex } })}
-                className={cn(
-                  "shrink-0",
-                  isWhite && "text-neutral-900 dark:text-white",
-                )}
+                className={cn("shrink-0", isWhite && "text-neutral-900 dark:text-white")}
               />
-              <span className="text-sm font-medium text-foreground">
-                {skill.name}
-              </span>
+              <span className="text-sm font-medium text-foreground">{skill.name}</span>
             </div>
           );
         })}
