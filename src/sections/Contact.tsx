@@ -7,11 +7,13 @@ import { ArrowUpRight, CheckCircle2, Loader2, MapPin, Send } from "lucide-react"
 import SectionHeader from "@/components/SectionHeader";
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 export default function Contact() {
   const { dict } = useDictionary();
+  const ref = useScrollReveal<HTMLDivElement>();
   const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle");
   const [formData, setFormData] = useState({
     name: "",
@@ -41,9 +43,12 @@ export default function Contact() {
     <section id="contact" className="section-wrapper">
       <SectionHeader title={dict.contact.title} subtitle={dict.contact.subtitle} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
+      <div ref={ref} className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
         <div className="lg:col-span-2 flex flex-col gap-6">
-          <div className="card-base p-8">
+          <div
+            className="card-base p-8 reveal-fade-up"
+            style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-200/80 dark:bg-white/5 border border-border/30">
                 <MapPin className="size-5 text-muted-foreground" />
@@ -62,7 +67,10 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="flex-1 card-base p-8">
+          <div
+            className="flex-1 card-base p-8 reveal-fade-up"
+            style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
+          >
             <h3 className="text-base font-semibold text-foreground mb-5">
               {dict.contact.findMe}
             </h3>
@@ -98,7 +106,10 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="lg:col-span-3 card-base p-8 lg:p-10">
+        <div
+          className="lg:col-span-3 card-base p-8 lg:p-10 reveal-fade-up"
+          style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
+        >
           <h3 className="text-xl font-semibold text-foreground mb-2">
             {dict.contact.sendMessage}
           </h3>

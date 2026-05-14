@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 
 import { AppProviders } from "@/components/AppProviders";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -94,11 +95,15 @@ export const metadata: Metadata = {
  * React hydration errors when the theme class is added by a client-side
  * script before React hydrates.
  */
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const langCookie = cookieStore.get("lang")?.value;
+  const initialLang = langCookie === "en" ? "en" : "pt";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -115,7 +120,7 @@ export default function RootLayout({
 
   return (
     <html
-      lang="pt-BR"
+      lang={initialLang === "pt" ? "pt-BR" : "en"}
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
     >
@@ -125,7 +130,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <AppProviders initialLang="pt">{children}</AppProviders>
+          <AppProviders initialLang={initialLang}>{children}</AppProviders>
         </ThemeProvider>
       </body>
     </html>

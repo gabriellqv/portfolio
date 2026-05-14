@@ -2,13 +2,18 @@
 
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 
 const Footer = () => {
   const { dict } = useDictionary();
+  const ref = useScrollReveal<HTMLElement>();
 
   return (
-    <footer className="mt-auto w-full py-12 border-t border-border/40 bg-background">
+    <footer
+      ref={ref}
+      className="mt-auto w-full py-12 border-t border-border/40 bg-background reveal-fade-up"
+    >
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-4 md:flex-row">
         <div className="flex flex-col items-center md:items-start gap-1">
           <span className="text-lg font-bold tracking-tight text-foreground">
