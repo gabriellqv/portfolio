@@ -37,7 +37,7 @@ export default function SkillsCarousel() {
               className="group flex items-center gap-2 px-4 py-2 mx-2 text-muted-foreground whitespace-nowrap transition-all duration-300 cursor-default"
             >
               <Icon
-                size={16}
+                size={18}
                 className={`shrink-0 transition-colors duration-300 ${skill.color}`}
               />
               <span className="text-xs font-medium group-hover:text-foreground transition-colors duration-300">

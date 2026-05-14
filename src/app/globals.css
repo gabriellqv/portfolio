@@ -86,7 +86,6 @@
 
   html {
     hanging-punctuation: first last;
-    scroll-behavior: smooth;
   }
 
   html.dark {

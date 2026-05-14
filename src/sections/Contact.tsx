@@ -187,6 +187,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={formState !== "idle"}
+              aria-live="polite"
               className={cn(
                 "group/btn flex items-center justify-center gap-2 w-full sm:w-auto sm:self-end px-6 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none",
                 "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
