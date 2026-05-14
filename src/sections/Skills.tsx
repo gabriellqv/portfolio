@@ -36,7 +36,10 @@ export default function Skills() {
         {skillCategories.map((category, idx) => (
           <div
             key={category.title}
-            className={cn("flex flex-col p-8 card-base", idx === 4 && "md:col-span-2")}
+            className={cn(
+              "flex flex-col p-8 card-base",
+              idx === skillCategories.length - 1 && "md:col-span-2",
+            )}
           >
             <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
               <div className="p-2 bg-white dark:bg-neutral-800/50 rounded-lg border border-border/50">

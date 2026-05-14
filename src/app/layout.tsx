@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     "gabriel queiroz",
   ],
   authors: [{ name: SITE.name }],
+  alternates: {
+    canonical: SITE.siteUrl,
+  },
   openGraph: {
     title: `${SITE.name} | Portfolio`,
     description: SITE.description,
@@ -53,11 +56,20 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: `${SITE.name} | Portfolio`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE.name} | Portfolio`,
     description: SITE.description,
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,
@@ -86,6 +98,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE.name,
+    jobTitle: SITE.title,
+    description: SITE.description,
+    url: SITE.siteUrl,
+    email: SITE.email,
+    sameAs: [
+      `https://github.com/${SITE.githubUsername}`,
+      `https://www.linkedin.com/in/${SITE.linkedinUsername}/`,
+    ],
+  };
+
   return (
     <html
       lang="pt-BR"
@@ -93,6 +119,10 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
     >
       <body className="bg-background text-foreground font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-full focus:bg-foreground focus:text-background focus:text-sm focus:font-semibold"

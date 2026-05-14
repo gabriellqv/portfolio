@@ -33,7 +33,7 @@ const Navbar = () => {
   const mounted = useMounted();
 
   return (
-    <header className="fixed top-6 z-50 w-full max-w-4xl px-4 left-1/2 -translate-x-1/2">
+    <header className="fixed top-6 z-50 w-full max-w-5xl px-4 left-1/2 -translate-x-1/2">
       <nav
         className={cn(
           "relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/40 transition-colors",

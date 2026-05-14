@@ -73,32 +73,12 @@ const allSkills: SkillItem[] = [
 export function getSkillsForCarousel(): (SkillItem & {
   color: string;
 })[] {
-  const brandColors: Record<string, string> = {
-    HTML5: "group-hover:text-[#E34F26]",
-    CSS3: "group-hover:text-[#1572B6]",
-    JavaScript: "group-hover:text-[#F7DF1E]",
-    TypeScript: "group-hover:text-[#3178C6]",
-    React: "group-hover:text-[#61DAFB]",
-    "Next.js": "group-hover:text-foreground",
-    "Vue.js": "group-hover:text-[#4FC08D]",
-    Tailwind: "group-hover:text-[#06B6D4]",
-    Vite: "group-hover:text-[#646CFF]",
-    "Node.js": "group-hover:text-[#339933]",
-    NestJS: "group-hover:text-[#E0234E]",
-    PHP: "group-hover:text-[#777BB4]",
-    Laravel: "group-hover:text-[#FF2D20]",
-    PostgreSQL: "group-hover:text-[#4169E1]",
-    MySQL: "group-hover:text-[#4479A1]",
-    Redis: "group-hover:text-[#DC382D]",
-    Prisma: "group-hover:text-foreground",
-    Jest: "group-hover:text-[#C21325]",
-    Docker: "group-hover:text-[#2496ED]",
-    Git: "group-hover:text-[#F05032]",
-  };
-
   return allSkills.map((skill) => ({
     ...skill,
-    color: brandColors[skill.name] ?? "group-hover:text-foreground",
+    color:
+      skill.hex === "#FFFFFF"
+        ? "group-hover:text-foreground"
+        : `group-hover:text-[${skill.hex}]`,
   }));
 }
 
