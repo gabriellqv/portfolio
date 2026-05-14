@@ -250,7 +250,7 @@
 }
 
 @utility animate-marquee {
-  animation: marquee 80s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 /**
@@ -266,7 +266,7 @@
  */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
-    animation: none;
+    animation-duration: 90s;
   }
 
   html {
