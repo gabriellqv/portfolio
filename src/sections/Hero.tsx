@@ -27,7 +27,7 @@ export default function Hero() {
       </h2>
 
       <p className="max-w-[600px] text-sm md:text-base text-muted-foreground leading-relaxed">
-        {SITE.tagline}
+        {dict.hero.tagline}
       </p>
 
       <SkillsCarousel />

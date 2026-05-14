@@ -34,7 +34,9 @@ export default function Skills() {
               <div className="p-2 bg-white dark:bg-neutral-800/50 rounded-lg border border-border/50">
                 <category.icon className="size-5 text-foreground" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
+              <h3 className="text-lg font-semibold text-foreground">
+                {dict.skills.categoryTitles[category.title] ?? category.title}
+              </h3>
             </div>
 
             <div

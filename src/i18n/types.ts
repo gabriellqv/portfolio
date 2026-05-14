@@ -12,6 +12,7 @@ export interface Dictionary {
   hero: {
     roleMuted: string;
     roleAccent: string;
+    tagline: string;
     viewProjects: string;
     downloadCV: string;
   };
@@ -34,6 +35,7 @@ export interface Dictionary {
   skills: {
     title: string;
     subtitle: string;
+    categoryTitles: Record<string, string>;
   };
   education: {
     title: string;
@@ -42,12 +44,14 @@ export interface Dictionary {
     degree: string;
     completed: string;
     description: string;
+    universityLogoAlt: string;
     tags: string[];
   };
   contact: {
     title: string;
     subtitle: string;
     location: string;
+    locationValue: string;
     locationDesc: string;
     findMe: string;
     sendMessage: string;
@@ -80,13 +84,17 @@ export interface Dictionary {
   a11y: {
     skipToContent: string;
     toggleTheme: string;
+    switchLangEn: string;
+    switchLangPt: string;
     openMenu: string;
     closeMenu: string;
     backToTop: string;
   };
-  seo: {
+  socialLabels: Record<string, string>;
+  site: {
+    lang: string;
+    htmlLang: string;
     keywords: string[];
-    locale: string;
     description: string;
     jobTitle: string;
   };

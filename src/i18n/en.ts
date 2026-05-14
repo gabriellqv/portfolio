@@ -12,6 +12,8 @@ const en: Dictionary = {
   hero: {
     roleMuted: "",
     roleAccent: "Full Stack Developer",
+    tagline:
+      "Full Stack Developer specialized in React, Next.js, Vue.js, NestJS, and Laravel",
     viewProjects: "View Projects",
     downloadCV: "Download CV",
   },
@@ -40,6 +42,13 @@ const en: Dictionary = {
     title: "Technical Skills",
     subtitle:
       "Specialized in modern software development, using the best market technologies to build scalable, secure, and high-performance systems.",
+    categoryTitles: {
+      "Linguagens Core": "Core Languages",
+      Frontend: "Frontend",
+      Backend: "Backend",
+      "Banco de Dados": "Databases",
+      Ferramentas: "Tools",
+    },
   },
   education: {
     title: "Education",
@@ -50,6 +59,7 @@ const en: Dictionary = {
     completed: "Completed",
     description:
       "Comprehensive education with deep focus on software engineering, algorithms, data structures, networking, and databases. A scientific and mathematical foundation that provides the analytical reasoning needed to design distributed system architectures and create scalable solutions.",
+    universityLogoAlt: "UNINOVE Logo",
     tags: [
       "HTML",
       "CSS",
@@ -70,6 +80,7 @@ const en: Dictionary = {
     subtitle:
       "Interested in working together or have a proposal? Feel free to reach out, I'm always open to new opportunities and conversations.",
     location: "Location",
+    locationValue: "São Paulo, Brazil",
     locationDesc: "Available for remote work and international opportunities.",
     findMe: "Where to find me",
     sendMessage: "Send a message",
@@ -104,11 +115,18 @@ const en: Dictionary = {
   a11y: {
     skipToContent: "Skip to content",
     toggleTheme: "Toggle theme",
+    switchLangEn: "Switch to English",
+    switchLangPt: "Mudar para Português",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     backToTop: "Back to top",
   },
-  seo: {
+  socialLabels: {
+    "E-mail": "Email",
+  },
+  site: {
+    lang: "en",
+    htmlLang: "en",
     keywords: [
       "full stack developer",
       "react",
@@ -118,7 +136,6 @@ const en: Dictionary = {
       "portfolio",
       "gabriel queiroz",
     ],
-    locale: "en_US",
     description:
       "Full Stack Developer — React, Next.js, NestJS, Laravel. Professional portfolio with featured projects.",
     jobTitle: "Full Stack Developer",

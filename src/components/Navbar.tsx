@@ -67,7 +67,9 @@ const Navbar = () => {
               <button
                 onClick={() => setLang(lang === "pt" ? "en" : "pt")}
                 className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
-                aria-label={lang === "pt" ? "Switch to English" : "Mudar para Português"}
+                aria-label={
+                  lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt
+                }
               >
                 <Globe className="size-4" />
               </button>
@@ -92,7 +94,9 @@ const Navbar = () => {
               <button
                 onClick={() => setLang(lang === "pt" ? "en" : "pt")}
                 className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
-                aria-label={lang === "pt" ? "Switch to English" : "Mudar para Português"}
+                aria-label={
+                  lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt
+                }
               >
                 <Globe className="size-5" />
               </button>

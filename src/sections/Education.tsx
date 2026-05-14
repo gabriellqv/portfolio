@@ -31,7 +31,7 @@ export default function Education() {
                   <div className="p-3 bg-background rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
                     <Image
                       src="/uninove.webp"
-                      alt="UNINOVE Logo"
+                      alt={dict.education.universityLogoAlt}
                       width={80}
                       height={80}
                       className="object-contain"

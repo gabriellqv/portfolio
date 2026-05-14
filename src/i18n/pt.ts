@@ -12,6 +12,8 @@ const pt: Dictionary = {
   hero: {
     roleMuted: "Desenvolvedor ",
     roleAccent: "Full Stack",
+    tagline:
+      "Desenvolvedor Full Stack especializado em React, Next.js, Vue.js, NestJS e Laravel",
     viewProjects: "Ver Projetos",
     downloadCV: "Baixar CV",
   },
@@ -40,6 +42,13 @@ const pt: Dictionary = {
     title: "Habilidades Técnicas",
     subtitle:
       "Especializado em desenvolvimento moderno de software, utilizo as melhores tecnologias do mercado para construir sistemas escaláveis, seguros e de alta performance.",
+    categoryTitles: {
+      "Linguagens Core": "Linguagens Core",
+      Frontend: "Frontend",
+      Backend: "Backend",
+      "Banco de Dados": "Banco de Dados",
+      Ferramentas: "Ferramentas",
+    },
   },
   education: {
     title: "Formação Acadêmica",
@@ -50,6 +59,7 @@ const pt: Dictionary = {
     completed: "Concluído",
     description:
       "Formação abrangente com foco profundo em engenharia de software, algoritmos, estrutura de dados, redes e banco de dados. Base científica e matemática que provê o raciocínio analítico necessário para desenhar arquiteturas de sistemas distribuídos e criar soluções escaláveis.",
+    universityLogoAlt: "UNINOVE Logo",
     tags: [
       "HTML",
       "CSS",
@@ -70,6 +80,7 @@ const pt: Dictionary = {
     subtitle:
       "Interessado em trabalhar junto ou tem uma proposta? Fique à vontade para entrar em contato, estou sempre aberto a novas oportunidades e conversas.",
     location: "Localização",
+    locationValue: "São Paulo, Brasil",
     locationDesc: "Disponível para trabalho remoto e oportunidades internacionais.",
     findMe: "Onde me encontrar",
     sendMessage: "Envie uma mensagem",
@@ -104,11 +115,18 @@ const pt: Dictionary = {
   a11y: {
     skipToContent: "Pular para o conteúdo",
     toggleTheme: "Alternar tema",
+    switchLangEn: "Switch to English",
+    switchLangPt: "Mudar para Português",
     openMenu: "Abrir menu",
     closeMenu: "Fechar menu",
     backToTop: "Voltar ao topo",
   },
-  seo: {
+  socialLabels: {
+    "E-mail": "E-mail",
+  },
+  site: {
+    lang: "pt",
+    htmlLang: "pt-BR",
     keywords: [
       "desenvolvedor full stack",
       "react",
@@ -118,7 +136,6 @@ const pt: Dictionary = {
       "portfolio",
       "gabriel queiroz",
     ],
-    locale: "pt_BR",
     description:
       "Desenvolvedor Full Stack — React, Next.js, NestJS, Laravel. Portfolio profissional com projetos em destaque.",
     jobTitle: "Desenvolvedor Full Stack",

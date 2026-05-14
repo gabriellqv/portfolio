@@ -52,7 +52,9 @@ export default function Contact() {
                 <p className="text-sm font-semibold text-foreground">
                   {dict.contact.location}
                 </p>
-                <p className="text-xs text-muted-foreground">{SITE.location}</p>
+                <p className="text-xs text-muted-foreground">
+                  {dict.contact.locationValue}
+                </p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -65,27 +67,33 @@ export default function Contact() {
               {dict.contact.findMe}
             </h3>
             <div className="flex flex-col gap-3">
-              {socials.map(({ href, icon: Icon, label, handle }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("mailto") ? undefined : "_blank"}
-                  rel="noreferrer"
-                  className={cn(
-                    "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
-                    "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                  )}
-                >
-                  <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
-                    <Icon className="size-4 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{label}</p>
-                    <p className="text-xs text-muted-foreground truncate">{handle}</p>
-                  </div>
-                  <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
-                </a>
-              ))}
+              {socials.map(({ href, icon: Icon, label, handle }) => {
+                const translatedLabel = dict.socialLabels[label] ?? label;
+
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noreferrer"
+                    className={cn(
+                      "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
+                      "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    )}
+                  >
+                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
+                      <Icon className="size-4 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">
+                        {translatedLabel}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">{handle}</p>
+                    </div>
+                    <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
