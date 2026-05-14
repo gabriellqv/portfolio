@@ -5,6 +5,11 @@ import { ArrowUp } from "lucide-react";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { cn } from "@/lib/utils";
 
+/**
+ * Floating button that appears after scrolling past the hero section.
+ * Smoothly scrolls the viewport back to the top of the page on click.
+ * Uses opacity and translate transitions for a clean show/hide animation.
+ */
 export default function ScrollToTop() {
   const isVisible = useScrollToTop();
 

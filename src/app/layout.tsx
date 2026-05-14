@@ -6,16 +6,30 @@ import { SITE } from "@/constants";
 
 import "./globals.css";
 
+/**
+ * Sans-serif font used for body text and UI elements.
+ * Registered as a CSS variable (--font-sans) so Tailwind's font-sans
+ * utility and the @theme inline declaration pick it up automatically.
+ */
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
+/**
+ * Monospace font used for code blocks and technical labels.
+ * Registered as --font-mono for the same CSS variable integration.
+ */
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 });
 
+/**
+ * Root metadata merged into every page's <head>.
+ * OpenGraph and Twitter cards enable rich link previews when the site
+ * URL is shared on social platforms and messaging apps.
+ */
 export const metadata: Metadata = {
   title: {
     default: `${SITE.name} | Portfolio`,
@@ -52,6 +66,21 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
 };
 
+/**
+ * Root layout wrapping the entire application.
+ *
+ * Injects font variables into the <html> element, applies the base
+ * Tailwind classes (scroll-smooth, antialiased), and provides the
+ * ThemeProvider for dark/light mode switching.
+ *
+ * Includes a visually hidden skip-to-content link that becomes visible
+ * on keyboard focus, allowing screen reader and keyboard users to
+ * bypass the navigation and jump directly to the main content.
+ *
+ * suppressHydrationWarning is required by next-themes to prevent
+ * React hydration errors when the theme class is added by a client-side
+ * script before React hydrates.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -8,6 +8,14 @@ import Hero from "@/sections/Hero";
 import Projects from "@/sections/Projects";
 import Skills from "@/sections/Skills";
 
+/**
+ * Single-page home route composing all portfolio sections.
+ *
+ * The `id="main-content"` on the <main> element is the target of the
+ * skip-to-content link in the root layout, enabling keyboard accessibility.
+ * Section order here determines both the visual page flow and the logical
+ * tab order for navigation.
+ */
 export default function Home() {
   return (
     <main id="main-content" className="min-h-screen flex flex-col items-center">

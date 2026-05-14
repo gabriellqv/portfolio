@@ -1,7 +1,18 @@
 @import "tailwindcss";
+
+/**
+ * Custom dark mode variant using the `.dark` class strategy.
+ * Matches the approach used by next-themes with attribute="class".
+ */
 @custom-variant dark (&:where(.dark, .dark *));
 @layer theme, base, components, utilities;
 
+/**
+ * Design tokens mapped to Tailwind utility classes via @theme inline.
+ * Each --color-* token is bridged to a CSS custom property that changes
+ * value between :root (light mode) and .dark (dark mode), enabling
+ * semantic class names like `bg-background`, `text-foreground`, etc.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -16,6 +27,11 @@
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
+/**
+ * Light mode color values.
+ * --grid-color and --glow-color control the subtle background pattern
+ * (dot grid and radial gradient) applied to the body.
+ */
 :root {
   --background: #f5f5ee;
   --foreground: #050505;
@@ -31,6 +47,11 @@
   --glow-color: rgba(0, 0, 0, 0.03);
 }
 
+/**
+ * Dark mode color values.
+ * Grid lines and glow are subtler in dark mode to avoid visual noise
+ * against the near-black background.
+ */
 .dark {
   --background: #050505;
   --foreground: #fafafa;
@@ -45,6 +66,12 @@
   --glow-color: rgba(255, 255, 255, 0.02);
 }
 
+/**
+ * Global CSS reset and base styles.
+ * Based on modern reset best practices: border-box sizing, margin/padding
+ * reset, smooth scrolling, font rendering optimization, and isolation
+ * on the Next.js root element.
+ */
 @layer base {
   *,
   *::before,
@@ -73,6 +100,13 @@
   body {
     min-height: 100svh;
     background-color: var(--background);
+    /**
+     * Background pattern composed of three layers:
+     * 1. A radial glow gradient at the top center (ambient light effect)
+     * 2. Vertical grid lines every 24px
+     * 3. Horizontal grid lines every 24px
+     * The grid creates a subtle dot-matrix/blueprint aesthetic.
+     */
     background-image:
       radial-gradient(ellipse 60% 40% at 50% 0%, var(--glow-color), transparent),
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
@@ -88,6 +122,10 @@
     text-rendering: optimizeLegibility;
   }
 
+  /**
+   * Reset media elements to block display with constrained width.
+   * Prevents images from overflowing their containers.
+   */
   img,
   picture,
   svg,
@@ -105,6 +143,10 @@
     color: inherit;
   }
 
+  /**
+   * Reset button to a clean state since many Tailwind classes assume
+   * no default browser styling.
+   */
   button {
     cursor: pointer;
     border: none;
@@ -116,11 +158,18 @@
     text-decoration: none;
   }
 
+  /**
+   * Remove default list markers for all lists.
+   * Decorative lists use their own styling via Tailwind.
+   */
   ul,
   ol {
     list-style: none;
   }
 
+  /**
+   * Prevent long words/URLs from breaking layouts.
+   */
   p,
   h1,
   h2,
@@ -131,6 +180,10 @@
     overflow-wrap: break-word;
   }
 
+  /**
+   * Balance text wrapping for headings to avoid orphans and widows.
+   * `text-wrap: pretty` on paragraphs does the same for body text.
+   */
   h1,
   h2,
   h3,
@@ -144,16 +197,27 @@
     text-wrap: pretty;
   }
 
+  /**
+   * Create a new stacking context for Next.js root elements to
+   * prevent z-index conflicts between components.
+   */
   #root,
   #__next {
     isolation: isolate;
   }
 
+  /**
+   * Custom text selection color using the accent theme token.
+   */
   ::selection {
     background-color: var(--accent);
     color: var(--accent-foreground);
   }
 
+  /**
+   * Custom scrollbar styling for WebKit browsers.
+   * Uses theme tokens so the scrollbar adapts to light/dark mode.
+   */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -172,6 +236,12 @@
   }
 }
 
+/**
+ * Keyframes for the infinite scrolling marquee animation.
+ * Translates by -50% because the content is rendered twice as wide
+ * (two copies of the skill list), so shifting by half the total width
+ * brings the first copy's end exactly to where the second copy's start was.
+ */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -185,10 +255,18 @@
   animation: marquee 80s linear infinite;
 }
 
+/**
+ * Pause the marquee on hover so the user can inspect individual skills.
+ */
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
+/**
+ * Respect the user's OS-level motion reduction preference.
+ * Disables all animations, transitions, and smooth scrolling when
+ * `prefers-reduced-motion: reduce` is active.
+ */
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
@@ -204,10 +282,20 @@
   }
 }
 
+/**
+ * Shared card styling applied via the `card-base` utility class.
+ * Used by project cards, about cards, contact cards, and skill cards
+ * to maintain a consistent elevation, border, radius, and hover effect.
+ */
 @utility card-base {
   @apply bg-card border-border/40 rounded-3xl border shadow-xl transition-all hover:shadow-2xl dark:hover:bg-white/[0.04];
 }
 
+/**
+ * Shared section wrapper applied to every page section.
+ * Constrains width, centers content, and applies consistent vertical
+ * padding so all sections share the same horizontal rhythm.
+ */
 @utility section-wrapper {
   @apply mx-auto w-full max-w-5xl px-4 py-24;
 }

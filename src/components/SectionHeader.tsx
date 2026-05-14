@@ -1,5 +1,9 @@
 import type { SectionHeaderProps } from "@/types";
 
+/**
+ * Reusable section heading with a decorative divider and optional subtitle.
+ * Used by every page section to maintain consistent visual hierarchy.
+ */
 export default function SectionHeader({ title, subtitle }: SectionHeaderProps) {
   return (
     <div className="flex flex-col mb-16">

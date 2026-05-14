@@ -7,6 +7,16 @@ import { skillCategories } from "@/data/skills";
 import { useMounted } from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";
 
+/**
+ * Skills section displaying technologies grouped by category in a card grid.
+ *
+ * Each skill item is tinted with its brand color at low opacity, creating
+ * a subtle colored badge effect. Opacity values are slightly higher in
+ * light mode to compensate for the lighter background.
+ *
+ * Skills with a white hex color (#FFFFFF) receive a neutral gray badge
+ * style instead, since white would be invisible on the card background.
+ */
 export default function Skills() {
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
@@ -64,9 +74,7 @@ export default function Skills() {
                   >
                     <Icon
                       size={18}
-                      {...(isWhite
-                        ? {}
-                        : { style: { color: skill.hex } })}
+                      {...(isWhite ? {} : { style: { color: skill.hex } })}
                       className={cn(
                         "shrink-0",
                         isWhite && "text-neutral-900 dark:text-white",

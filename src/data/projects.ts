@@ -1,5 +1,15 @@
 import type { Project } from "@/types";
 
+/**
+ * Portfolio project entries rendered in the Projects section.
+ *
+ * @field deploy - Uses "#" as a placeholder when the project has no public URL.
+ *                 The component handles this by keeping the link non-functional.
+ * @field image - Set to an empty string for projects without screenshots (e.g.
+ *                FlowERP). The component falls back to a FolderGit2 icon and
+ *                title placeholder.
+ * @field status - Displayed as a badge. Pure display text, not used for filtering.
+ */
 export const projects: Project[] = [
   {
     title: "HydroTrack",

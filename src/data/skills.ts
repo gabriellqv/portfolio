@@ -34,6 +34,11 @@ import {
 
 import type { SkillCategory, SkillItem } from "@/types";
 
+/**
+ * Master list of all skills used by both the hero section carousel
+ * and the dedicated skills section. Both views derive their data from
+ * this single source, ensuring consistency when skills are added or removed.
+ */
 const allSkills: SkillItem[] = [
   { name: "HTML5", icon: SiHtml5, hex: "#E34F26" },
   { name: "CSS3", icon: SiCss, hex: "#1572B6" },
@@ -57,6 +62,14 @@ const allSkills: SkillItem[] = [
   { name: "Git", icon: SiGit, hex: "#F05032" },
 ];
 
+/**
+ * Builds skill data for the hero section carousel by merging the master skill
+ * list with Tailwind group-hover color utility classes.
+ *
+ * Each skill is assigned a brand-specific hover color so the icon transitions
+ * to its official brand color when the user hovers over the skill item.
+ * Skills without a defined brand color fall back to the foreground text color.
+ */
 export function getSkillsForCarousel(): (SkillItem & {
   color: string;
 })[] {
@@ -89,6 +102,13 @@ export function getSkillsForCarousel(): (SkillItem & {
   }));
 }
 
+/**
+ * Skills organized by category for the dedicated skills section.
+ * Each category renders as a card with a title, icon, and a grid of skill items.
+ *
+ * Skills with hex "#FFFFFF" receive special neutral styling (light background
+ * with dark text) because white icons would be invisible on light backgrounds.
+ */
 export const skillCategories: SkillCategory[] = [
   {
     title: "Linguagens Core",

@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+/**
+ * Custom 404 page displayed when a user navigates to a route that does
+ * not exist. Provides a clear heading, a brief explanation, and a link
+ * back to the home page.
+ */
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">

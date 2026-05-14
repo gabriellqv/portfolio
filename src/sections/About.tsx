@@ -1,5 +1,10 @@
 import SectionHeader from "@/components/SectionHeader";
 
+/**
+ * About section with two side-by-side cards introducing the developer.
+ * Covers personal identity, technical focus, professional journey, and
+ * background that shaped the approach to software engineering.
+ */
 export default function About() {
   return (
     <section id="about" className="section-wrapper">

@@ -1,3 +1,7 @@
+/**
+ * Global loading fallback rendered during page transitions and initial
+ * page generation. Displays a centered spinner with a text label.
+ */
 export default function Loading() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
