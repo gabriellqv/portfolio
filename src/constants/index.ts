@@ -15,7 +15,7 @@ export const SITE = {
   githubUsername: "gabriellqv",
   linkedinUsername: "gabriellqv",
   cvFilename: "CV_Gabriel_Queiroz_Desenvolvedor_Full_Stack.pdf",
-  siteUrl: "https://gabrielqueiroz.dev",
+  siteUrl: "https://gabriellqv.vercel.app",
 } as const;
 
 /**
