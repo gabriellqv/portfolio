@@ -5,21 +5,13 @@ import { useTheme } from "next-themes";
 import SectionHeader from "@/components/SectionHeader";
 import { skillCategories } from "@/data/skills";
 import { useMounted } from "@/hooks/useMounted";
+import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-/**
- * Skills section displaying technologies grouped by category in a card grid.
- *
- * Each skill item is tinted with its brand color at low opacity, creating
- * a subtle colored badge effect. Opacity values are slightly higher in
- * light mode to compensate for the lighter background.
- *
- * Skills with a white hex color (#FFFFFF) receive a neutral gray badge
- * style instead, since white would be invisible on the card background.
- */
 export default function Skills() {
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
+  const { dict } = useDictionary();
 
   const isLight = mounted && resolvedTheme === "light";
   const bgOpacity = isLight ? "25" : "15";
@@ -27,10 +19,7 @@ export default function Skills() {
 
   return (
     <section id="skills" className="section-wrapper">
-      <SectionHeader
-        title="Habilidades Técnicas"
-        subtitle="Especializado em desenvolvimento moderno de software, utilizo as melhores tecnologias do mercado para construir sistemas escaláveis, seguros e de alta performance."
-      />
+      <SectionHeader title={dict.skills.title} subtitle={dict.skills.subtitle} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         {skillCategories.map((category, idx) => (
@@ -51,7 +40,9 @@ export default function Skills() {
             <div
               className={cn(
                 "grid gap-3",
-                idx === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-2",
+                idx === skillCategories.length - 1
+                  ? "grid-cols-2 md:grid-cols-4"
+                  : "grid-cols-2",
               )}
             >
               {category.skills.map((skill) => {

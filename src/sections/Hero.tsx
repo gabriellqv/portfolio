@@ -1,17 +1,17 @@
+"use client";
+
 import Link from "next/link";
 
 import { ArrowRight, Download } from "lucide-react";
 
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { SITE } from "@/constants";
+import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-/**
- * Hero section with name, tagline, skill carousel, and two CTA buttons.
- * Uses a CSS gradient text effect on the main heading via bg-clip-text.
- * Links to the projects section and the downloadable CV PDF file.
- */
 export default function Hero() {
+  const { dict } = useDictionary();
+
   return (
     <section
       id="home"
@@ -22,8 +22,8 @@ export default function Hero() {
       </h1>
 
       <h2 className="text-xl md:text-3xl font-medium tracking-tight mb-4">
-        <span className="text-muted-foreground">Desenvolvedor </span>
-        <span className="text-foreground">Full Stack</span>
+        <span className="text-muted-foreground">{dict.hero.roleMuted}</span>
+        <span className="text-foreground">{dict.hero.roleAccent}</span>
       </h2>
 
       <p className="max-w-[600px] text-sm md:text-base text-muted-foreground leading-relaxed">
@@ -40,7 +40,7 @@ export default function Hero() {
             "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           )}
         >
-          Ver Projetos <ArrowRight className="size-4 shrink-0" />
+          {dict.hero.viewProjects} <ArrowRight className="size-4 shrink-0" />
         </Link>
         <a
           href={`/${SITE.cvFilename}`}
@@ -51,7 +51,7 @@ export default function Hero() {
             "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           )}
         >
-          <Download className="size-4 shrink-0" /> Baixar CV
+          <Download className="size-4 shrink-0" /> {dict.hero.downloadCV}
         </a>
       </div>
     </section>

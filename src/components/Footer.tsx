@@ -1,14 +1,12 @@
+"use client";
+
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
+import { useDictionary } from "@/i18n";
 
-/**
- * Site footer rendered as a Server Component.
- *
- * Displays the brand name, a dynamic copyright year (computed at request/build time),
- * and social media links from the centralized socials data source.
- * mailto links intentionally skip the target="_blank" attribute.
- */
 const Footer = () => {
+  const { dict } = useDictionary();
+
   return (
     <footer className="mt-auto w-full py-12 border-t border-border/40 bg-background">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-4 md:flex-row">
@@ -17,7 +15,7 @@ const Footer = () => {
             {SITE.name}
           </span>
           <span className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} {dict.footer.rights}
           </span>
         </div>
 

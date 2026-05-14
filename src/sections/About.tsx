@@ -1,44 +1,33 @@
-import SectionHeader from "@/components/SectionHeader";
+"use client";
 
-/**
- * About section with two side-by-side cards introducing the developer.
- * Covers personal identity, technical focus, professional journey, and
- * background that shaped the approach to software engineering.
- */
+import SectionHeader from "@/components/SectionHeader";
+import { useDictionary } from "@/i18n";
+
 export default function About() {
+  const { dict } = useDictionary();
+
   return (
     <section id="about" className="section-wrapper">
-      <SectionHeader title="Sobre Mim" />
+      <SectionHeader title={dict.about.title} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
         <div className="flex flex-col space-y-6 card-base p-8 lg:p-10">
-          <h3 className="text-xl font-semibold text-foreground">Quem eu sou</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            Sou um desenvolvedor Full Stack com foco em criar aplicações escaláveis e
-            interfaces modernas. Minha jornada na tecnologia é impulsionada pela busca
-            constante por excelência e resolução de problemas estruturais complexos.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Sou apaixonado por transformar regras de negócio robustas em experiências
-            fluídas para o usuário final (como no FlowERP, StockSnap e HydroTrack).
-            Trabalho de ponta a ponta utilizando React, Next.js, Node.js e Laravel, sempre
-            priorizando código limpo, arquitetura sólida (SOLID/Clean Code) e performance.
-          </p>
+          <h3 className="text-xl font-semibold text-foreground">{dict.about.whoIAm}</h3>
+          <p className="text-muted-foreground leading-relaxed">{dict.about.whoIAmP1}</p>
+          <p className="text-muted-foreground leading-relaxed">{dict.about.whoIAmP2}</p>
         </div>
 
         <div className="flex flex-col space-y-6 card-base p-8 lg:p-10">
-          <h3 className="text-xl font-semibold text-foreground">Minha Jornada</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            {dict.about.myJourney}
+          </h3>
           <p className="text-muted-foreground leading-relaxed">
-            Minha trajetória é marcada por uma fundação sólida de disciplina e
-            resiliência, construída durante meu período de serviço militar. Essa
-            experiência singular me ensinou habilidades cruciais: adaptabilidade sob
-            pressão, pensamento analítico e trabalho em equipe estruturado.
+            {dict.about.myJourneyP1}
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Hoje, como engenheiro de software, trago essa mesma maturidade e foco
-            pragmático para o ecossistema de desenvolvimento. Aplico essa visão sistêmica
-            desde a concepção e planejamento da arquitetura até o <em>deploy</em> e a
-            manutenção de aplicações de alto impacto.
+            {dict.about.myJourneyP2Start}
+            <em>deploy</em>
+            {dict.about.myJourneyP2End}
           </p>
         </div>
       </div>
