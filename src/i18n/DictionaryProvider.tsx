@@ -18,12 +18,6 @@ type DictionaryContextValue = {
 
 const DictionaryContext = createContext<DictionaryContextValue | null>(null);
 
-function getStoredLang(initialLang: Lang): Lang {
-  if (typeof window === "undefined") return initialLang;
-  const stored = localStorage.getItem(STORAGE_KEY) as Lang | null;
-  return stored ?? initialLang;
-}
-
 export function DictionaryProvider({
   children,
   initialLang,
@@ -31,13 +25,13 @@ export function DictionaryProvider({
   children: ReactNode;
   initialLang: Lang;
 }) {
-  const [lang, setLangState] = useState<Lang>(() => getStoredLang(initialLang));
+  const [lang, setLangState] = useState<Lang>(initialLang);
 
   const dict = dictionaries[lang];
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
-    localStorage.setItem(STORAGE_KEY, l);
+    document.cookie = `${STORAGE_KEY}=${l}; path=/; max-age=31536000; SameSite=Lax`;
   }, []);
 
   return (

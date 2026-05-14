@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Cache buster: 123456 */
+
 /**
  * Custom dark mode variant using the `.dark` class strategy.
  * Matches the approach used by next-themes with attribute="class".
@@ -118,6 +120,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    animation: ambientPulse 15s ease-in-out infinite;
+  }
+
+  @keyframes ambientPulse {
+    0%,
+    100% {
+      background-size: 100% 100%, 24px 24px, 24px 24px;
+    }
+    50% {
+      background-size: 120% 120%, 24px 24px, 24px 24px;
+    }
   }
 
   /**
@@ -250,7 +263,7 @@
 }
 
 @utility animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 60s linear infinite;
 }
 
 /**
@@ -258,20 +271,6 @@
  */
 .animate-marquee:hover {
   animation-play-state: paused;
-}
-
-/**
- * Respect the user's OS-level motion reduction preference.
- * Only disables the marquee animation; other animations remain unaffected.
- */
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation-duration: 90s;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 /**
@@ -291,3 +290,189 @@
 @utility section-wrapper {
   @apply mx-auto w-full max-w-5xl px-4 py-24;
 }
+
+/* ================================================================
+ * SCROLL REVEAL ANIMATIONS
+ * All animations use only transform + opacity (GPU-accelerated).
+ * Elements start hidden and transition to visible when the
+ * `.revealed` class is added via IntersectionObserver.
+ * ================================================================ */
+
+/**
+ * Fade-up reveal: element slides up 30px while fading in.
+ * Used by section cards, project cards, and footer.
+ */
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade-up.revealed,
+.revealed > .reveal-fade-up,
+.revealed .reveal-fade-up {
+  opacity: 1;
+  transform: none;
+}
+
+/**
+ * Scale-in reveal: element scales from 0.85 while fading in.
+ * Used by skill badges for a pop-in effect.
+ */
+.reveal-scale-in {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale-in.revealed,
+.revealed .reveal-scale-in {
+  opacity: 1;
+  transform: none;
+}
+
+/**
+ * Line grow: horizontal line expands from left to right.
+ * Used by the SectionHeader decorative divider.
+ */
+.reveal-line-grow {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-line-grow.revealed,
+.revealed .reveal-line-grow {
+  transform: scaleX(1);
+}
+
+/**
+ * Hero entrance sequence: elements fade-up with staggered delays.
+ * Each child uses a CSS custom property --hero-delay for its timing.
+ */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+@keyframes heroEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Navbar drop-in animation on page load.
+ */
+@keyframes navbarDrop {
+  from {
+    opacity: 0;
+    margin-top: -20px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+.animate-navbar-drop {
+  animation: navbarDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/**
+ * Mobile menu slide-in animation.
+ */
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-menu-slide {
+  transform-origin: top;
+  animation: menuSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/**
+ * Stagger delay utility system.
+ * Applied as inline CSS custom property --reveal-delay on children
+ * to create cascading reveal effects within a parent container.
+ */
+.reveal-fade-up[style*="--reveal-delay"],
+.reveal-scale-in[style*="--reveal-delay"] {
+  transition-delay: var(--reveal-delay);
+}
+
+/**
+ * Timeline dot pulse: single subtle pulse when the education
+ * timeline enters the viewport.
+ */
+.reveal-dot-pulse.revealed,
+.revealed .reveal-dot-pulse {
+  animation: dotPulse 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--foreground);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/**
+ * Text shine animation for the hero name.
+ * Creates a reflection light effect passing from left to right.
+ */
+@keyframes textShine {
+  0% {
+    background-position: 100% 50%, 0 0;
+  }
+  60% {
+    background-position: 0% 50%, 0 0;
+  }
+  100% {
+    background-position: 0% 50%, 0 0;
+  }
+}
+
+.animate-text-shine {
+  --text-base-top: #262626; /* neutral-800 (sem fade no modo claro) */
+  --text-base-bottom: #262626; /* neutral-800 */
+  --text-shine: #a3a3a3; /* neutral-400 */
+  
+  background-image: 
+    linear-gradient(
+      110deg,
+      transparent 45%,
+      var(--text-shine) 50%,
+      transparent 55%
+    ),
+    linear-gradient(to bottom, var(--text-base-top), var(--text-base-bottom));
+    
+  background-size: 300% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  animation: textShine 8s ease-in-out infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:is(.dark .animate-text-shine) {
+  --text-base-top: #737373; /* neutral-500 (mais escuro) */
+  --text-base-bottom: #d4d4d4; /* neutral-300 */
+  --text-shine: #e5e5e5; /* neutral-200 (branco menos agressivo) */
+}
+

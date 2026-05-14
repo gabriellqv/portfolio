@@ -3,28 +3,36 @@
 import Image from "next/image";
 
 import SectionHeader from "@/components/SectionHeader";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 
 export default function Education() {
   const { dict } = useDictionary();
+  const ref = useScrollReveal<HTMLDivElement>();
 
   return (
     <section id="education" className="section-wrapper">
       <SectionHeader title={dict.education.title} subtitle={dict.education.subtitle} />
 
-      <div className="relative pl-8 md:pl-12">
+      <div ref={ref} className="relative pl-8 md:pl-12">
         <div className="absolute left-0 top-0 bottom-0 w-px bg-black/20 dark:bg-border/40" />
-        <div className="absolute -left-[4.5px] top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-neutral-500 bg-background" />
+        <div className="absolute -left-[4.5px] top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-neutral-500 bg-background reveal-dot-pulse" />
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-          <div className="md:w-1/4 pt-8">
+          <div
+            className="md:w-1/4 pt-8 reveal-fade-up"
+            style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
+          >
             <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1]">
               2018 -<br />
               2023
             </h3>
           </div>
 
-          <div className="md:w-3/4">
+          <div
+            className="md:w-3/4 reveal-fade-up"
+            style={{ "--reveal-delay": "150ms" } as React.CSSProperties}
+          >
             <div className="flex flex-col p-8 card-base">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                 <div className="flex gap-4 items-center">
