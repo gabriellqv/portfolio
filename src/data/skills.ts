@@ -1,0 +1,153 @@
+import { Code2, Database, LayoutTemplate, Server, Wrench } from "lucide-react";
+import {
+  SiCss,
+  SiDocker,
+  SiExpress,
+  SiFigma,
+  SiGit,
+  SiGithubactions,
+  SiGraphql,
+  SiHtml5,
+  SiJavascript,
+  SiJest,
+  SiLaravel,
+  SiLinux,
+  SiMongodb,
+  SiMysql,
+  SiNestjs,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPhp,
+  SiPinia,
+  SiPostgresql,
+  SiPostman,
+  SiPrisma,
+  SiReact,
+  SiRedis,
+  SiTailwindcss,
+  SiTypescript,
+  SiVite,
+  SiVitest,
+  SiVuedotjs,
+  SiZod,
+} from "react-icons/si";
+
+import type { SkillCategory, SkillItem } from "@/types";
+
+/**
+ * Master list of all skills used by both the hero section carousel
+ * and the dedicated skills section. Both views derive their data from
+ * this single source, ensuring consistency when skills are added or removed.
+ */
+const allSkills: SkillItem[] = [
+  { name: "HTML5", icon: SiHtml5, hex: "#E34F26" },
+  { name: "CSS3", icon: SiCss, hex: "#1572B6" },
+  { name: "JavaScript", icon: SiJavascript, hex: "#F7DF1E" },
+  { name: "TypeScript", icon: SiTypescript, hex: "#3178C6" },
+  { name: "React", icon: SiReact, hex: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, hex: "#FFFFFF" },
+  { name: "Vue.js", icon: SiVuedotjs, hex: "#4FC08D" },
+  { name: "Tailwind", icon: SiTailwindcss, hex: "#06B6D4" },
+  { name: "Vite", icon: SiVite, hex: "#646CFF" },
+  { name: "Node.js", icon: SiNodedotjs, hex: "#339933" },
+  { name: "NestJS", icon: SiNestjs, hex: "#E0234E" },
+  { name: "PHP", icon: SiPhp, hex: "#777BB4" },
+  { name: "Laravel", icon: SiLaravel, hex: "#FF2D20" },
+  { name: "PostgreSQL", icon: SiPostgresql, hex: "#4169E1" },
+  { name: "MySQL", icon: SiMysql, hex: "#4479A1" },
+  { name: "Redis", icon: SiRedis, hex: "#DC382D" },
+  { name: "Prisma", icon: SiPrisma, hex: "#FFFFFF" },
+  { name: "Jest", icon: SiJest, hex: "#C21325" },
+  { name: "Docker", icon: SiDocker, hex: "#2496ED" },
+  { name: "Git", icon: SiGit, hex: "#F05032" },
+];
+
+/**
+ * Builds skill data for the hero section carousel by merging the master skill
+ * list with Tailwind group-hover color utility classes.
+ *
+ * Each skill is assigned a brand-specific hover color so the icon transitions
+ * to its official brand color when the user hovers over the skill item.
+ * Skills without a defined brand color fall back to the foreground text color.
+ */
+export function getSkillsForCarousel(): (SkillItem & {
+  color: string;
+})[] {
+  return allSkills.map((skill) => ({
+    ...skill,
+    color:
+      skill.hex === "#FFFFFF"
+        ? "group-hover:text-foreground"
+        : `group-hover:text-[${skill.hex}]`,
+  }));
+}
+
+/**
+ * Skills organized by category for the dedicated skills section.
+ * Each category renders as a card with a title, icon, and a grid of skill items.
+ *
+ * Skills with hex "#FFFFFF" receive special neutral styling (light background
+ * with dark text) because white icons would be invisible on light backgrounds.
+ */
+export const skillCategories: SkillCategory[] = [
+  {
+    title: "Linguagens Core",
+    icon: Code2,
+    skills: [
+      { name: "TypeScript", icon: SiTypescript, hex: "#3178C6" },
+      { name: "JavaScript", icon: SiJavascript, hex: "#F7DF1E" },
+      { name: "PHP", icon: SiPhp, hex: "#777BB4" },
+    ],
+  },
+  {
+    title: "Frontend",
+    icon: LayoutTemplate,
+    skills: [
+      { name: "React", icon: SiReact, hex: "#61DAFB" },
+      { name: "Next.js", icon: SiNextdotjs, hex: "#FFFFFF" },
+      { name: "Vue.js", icon: SiVuedotjs, hex: "#4FC08D" },
+      { name: "Pinia", icon: SiPinia, hex: "#FFE262" },
+      { name: "Tailwind CSS", icon: SiTailwindcss, hex: "#06B6D4" },
+      { name: "Vite", icon: SiVite, hex: "#646CFF" },
+      { name: "HTML", icon: SiHtml5, hex: "#E34F26" },
+      { name: "CSS", icon: SiCss, hex: "#1572B6" },
+    ],
+  },
+  {
+    title: "Backend",
+    icon: Server,
+    skills: [
+      { name: "Node.js", icon: SiNodedotjs, hex: "#339933" },
+      { name: "Express", icon: SiExpress, hex: "#FFFFFF" },
+      { name: "NestJS", icon: SiNestjs, hex: "#E0234E" },
+      { name: "Laravel", icon: SiLaravel, hex: "#FF2D20" },
+    ],
+  },
+  {
+    title: "Banco de Dados",
+    icon: Database,
+    skills: [
+      { name: "PostgreSQL", icon: SiPostgresql, hex: "#4169E1" },
+      { name: "MySQL", icon: SiMysql, hex: "#4479A1" },
+      { name: "MongoDB", icon: SiMongodb, hex: "#47A248" },
+      { name: "Redis", icon: SiRedis, hex: "#DC382D" },
+      { name: "Prisma", icon: SiPrisma, hex: "#FFFFFF" },
+    ],
+  },
+  {
+    title: "Ferramentas",
+    icon: Wrench,
+    skills: [
+      { name: "Docker", icon: SiDocker, hex: "#2496ED" },
+      { name: "Linux", icon: SiLinux, hex: "#FFFFFF" },
+      { name: "Git", icon: SiGit, hex: "#F05032" },
+      { name: "GitHub Actions", icon: SiGithubactions, hex: "#2088FF" },
+      { name: "Jest", icon: SiJest, hex: "#C21325" },
+      { name: "Vitest", icon: SiVitest, hex: "#FCC72B" },
+      { name: "Zod", icon: SiZod, hex: "#3E67B1" },
+      { name: "GraphQL", icon: SiGraphql, hex: "#E10098" },
+      { name: "Postman", icon: SiPostman, hex: "#FF6C37" },
+      { name: "Figma", icon: SiFigma, hex: "#F24E1E" },
+    ],
+  },
+];

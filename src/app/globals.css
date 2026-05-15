@@ -1,7 +1,17 @@
 @import "tailwindcss";
 
-@layer theme, base, components, utilities;
+/**
+ * Custom dark mode variant using the `.dark` class strategy.
+ * Matches the approach used by next-themes with attribute="class".
+ */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/**
+ * Design tokens mapped to Tailwind utility classes via @theme inline.
+ * Each --color-* token is bridged to a CSS custom property that changes
+ * value between :root (light mode) and .dark (dark mode), enabling
+ * semantic class names like `bg-background`, `text-foreground`, etc.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -16,7 +26,33 @@
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
+/**
+ * Light mode color values.
+ * --grid-color and --glow-color control the subtle background pattern
+ * (dot grid and radial gradient) applied to the body.
+ */
 :root {
+  --background: #f5f5ee;
+  --foreground: #050505;
+  --muted: #e5e5e5;
+  --muted-foreground: #52525b;
+  --border: #d4d4d8;
+  --accent: #3b82f6;
+  --accent-foreground: #eff6ff;
+  --card: #f5f4f0;
+  --card-foreground: #050505;
+  --radius: 0.625rem;
+  --grid-color: rgba(0, 0, 0, 0.04);
+  --glow-color: rgba(0, 0, 0, 0.05);
+  --glow-shape: ellipse 60% 40% at 50% 0%;
+}
+
+/**
+ * Dark mode color values.
+ * Grid lines and glow are subtler in dark mode to avoid visual noise
+ * against the near-black background.
+ */
+.dark {
   --background: #050505;
   --foreground: #fafafa;
   --muted: #1a1a1a;
@@ -24,11 +60,19 @@
   --border: #27272a;
   --accent: #3b82f6;
   --accent-foreground: #eff6ff;
-  --card: #111111;
+  --card: #0a0a0a;
   --card-foreground: #fafafa;
-  --radius: 0.625rem;
+  --grid-color: rgba(255, 255, 255, 0.008);
+  --glow-color: rgba(255, 255, 255, 0.065);
+  --glow-shape: ellipse 80% 50% at 50% 0%;
 }
 
+/**
+ * Global CSS reset and base styles.
+ * Based on modern reset best practices: border-box sizing, margin/padding
+ * reset, smooth scrolling, font rendering optimization, and isolation
+ * on the Next.js root element.
+ */
 @layer base {
   *,
   *::before,
@@ -43,25 +87,28 @@
 
   html {
     hanging-punctuation: first last;
+  }
+
+  html.dark {
     color-scheme: dark;
-    scroll-behavior: smooth;
+  }
+
+  html:not(.dark) {
+    color-scheme: light;
   }
 
   body {
     min-height: 100svh;
+    position: relative;
     background-color: var(--background);
+    /**
+     * Static grid pattern on the body. The ambient glow is handled by
+     * the ::before pseudo-element below for GPU-accelerated animation.
+     */
     background-image:
-      radial-gradient(
-        ellipse 60% 40% at 50% 0%,
-        rgba(255, 255, 255, 0.02),
-        transparent
-      ),
-      linear-gradient(to right, rgba(255, 255, 255, 0.008) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
-    background-size:
-      100% 100%,
-      24px 24px,
-      24px 24px;
+      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+    background-size: 24px 24px;
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -69,6 +116,36 @@
     text-rendering: optimizeLegibility;
   }
 
+  /**
+   * Ambient glow layer promoted to its own GPU compositing layer.
+   * Animates `transform: scale()` instead of `background-size` to avoid
+   * triggering expensive full-page repaints every animation cycle.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(var(--glow-shape), var(--glow-color), transparent);
+    will-change: opacity;
+    animation: ambientPulse 10s ease-in-out infinite;
+  }
+
+  @keyframes ambientPulse {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /**
+   * Reset media elements to block display with constrained width.
+   * Prevents images from overflowing their containers.
+   */
   img,
   picture,
   svg,
@@ -86,6 +163,10 @@
     color: inherit;
   }
 
+  /**
+   * Reset button to a clean state since many Tailwind classes assume
+   * no default browser styling.
+   */
   button {
     cursor: pointer;
     border: none;
@@ -97,11 +178,18 @@
     text-decoration: none;
   }
 
+  /**
+   * Remove default list markers for all lists.
+   * Decorative lists use their own styling via Tailwind.
+   */
   ul,
   ol {
     list-style: none;
   }
 
+  /**
+   * Prevent long words/URLs from breaking layouts.
+   */
   p,
   h1,
   h2,
@@ -112,6 +200,10 @@
     overflow-wrap: break-word;
   }
 
+  /**
+   * Balance text wrapping for headings to avoid orphans and widows.
+   * `text-wrap: pretty` on paragraphs does the same for body text.
+   */
   h1,
   h2,
   h3,
@@ -125,43 +217,274 @@
     text-wrap: pretty;
   }
 
+  /**
+   * Create a new stacking context for Next.js root elements to
+   * prevent z-index conflicts between components.
+   */
   #root,
   #__next {
     isolation: isolate;
   }
 
+  /**
+   * Custom text selection color using the accent theme token.
+   */
   ::selection {
     background-color: var(--accent);
     color: var(--accent-foreground);
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--background);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-foreground);
+  /**
+   * Custom scrollbar styling for WebKit browsers.
+   * Uses theme tokens so the scrollbar adapts to light/dark mode.
+   */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
 }
 
+/**
+ * Keyframes for the infinite scrolling marquee animation.
+ * Translates by -50% because the content is rendered twice as wide
+ * (two copies of the skill list), so shifting by half the total width
+ * brings the first copy's end exactly to where the second copy's start was.
+ */
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @utility animate-marquee {
-  animation: marquee 80s linear infinite;
+  animation: marquee 60s linear infinite;
 }
 
+/**
+ * Pause the marquee on hover so the user can inspect individual skills.
+ */
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/**
+ * Shared card styling applied via the `card-base` utility class.
+ * Used by project cards, about cards, contact cards, and skill cards
+ * to maintain a consistent elevation, border, radius, and hover effect.
+ */
+@utility card-base {
+  @apply bg-card border-border/40 rounded-3xl border shadow-xl transition-all hover:shadow-2xl dark:hover:bg-white/[0.04];
+}
+
+/**
+ * Shared section wrapper applied to every page section.
+ * Constrains width, centers content, and applies consistent vertical
+ * padding so all sections share the same horizontal rhythm.
+ */
+@utility section-wrapper {
+  @apply mx-auto w-full max-w-5xl px-4 py-16 md:py-24;
+}
+
+/**
+ * Shared form input styling for the contact form fields (name, email, textarea).
+ * Centralizes the border, background, focus ring, and placeholder styling
+ * so changes propagate to all inputs at once.
+ */
+@utility form-input {
+  @apply border-border/50 text-foreground focus:ring-accent/40 focus:border-accent/60 w-full rounded-xl border bg-white px-4 py-3 text-sm transition-all placeholder:text-neutral-400 focus:ring-2 focus:outline-none dark:bg-black/40 dark:placeholder:text-neutral-600;
+}
+
+/* ================================================================
+ * SCROLL REVEAL ANIMATIONS
+ * All animations use only transform + opacity (GPU-accelerated).
+ * Elements start hidden and transition to visible when the
+ * `.revealed` class is added via IntersectionObserver.
+ * ================================================================ */
+
+/**
+ * Fade-up reveal: element slides up 30px while fading in.
+ * Used by section cards, project cards, and footer.
+ */
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade-up.revealed,
+.revealed > .reveal-fade-up,
+.revealed .reveal-fade-up {
+  opacity: 1;
+  transform: none;
+}
+
+/**
+ * Scale-in reveal: element scales from 0.85 while fading in.
+ * Used by skill badges for a pop-in effect.
+ */
+.reveal-scale-in {
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale-in.revealed,
+.revealed .reveal-scale-in {
+  opacity: 1;
+  transform: none;
+}
+
+/**
+ * Line grow: horizontal line expands from left to right.
+ * Used by the SectionHeader decorative divider.
+ */
+.reveal-line-grow {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-line-grow.revealed,
+.revealed .reveal-line-grow {
+  transform: scaleX(1);
+}
+
+/**
+ * Hero entrance sequence: elements fade-up with staggered delays.
+ * Each child uses a CSS custom property --hero-delay for its timing.
+ */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+@keyframes heroEntrance {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Navbar drop-in animation on page load.
+ */
+@keyframes navbarDrop {
+  from {
+    opacity: 0;
+    margin-top: -20px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+.animate-navbar-drop {
+  animation: navbarDrop 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/**
+ * Mobile menu slide-in animation.
+ */
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-menu-slide {
+  transform-origin: top;
+  animation: menuSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/**
+ * Stagger delay utility system.
+ * Applied as inline CSS custom property --reveal-delay on children
+ * to create cascading reveal effects within a parent container.
+ */
+.reveal-fade-up[style*="--reveal-delay"],
+.reveal-scale-in[style*="--reveal-delay"] {
+  transition-delay: var(--reveal-delay);
+}
+
+/**
+ * Timeline dot pulse: single subtle pulse when the education
+ * timeline enters the viewport.
+ */
+.reveal-dot-pulse.revealed,
+.revealed .reveal-dot-pulse {
+  animation: dotPulse 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--foreground);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/**
+ * Text shine animation for the hero name.
+ * Creates a reflection light effect passing from left to right.
+ */
+@keyframes textShine {
+  0% {
+    background-position:
+      100% 50%,
+      0 0;
+  }
+  60% {
+    background-position:
+      0% 50%,
+      0 0;
+  }
+  100% {
+    background-position:
+      0% 50%,
+      0 0;
+  }
+}
+
+.animate-text-shine {
+  --text-base-top: #262626; /* neutral-800 (sem fade no modo claro) */
+  --text-base-bottom: #262626; /* neutral-800 */
+  --text-shine: #a3a3a3; /* neutral-400 */
+
+  background-image:
+    linear-gradient(110deg, transparent 45%, var(--text-shine) 50%, transparent 55%),
+    linear-gradient(to bottom, var(--text-base-top), var(--text-base-bottom));
+
+  background-size:
+    300% 100%,
+    100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  animation: textShine 8s ease-in-out infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:is(.dark .animate-text-shine) {
+  --text-base-top: #737373; /* neutral-500 (mais escuro) */
+  --text-base-bottom: #d4d4d4; /* neutral-300 */
+  --text-shine: #e5e5e5; /* neutral-200 (branco menos agressivo) */
 }
