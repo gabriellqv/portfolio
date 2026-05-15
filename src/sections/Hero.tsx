@@ -22,14 +22,14 @@ export default function Hero() {
       className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10"
     >
       <h1
-        className="hero-stagger text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 pb-2"
+        className="hero-stagger text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 pb-2"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
         <span className="animate-text-shine">{SITE.name}</span>
       </h1>
 
       <h2
-        className="hero-stagger text-xl md:text-3xl font-medium tracking-tight mb-4"
+        className="hero-stagger text-lg sm:text-xl md:text-3xl font-medium tracking-tight mb-4"
         style={{ "--hero-delay": "150ms" } as React.CSSProperties}
       >
         <span className="text-muted-foreground">{dict.hero.roleMuted}</span>

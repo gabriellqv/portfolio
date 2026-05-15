@@ -33,7 +33,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       className="reveal-fade-up flex flex-col lg:flex-row group card-base overflow-hidden"
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      <div className="w-full lg:w-1/2 min-h-[16rem] bg-card relative overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40 flex items-center justify-center">
+      <div className="w-full lg:w-1/2 min-h-[12rem] sm:min-h-[16rem] bg-card relative overflow-hidden border-b lg:border-b-0 lg:border-r border-border/40 flex items-center justify-center">
         {project.image ? (
           <Image
             src={project.image}

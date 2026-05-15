@@ -43,7 +43,7 @@
   --card-foreground: #050505;
   --radius: 0.625rem;
   --grid-color: rgba(0, 0, 0, 0.04);
-  --glow-color: rgba(0, 0, 0, 0.03);
+  --glow-color: rgba(0, 0, 0, 0.05);
 }
 
 /**
@@ -62,7 +62,7 @@
   --card: #0a0a0a;
   --card-foreground: #fafafa;
   --grid-color: rgba(255, 255, 255, 0.008);
-  --glow-color: rgba(255, 255, 255, 0.02);
+  --glow-color: rgba(255, 255, 255, 0.035);
 }
 
 /**
@@ -299,7 +299,7 @@
  * padding so all sections share the same horizontal rhythm.
  */
 @utility section-wrapper {
-  @apply mx-auto w-full max-w-5xl px-4 py-24;
+  @apply mx-auto w-full max-w-5xl px-4 py-16 md:py-24;
 }
 
 /**
