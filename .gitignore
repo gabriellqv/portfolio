@@ -22,6 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.eslintcache
+
+# os
+Thumbs.db
 
 # env
 .env
