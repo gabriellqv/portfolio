@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* Cache buster: 123456 */
-
 /**
  * Custom dark mode variant using the `.dark` class strategy.
  * Matches the approach used by next-themes with attribute="class".

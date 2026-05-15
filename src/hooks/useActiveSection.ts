@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
  *                     The first element is used as the default active section.
  * @returns The ID of the currently active section.
  */
-export function useActiveSection(sectionIds: string[]) {
+export function useActiveSection(sectionIds: readonly string[]) {
   const [activeSection, setActiveSection] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
