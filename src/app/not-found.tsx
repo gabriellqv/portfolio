@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { buttonVariants } from "@/components/Button";
 import { useDictionary } from "@/i18n";
 
 export default function NotFound() {
@@ -19,7 +20,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="px-6 py-2.5 rounded-full bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all"
+          className={buttonVariants({ variant: "primary", size: "default" })}
         >
           {dict.errors.backHome}
         </Link>

@@ -20,6 +20,8 @@ export default function SkillsCarousel() {
 
   return (
     <div
+      role="marquee"
+      aria-label="Technology skills"
       className="w-full max-w-[600px] mx-auto relative mt-8 mb-10 overflow-hidden py-4"
       style={{
         maskImage:

@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { ArrowRight, Download } from "lucide-react";
 
+import { buttonVariants } from "@/components/Button";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { SITE } from "@/constants";
 import { useHeroFadeOut } from "@/hooks/useHeroFadeOut";
@@ -56,8 +57,8 @@ export default function Hero() {
         <Link
           href="#projects"
           className={cn(
-            "flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm bg-foreground text-background font-semibold hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto",
-            "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            buttonVariants({ variant: "primary", size: "default" }),
+            "rounded-full w-full sm:w-auto",
           )}
         >
           {dict.hero.viewProjects} <ArrowRight className="size-4 shrink-0" />
@@ -67,8 +68,8 @@ export default function Hero() {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "flex justify-center items-center gap-2 px-6 py-3 sm:py-2.5 rounded-full text-sm border border-border/50 bg-white dark:bg-transparent hover:bg-neutral-100 dark:hover:bg-white/5 transition-all text-foreground hover:text-foreground font-medium hover:scale-[1.02] active:scale-95 whitespace-nowrap w-full sm:w-auto",
-            "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            buttonVariants({ variant: "secondary", size: "default" }),
+            "rounded-full w-full sm:w-auto font-medium",
           )}
         >
           <Download className="size-4 shrink-0" /> {dict.hero.downloadCV}

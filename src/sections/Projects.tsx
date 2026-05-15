@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ExternalLink, FolderGit2 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
+import { buttonVariants } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
 import { projects } from "@/data/projects";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -82,8 +83,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <Link
               href={project.deploy}
               className={cn(
-                "flex justify-center items-center gap-2 py-2 px-4 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-neutral-800 dark:hover:bg-neutral-200 hover:scale-[1.02] active:scale-95 whitespace-nowrap",
-                "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                buttonVariants({ variant: "primary", size: "sm" }),
+                "rounded-full",
               )}
             >
               <ExternalLink className="size-3.5 shrink-0" />
@@ -94,8 +95,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <Link
             href={project.github}
             className={cn(
-              "flex justify-center items-center gap-2 py-2 px-4 rounded-full border border-border/50 bg-white dark:bg-transparent hover:bg-neutral-100 dark:hover:bg-white/5 text-foreground font-medium text-sm transition-all hover:scale-[1.02] active:scale-95 whitespace-nowrap",
-              "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              buttonVariants({ variant: "secondary", size: "sm" }),
+              "rounded-full",
             )}
           >
             <SiGithub className="size-3.5 shrink-0" />
