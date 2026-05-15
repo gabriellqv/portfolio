@@ -7,40 +7,11 @@ import { ExternalLink, FolderGit2 } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
 import SectionHeader from "@/components/SectionHeader";
+import { projects } from "@/data/projects";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
-
-const projects: Project[] = [
-  {
-    title: "HydroTrack",
-    description: "",
-    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Leaflet", "Pinia"],
-    github: "https://github.com/gabriellqv/hydrotrack",
-    deploy: "#",
-    image: "/hydrotrack.webp",
-    status: "",
-  },
-  {
-    title: "FlowERP",
-    description: "",
-    techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Pinia", "TailwindCSS"],
-    github: "https://github.com/gabriellqv/flowerp",
-    deploy: "#",
-    image: "",
-    status: "",
-  },
-  {
-    title: "StockSnap",
-    description: "",
-    techs: ["Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL", "TailwindCSS"],
-    github: "https://github.com/gabriellqv/stocksnap",
-    deploy: "#",
-    image: "/stocksnap.webp",
-    status: "",
-  },
-];
 
 /**
  * Single project card with scroll-triggered fade-up animation.
@@ -107,16 +78,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-auto">
-          <Link
-            href={project.deploy}
-            className={cn(
-              "flex justify-center items-center gap-2 py-2 px-4 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-neutral-800 dark:hover:bg-neutral-200 hover:scale-[1.02] active:scale-95 whitespace-nowrap",
-              "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-            )}
-          >
-            <ExternalLink className="size-3.5 shrink-0" />
-            <span>{dict.projects.viewProject}</span>
-          </Link>
+          {project.deploy !== "#" && (
+            <Link
+              href={project.deploy}
+              className={cn(
+                "flex justify-center items-center gap-2 py-2 px-4 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-neutral-800 dark:hover:bg-neutral-200 hover:scale-[1.02] active:scale-95 whitespace-nowrap",
+                "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              )}
+            >
+              <ExternalLink className="size-3.5 shrink-0" />
+              <span>{dict.projects.viewProject}</span>
+            </Link>
+          )}
 
           <Link
             href={project.github}

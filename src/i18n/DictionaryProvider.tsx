@@ -18,6 +18,17 @@ type DictionaryContextValue = {
 
 const DictionaryContext = createContext<DictionaryContextValue | null>(null);
 
+/**
+ * Reads the saved language preference from the browser cookie.
+ * Returns the stored Lang or undefined if no valid cookie exists.
+ */
+function getSavedLang(): Lang | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${STORAGE_KEY}=([^;]*)`));
+  const value = match?.[1];
+  return value === "en" || value === "pt" ? value : undefined;
+}
+
 export function DictionaryProvider({
   children,
   initialLang,
@@ -25,7 +36,12 @@ export function DictionaryProvider({
   children: ReactNode;
   initialLang: Lang;
 }) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
+  /**
+   * Lazy initializer reads the saved cookie on mount so static pages
+   * (which always render with initialLang "pt") can restore the user's
+   * preference without an extra render cycle.
+   */
+  const [lang, setLangState] = useState<Lang>(() => getSavedLang() ?? initialLang);
 
   const dict = dictionaries[lang];
 
