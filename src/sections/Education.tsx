@@ -23,10 +23,10 @@ export default function Education() {
             className="md:w-1/4 pt-8 reveal-fade-up"
             style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
           >
-            <h3 className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1]">
+            <p className="text-4xl md:text-5xl font-black text-foreground tracking-tight leading-[1.1]">
               2018 -<br />
               2023
-            </h3>
+            </p>
           </div>
 
           <div

@@ -50,6 +50,10 @@ export const metadata: Metadata = {
   authors: [{ name: SITE.name }],
   alternates: {
     canonical: SITE.siteUrl,
+    languages: {
+      "pt-BR": SITE.siteUrl,
+      en: SITE.siteUrl,
+    },
   },
   openGraph: {
     title: `${SITE.name} | Portfolio`,
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: `${SITE.name} | Portfolio`,
@@ -71,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE.name} | Portfolio`,
     description: SITE.description,
-    images: ["/og-image.svg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
