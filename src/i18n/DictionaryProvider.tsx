@@ -32,6 +32,7 @@ export function DictionaryProvider({
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
     document.cookie = `${STORAGE_KEY}=${l}; path=/; max-age=31536000; SameSite=Lax`;
+    document.documentElement.lang = l === "pt" ? "pt-BR" : "en";
   }, []);
 
   return (
