@@ -9,13 +9,15 @@ import { useEffect, useRef } from "react";
  * Uses a negative rootMargin so the element must be well inside the
  * viewport (not just peeking in) before the animation fires.
  *
- * @param rootMargin - Shrinks the trigger zone. Default "-80px" means
- *   the element must be 80px inside the viewport edge to trigger.
+ * @param rootMargin - Shrinks the trigger zone. Default "-15%" means
+ *   the element must be 15% inside the viewport edge to trigger.
+ *   A percentage value scales with viewport height, ensuring the
+ *   animation fires correctly on both large desktops and small phones.
  * @param once - If true, unobserves after the first intersection (default: true).
  * @returns A ref to attach to the target element.
  */
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
-  rootMargin = "-300px",
+  rootMargin = "-15%",
   once = true,
 ) {
   const ref = useRef<T>(null);

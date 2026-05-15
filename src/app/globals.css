@@ -97,43 +97,50 @@
 
   body {
     min-height: 100svh;
+    position: relative;
     background-color: var(--background);
     /**
-     * Background pattern composed of three layers:
-     * 1. A radial glow gradient at the top center (ambient light effect)
-     * 2. Vertical grid lines every 24px
-     * 3. Horizontal grid lines every 24px
-     * The grid creates a subtle dot-matrix/blueprint aesthetic.
+     * Static grid pattern on the body. The ambient glow is handled by
+     * the ::before pseudo-element below for GPU-accelerated animation.
      */
     background-image:
-      radial-gradient(ellipse 60% 40% at 50% 0%, var(--glow-color), transparent),
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size:
-      100% 100%,
-      24px 24px,
-      24px 24px;
+    background-size: 24px 24px;
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /**
+   * Ambient glow layer promoted to its own GPU compositing layer.
+   * Animates `transform: scale()` instead of `background-size` to avoid
+   * triggering expensive full-page repaints every animation cycle.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(
+      ellipse 60% 40% at 50% 0%,
+      var(--glow-color),
+      transparent
+    );
+    will-change: transform;
     animation: ambientPulse 15s ease-in-out infinite;
   }
 
   @keyframes ambientPulse {
     0%,
     100% {
-      background-size:
-        100% 100%,
-        24px 24px,
-        24px 24px;
+      transform: scale(1);
     }
     50% {
-      background-size:
-        120% 120%,
-        24px 24px,
-        24px 24px;
+      transform: scale(1.2);
     }
   }
 

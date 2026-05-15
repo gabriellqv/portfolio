@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { cookies } from "next/headers";
 
 import { AppProviders } from "@/components/AppProviders";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -91,23 +90,20 @@ export const metadata: Metadata = {
  * Tailwind classes (scroll-smooth, antialiased), and provides the
  * ThemeProvider for dark/light mode switching.
  *
- * Includes a visually hidden skip-to-content link that becomes visible
- * on keyboard focus, allowing screen reader and keyboard users to
- * bypass the navigation and jump directly to the main content.
+ * Language defaults to "pt" at build time to enable static generation.
+ * The DictionaryProvider reads the saved language preference from a
+ * client-side cookie on mount, so returning visitors see their chosen
+ * language immediately after hydration.
  *
  * suppressHydrationWarning is required by next-themes to prevent
  * React hydration errors when the theme class is added by a client-side
  * script before React hydrates.
  */
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const langCookie = cookieStore.get("lang")?.value;
-  const initialLang = langCookie === "en" ? "en" : "pt";
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -124,7 +120,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={initialLang === "pt" ? "pt-BR" : "en"}
+      lang="pt-BR"
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
     >
@@ -134,7 +130,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <AppProviders initialLang={initialLang}>{children}</AppProviders>
+          <AppProviders initialLang="pt">{children}</AppProviders>
         </ThemeProvider>
       </body>
     </html>
