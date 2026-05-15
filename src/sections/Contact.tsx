@@ -4,6 +4,7 @@ import { type FormEvent, useState } from "react";
 
 import { ArrowUpRight, CheckCircle2, Loader2, MapPin, Send } from "lucide-react";
 
+import { Button } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
 import { SITE } from "@/constants";
 import { socials } from "@/data/socials";
@@ -84,6 +85,7 @@ export default function Contact() {
                     href={href}
                     target={href.startsWith("mailto") ? undefined : "_blank"}
                     rel="noreferrer"
+                    aria-label={translatedLabel}
                     className={cn(
                       "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
                       "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
@@ -138,7 +140,7 @@ export default function Contact() {
                       name: e.target.value,
                     }))
                   }
-                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-foreground placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
+                  className="form-input"
                 />
               </div>
 
@@ -161,7 +163,7 @@ export default function Contact() {
                       email: e.target.value,
                     }))
                   }
-                  className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-foreground placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all"
+                  className="form-input"
                 />
               </div>
             </div>
@@ -185,18 +187,15 @@ export default function Contact() {
                     message: e.target.value,
                   }))
                 }
-                className="w-full px-4 py-3 rounded-xl border border-border/50 bg-white dark:bg-black/40 text-sm text-foreground placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60 transition-all resize-none"
+                className="form-input resize-none"
               />
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={formState !== "idle"}
               aria-live="polite"
-              className={cn(
-                "group/btn flex items-center justify-center gap-2 w-full sm:w-auto sm:self-end px-6 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none",
-                "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-              )}
+              className="w-full sm:w-auto sm:self-end rounded-xl group/btn"
             >
               {formState === "idle" && (
                 <>
@@ -216,7 +215,7 @@ export default function Contact() {
                   <CheckCircle2 className="size-4" />
                 </>
               )}
-            </button>
+            </Button>
           </form>
         </div>
       </div>

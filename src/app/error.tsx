@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import Link from "next/link";
 
+import { Button, buttonVariants } from "@/components/Button";
 import { useDictionary } from "@/i18n";
 
 export default function Error({
@@ -29,15 +30,15 @@ export default function Error({
           {dict.errors.unexpectedError}
         </p>
         <div className="flex gap-3">
-          <button
-            onClick={reset}
-            className="px-6 py-2.5 rounded-full bg-foreground text-background font-semibold text-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all"
-          >
+          <Button onClick={reset} className="w-full sm:w-auto">
             {dict.errors.tryAgain}
-          </button>
+          </Button>
           <Link
             href="/"
-            className="px-6 py-2.5 rounded-full border border-border/50 font-medium text-sm text-foreground hover:bg-neutral-100 dark:hover:bg-white/5 transition-all"
+            className={buttonVariants({
+              variant: "secondary",
+              className: "w-full sm:w-auto",
+            })}
           >
             {dict.errors.backHome}
           </Link>

@@ -7,10 +7,11 @@ export interface SectionHeaderProps {
 }
 
 /**
- * Props interface for skill icon components from react-icons/si.
- * Accepts an optional style prop for dynamic hex color overrides.
+ * Base props accepted by all icon components (Lucide, react-icons, custom SVGs).
+ * Every icon reference throughout the app should use this type to ensure a
+ * consistent prop surface.
  */
-export interface SkillIconProps {
+export interface IconProps {
   size?: number;
   className?: string;
   style?: React.CSSProperties;
@@ -23,7 +24,7 @@ export interface SkillIconProps {
  */
 export interface SkillItem {
   name: string;
-  icon: React.ComponentType<SkillIconProps>;
+  icon: React.ComponentType<IconProps>;
   hex: string;
 }
 
@@ -32,7 +33,7 @@ export interface SkillItem {
  */
 export interface SkillCategory {
   title: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<IconProps>;
   skills: SkillItem[];
 }
 
@@ -41,7 +42,7 @@ export interface SkillCategory {
  */
 export interface SocialLink {
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<IconProps>;
   label: string;
   handle?: string;
 }

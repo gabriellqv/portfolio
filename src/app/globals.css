@@ -302,6 +302,15 @@
   @apply mx-auto w-full max-w-5xl px-4 py-24;
 }
 
+/**
+ * Shared form input styling for the contact form fields (name, email, textarea).
+ * Centralizes the border, background, focus ring, and placeholder styling
+ * so changes propagate to all inputs at once.
+ */
+@utility form-input {
+  @apply border-border/50 text-foreground focus:ring-accent/40 focus:border-accent/60 w-full rounded-xl border bg-white px-4 py-3 text-sm transition-all placeholder:text-neutral-400 focus:ring-2 focus:outline-none dark:bg-black/40 dark:placeholder:text-neutral-600;
+}
+
 /* ================================================================
  * SCROLL REVEAL ANIMATIONS
  * All animations use only transform + opacity (GPU-accelerated).
