@@ -7,6 +7,11 @@ import Link from "next/link";
 import { Button, buttonVariants } from "@/components/Button";
 import { useDictionary } from "@/i18n";
 
+/**
+ * Global error boundary for the application.
+ * Automatically catches unhandled exceptions in React Server or Client Components
+ * and renders a safe fallback UI to prevent a complete application crash.
+ */
 export default function Error({
   error,
   reset,

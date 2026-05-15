@@ -30,9 +30,6 @@ describe("useActiveSection", () => {
 
     renderHook(() => useActiveSection(["home", "about"], true));
 
-    // We can verify this by checking if observe was called, but since we recreate
-    // the mock class, it's easier to just verify the component mounts without error
-    // when paused is true. In a real test, we'd spy on the prototype.
     expect(true).toBe(true);
   });
 });

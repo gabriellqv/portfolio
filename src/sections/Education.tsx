@@ -6,6 +6,10 @@ import SectionHeader from "@/components/SectionHeader";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 
+/**
+ * Education section component.
+ * Displays academic history and degrees using a vertical timeline layout.
+ */
 export default function Education() {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();

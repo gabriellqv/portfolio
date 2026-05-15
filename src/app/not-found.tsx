@@ -5,6 +5,10 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/Button";
 import { useDictionary } from "@/i18n";
 
+/**
+ * Global 404 Not Found boundary.
+ * Renders a stylized fallback UI when a user attempts to access an undefined route.
+ */
 export default function NotFound() {
   const { dict } = useDictionary();
 

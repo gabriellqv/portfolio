@@ -30,7 +30,7 @@ const Navbar = () => {
     { id: "contact", label: dict.nav.contact },
   ] as const;
 
-  // Block body scroll when mobile menu is open
+  // Prevent background scrolling to ensure focus remains trapped within the mobile drawer
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";

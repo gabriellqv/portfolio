@@ -12,6 +12,11 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
+/**
+ * Contact section component.
+ * Renders an interactive contact form and social media links.
+ * Requires client-side hydration for form state management and submission logic.
+ */
 export default function Contact() {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();

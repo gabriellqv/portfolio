@@ -108,6 +108,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
+/**
+ * Projects section component.
+ * Maps over the portfolio projects data to render a grid of highly detailed project cards.
+ */
 export default function Projects() {
   const { dict } = useDictionary();
 

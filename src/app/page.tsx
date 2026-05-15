@@ -9,6 +9,11 @@ import Hero from "@/sections/Hero";
 import Projects from "@/sections/Projects";
 import Skills from "@/sections/Skills";
 
+/**
+ * Primary landing page of the application.
+ * Assembles all layout sections (Hero, About, Skills, etc.) into a cohesive,
+ * sequentially animated single-page experience.
+ */
 export default function Home() {
   return (
     <>
