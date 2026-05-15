@@ -54,8 +54,8 @@ function SkillCategoryCard({
         className={cn(
           "grid gap-3",
           isLast
-            ? "grid-cols-1 min-[400px]:grid-cols-2 md:grid-cols-4"
-            : "grid-cols-1 min-[400px]:grid-cols-2",
+            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
+            : "grid-cols-1 sm:grid-cols-2",
         )}
       >
         {category.skills.map((skill, skillIdx) => {

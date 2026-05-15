@@ -13,7 +13,10 @@ export default function Home() {
   return (
     <>
       <SkipToContent />
-      <main id="main-content" className="min-h-screen flex flex-col items-center">
+      <main
+        id="main-content"
+        className="min-h-screen flex flex-col items-center w-full overflow-x-clip"
+      >
         <Navbar />
         <Hero />
         <About />

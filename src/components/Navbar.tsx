@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const activeSection = useActiveSection(SECTION_IDS);
+  const activeSection = useActiveSection(SECTION_IDS, isMobileMenuOpen);
 
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
@@ -30,18 +30,44 @@ const Navbar = () => {
     { id: "contact", label: dict.nav.contact },
   ] as const;
 
+  // Block body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.classList.remove("menu-open");
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.classList.remove("menu-open");
+    };
+  }, [isMobileMenuOpen]);
+
   return (
-    <header className="fixed top-6 z-50 w-full max-w-5xl px-4 left-1/2 -translate-x-1/2 animate-navbar-drop">
+    <header
+      className={cn(
+        "fixed z-50 w-full inset-x-0 mx-auto transition-all duration-150 animate-navbar-drop",
+        isMobileMenuOpen
+          ? "top-0 px-0 max-w-none h-screen md:h-auto md:top-6 md:px-4 md:max-w-5xl"
+          : "top-6 px-4 max-w-5xl",
+      )}
+    >
       <nav
         className={cn(
-          "relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-black/15 dark:border-white/10 transition-colors",
+          "relative flex items-center justify-between transition-all duration-150",
           isMobileMenuOpen
-            ? "bg-background shadow-lg"
-            : "bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
+            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-black/10 dark:border-white/10 rounded-none md:rounded-[32px] md:border md:border-black/15 md:dark:border-white/10"
+            : "px-6 py-3.5 md:py-4 md:px-8 rounded-[32px] border border-black/15 dark:border-white/10 bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
         )}
       >
         <Link
           href="#home"
+          onClick={() => setIsMobileMenuOpen(false)}
           className="text-sm font-semibold tracking-wide text-foreground z-10"
         >
           Gabriellqv
@@ -127,22 +153,27 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-black/10 dark:border-white/10 bg-background flex flex-col gap-2 shadow-2xl md:hidden animate-menu-slide">
-            {navItems.map((item) => (
-              <Link
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={cn(
-                  "px-4 py-3 rounded-xl transition-all font-medium text-sm",
-                  activeSection === item.id
-                    ? "bg-black/5 dark:bg-white/10 text-foreground"
-                    : "text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground",
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-8 pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-white/5 shadow-2xl">
+            <div className="flex flex-col gap-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "relative flex items-center text-4xl font-black tracking-tighter transition-colors duration-300",
+                    activeSection === item.id
+                      ? "text-foreground"
+                      : "text-neutral-400 dark:text-neutral-600 hover:text-foreground",
+                  )}
+                >
+                  {activeSection === item.id && (
+                    <span className="absolute -left-5 w-2 h-2 rounded-full bg-foreground" />
+                  )}
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </nav>
