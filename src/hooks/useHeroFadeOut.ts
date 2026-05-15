@@ -18,6 +18,9 @@ export function useHeroFadeOut<T extends HTMLElement = HTMLElement>() {
     const el = ref.current;
     if (!el) return;
 
+    /** Skip scroll-driven animation when the user prefers reduced motion. */
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let ticking = false;
 
     const onScroll = () => {

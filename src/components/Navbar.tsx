@@ -1,6 +1,5 @@
 "use client";
 
-// Cache buster: 123456
 import { useState } from "react";
 
 import { useTheme } from "next-themes";
@@ -16,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const activeSection = useActiveSection([...SECTION_IDS]);
+  const activeSection = useActiveSection(SECTION_IDS);
 
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
