@@ -4,6 +4,11 @@ import SectionHeader from "@/components/SectionHeader";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 
+/**
+ * About section component.
+ * Displays professional background, career trajectory, and high-level qualifications
+ * structured within an interactive bento-box grid layout.
+ */
 export default function About() {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();

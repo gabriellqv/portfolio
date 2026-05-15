@@ -96,6 +96,11 @@ function SkillCategoryCard({
   );
 }
 
+/**
+ * Skills section component.
+ * Integrates an infinite marquee carousel and a categorized bento-box grid
+ * to showcase technical proficiencies and tooling expertise.
+ */
 export default function Skills() {
   return (
     <section id="skills" className="section-wrapper">

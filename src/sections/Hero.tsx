@@ -11,6 +11,11 @@ import { useHeroFadeOut } from "@/hooks/useHeroFadeOut";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
+/**
+ * Hero section component.
+ * Acts as the primary above-the-fold content, featuring a prominent value proposition,
+ * primary call-to-action buttons, and a scroll-triggered fade-out effect.
+ */
 export default function Hero() {
   const { dict } = useDictionary();
   const heroRef = useHeroFadeOut<HTMLElement>();

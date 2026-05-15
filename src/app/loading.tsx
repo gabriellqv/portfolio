@@ -2,6 +2,10 @@
 
 import { useDictionary } from "@/i18n";
 
+/**
+ * Global loading boundary for the application.
+ * Utilizes Next.js Suspense to display a branded loading spinner during page transitions or data fetching.
+ */
 export default function Loading() {
   const { dict } = useDictionary();
 
