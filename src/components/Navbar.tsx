@@ -36,7 +36,7 @@ const Navbar = () => {
         className={cn(
           "relative flex items-center justify-between px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-black/15 dark:border-white/10 transition-colors",
           isMobileMenuOpen
-            ? "bg-background"
+            ? "bg-background shadow-lg"
             : "bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
         )}
       >
@@ -127,7 +127,7 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-black/15 dark:border-white/10 bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200 flex flex-col gap-2 shadow-2xl md:hidden animate-menu-slide">
+          <div className="absolute top-full left-0 right-0 mt-3 p-4 rounded-3xl border border-black/10 dark:border-white/10 bg-background flex flex-col gap-2 shadow-2xl md:hidden animate-menu-slide">
             {navItems.map((item) => (
               <Link
                 key={item.id}
