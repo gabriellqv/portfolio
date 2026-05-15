@@ -42,7 +42,7 @@ export default function Hero() {
       </h2>
 
       <p
-        className="hero-stagger max-w-[600px] text-sm md:text-base text-muted-foreground leading-relaxed"
+        className="hero-stagger max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed"
         style={{ "--hero-delay": "300ms" } as React.CSSProperties}
       >
         {dict.hero.tagline}
@@ -56,7 +56,7 @@ export default function Hero() {
       </div>
 
       <div
-        className="hero-stagger flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-2 w-full max-w-[300px] sm:max-w-none mx-auto"
+        className="hero-stagger flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-2 w-full max-w-xs sm:max-w-none mx-auto"
         style={{ "--hero-delay": "600ms" } as React.CSSProperties}
       >
         <Link

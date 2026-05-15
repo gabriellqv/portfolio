@@ -20,7 +20,7 @@ export default function Education() {
 
       <div ref={ref} className="relative pl-8 md:pl-12">
         <div className="absolute left-0 top-0 bottom-0 w-px bg-black/20 dark:bg-border/40" />
-        <div className="absolute -left-[4.5px] top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-neutral-500 bg-background reveal-dot-pulse" />
+        <div className="absolute -left-1 top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-neutral-500 bg-background reveal-dot-pulse" />
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12">
           <div

@@ -22,7 +22,7 @@ export default function SkillsCarousel() {
     <div
       role="marquee"
       aria-label="Technology skills"
-      className="w-full max-w-[600px] mx-auto relative mt-8 mb-10 overflow-hidden py-4"
+      className="w-full max-w-2xl mx-auto relative mt-8 mb-10 overflow-hidden py-4"
       style={{
         maskImage:
           "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
