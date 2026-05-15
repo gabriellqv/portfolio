@@ -1,13 +1,16 @@
-import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
+
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import SkipToContent from "@/components/SkipToContent";
-import About from "@/sections/About";
-import Contact from "@/sections/Contact";
-import Education from "@/sections/Education";
 import Hero from "@/sections/Hero";
-import Projects from "@/sections/Projects";
-import Skills from "@/sections/Skills";
+
+const About = dynamic(() => import("@/sections/About"));
+const Contact = dynamic(() => import("@/sections/Contact"));
+const Education = dynamic(() => import("@/sections/Education"));
+const Projects = dynamic(() => import("@/sections/Projects"));
+const Skills = dynamic(() => import("@/sections/Skills"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 /**
  * Primary landing page of the application.
