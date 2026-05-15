@@ -48,6 +48,17 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Close mobile menu automatically when window resizes to desktop breakpoint
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMobileMenuOpen]);
+
   return (
     <header
       className={cn(
