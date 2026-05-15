@@ -13,10 +13,12 @@ import { useEffect, useState } from "react";
  *                     The first element is used as the default active section.
  * @returns The ID of the currently active section.
  */
-export function useActiveSection(sectionIds: readonly string[]) {
+export function useActiveSection(sectionIds: readonly string[], paused: boolean = false) {
   const [activeSection, setActiveSection] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
+    if (paused) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -41,7 +43,7 @@ export function useActiveSection(sectionIds: readonly string[]) {
         observer.unobserve(section);
       }
     };
-  }, [sectionIds]);
+  }, [sectionIds, paused]);
 
   return activeSection;
 }
