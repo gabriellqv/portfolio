@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
  * primary call-to-action buttons, and a scroll-triggered fade-out effect.
  */
 export default function Hero() {
-  const { dict } = useDictionary();
+  const { dict, lang } = useDictionary();
   const heroRef = useHeroFadeOut<HTMLElement>();
 
   return (
@@ -69,7 +69,7 @@ export default function Hero() {
           {dict.hero.viewProjects} <ArrowRight className="size-4 shrink-0" />
         </Link>
         <a
-          href={`/${SITE.cvFilename}`}
+          href={`/${lang === "en" ? "Gabriel_Queiroz_Full_Stack_Developer.pdf" : SITE.cvFilename}`}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(

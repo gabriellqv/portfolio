@@ -39,8 +39,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             src={project.image}
             alt={project.title}
             fill
+            priority={true}
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover object-top opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+            className="object-cover object-top group-hover:scale-105 transition-all duration-700"
           />
         ) : (
           <>
@@ -58,9 +59,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="w-full lg:w-1/2 p-8 md:p-10 flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl font-bold text-foreground">{project.title}</h3>
-          <span className="px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-foreground tracking-wider">
-            {item.status}
-          </span>
         </div>
 
         <p className="text-muted-foreground leading-relaxed mb-8 flex-1">
