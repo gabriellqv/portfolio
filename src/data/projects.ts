@@ -25,7 +25,7 @@ export const projects: Project[] = [
     techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Pinia", "TailwindCSS"],
     github: "https://github.com/gabriellqv/flowerp",
     deploy: "https://flowerp-dashboard.vercel.app/",
-    image: "",
+    image: "/flowerp.webp",
     status: "",
   },
   {
