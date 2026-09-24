@@ -113,30 +113,10 @@
   }
 
   /**
-   * Ambient glow layer promoted to its own GPU compositing layer.
-   * Animates `transform: scale()` instead of `background-size` to avoid
-   * triggering expensive full-page repaints every animation cycle.
+   * Ambient glow is now rendered by the Background component so it can
+   * follow the pointer on its own composited layer instead of being a
+   * static pseudo-element on the body.
    */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: radial-gradient(var(--glow-shape), var(--glow-color), transparent);
-    will-change: opacity;
-    animation: ambientPulse 10s ease-in-out infinite;
-  }
-
-  @keyframes ambientPulse {
-    0%,
-    100% {
-      opacity: 0.6;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
 
   /**
    * Reset media elements to block display with constrained width.

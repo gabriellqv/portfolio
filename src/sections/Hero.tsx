@@ -24,25 +24,35 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10 overflow-hidden"
     >
+      {/* Central depth glow: soft atmospheric illumination separating text from background waves */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] max-w-[90vw] h-[440px] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06)_0%,rgba(150,151,207,0.03)_45%,transparent_75%)] blur-3xl rounded-full -z-10"
+      />
+
       <h1
-        className="hero-stagger text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tighter mb-0 pb-2"
+        className="hero-stagger text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-2 pb-1"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
-        <span className="animate-text-shine">{SITE.name}</span>
+        <span className="bg-gradient-to-b from-white via-white/95 to-white/60 bg-clip-text text-transparent drop-shadow-[0_6px_35px_rgba(255,255,255,0.14)]">
+          {SITE.name}
+        </span>
       </h1>
 
       <h2
-        className="hero-stagger text-lg sm:text-xl md:text-3xl font-medium tracking-tight mb-4"
+        className="hero-stagger text-lg sm:text-2xl md:text-3xl font-medium tracking-tight mb-4"
         style={{ "--hero-delay": "150ms" } as React.CSSProperties}
       >
-        <span className="text-muted-foreground">{dict.hero.roleMuted}</span>
-        <span className="text-foreground">{dict.hero.roleAccent}</span>
+        <span className="text-zinc-400 font-normal">{dict.hero.roleMuted} </span>
+        <span className="bg-gradient-to-r from-zinc-100 to-zinc-300 bg-clip-text text-transparent font-bold">
+          {dict.hero.roleAccent}
+        </span>
       </h2>
 
       <p
-        className="hero-stagger max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed"
+        className="hero-stagger max-w-2xl text-sm sm:text-base md:text-lg text-zinc-400 leading-relaxed font-normal"
         style={{ "--hero-delay": "300ms" } as React.CSSProperties}
       >
         {dict.hero.tagline}
@@ -63,10 +73,11 @@ export default function Hero() {
           href="#projects"
           className={cn(
             buttonVariants({ variant: "primary", size: "default" }),
-            "rounded-full w-full sm:w-auto",
+            "group rounded-full w-full sm:w-auto shadow-[0_0_25px_rgba(255,255,255,0.18)] hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all",
           )}
         >
-          {dict.hero.viewProjects} <ArrowRight className="size-4 shrink-0" />
+          <span>{dict.hero.viewProjects}</span>
+          <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
         </Link>
         <a
           href={`/${lang === "en" ? "Gabriel_Queiroz_Full_Stack_Developer.pdf" : SITE.cvFilename}`}
@@ -74,10 +85,11 @@ export default function Hero() {
           rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: "secondary", size: "default" }),
-            "rounded-full w-full sm:w-auto font-medium",
+            "group rounded-full w-full sm:w-auto font-medium transition-all",
           )}
         >
-          <Download className="size-4 shrink-0" /> {dict.hero.downloadCV}
+          <Download className="size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5" />
+          <span>{dict.hero.downloadCV}</span>
         </a>
       </div>
     </section>
