@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { cn } from "@/lib/utils";
+
 interface CountUpProps {
   value: string;
   duration?: number;
@@ -9,16 +11,19 @@ interface CountUpProps {
 }
 
 /**
- * Easing function for smooth deceleration (Apple / Vercel style).
+ * Smooth quadratic ease-out deceleration.
+ * Provides a steady, visible progression for small numbers (e.g., 3, 5)
+ * and an energetic speedometer-like roll for larger numbers (e.g., 178+).
  */
-function easeOutExpo(x: number): number {
-  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+function easeOutQuad(x: number): number {
+  return 1 - (1 - x) * (1 - x);
 }
 
 /**
  * Parses numeric value, prefix, and suffix.
- * Examples: "3+" -> { prefix: "", target: 3, suffix: "+" }
- *           "116+" -> { prefix: "", target: 116, suffix: "+" }
+ * Examples: "3"    -> { prefix: "", target: 3, suffix: "" }
+ *           "5"    -> { prefix: "", target: 5, suffix: "" }
+ *           "178+" -> { prefix: "", target: 178, suffix: "+" }
  *           "100%" -> { prefix: "", target: 100, suffix: "%" }
  */
 function parseValue(value: string) {
@@ -27,83 +32,114 @@ function parseValue(value: string) {
     return { prefix: "", target: NaN, suffix: value };
   }
   return {
-    prefix: match[1] || "",
+    prefix: match[1] ?? "",
     target: parseInt(match[2] ?? "0", 10),
-    suffix: match[3] || "",
+    suffix: match[3] ?? "",
   };
 }
 
-export default function CountUp({ value, duration = 1800, className }: CountUpProps) {
+export default function CountUp({ value, duration = 1600, className }: CountUpProps) {
   const { prefix, target, suffix } = parseValue(value);
   const ref = useRef<HTMLSpanElement>(null);
+  const isAnimatingRef = useRef(false);
   const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (isNaN(target)) return;
-
     const element = ref.current;
-    if (!element) return;
+    if (!element || isNaN(target)) return;
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let animationFrameId: number | undefined;
+    let delayTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
-    if (prefersReducedMotion) {
+    const startAnimation = () => {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+
+      const startTime = performance.now();
+
+      const step = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeOutQuad(progress);
+        const nextValue = Math.round(easedProgress * target);
+
+        if (element) {
+          element.textContent = `${prefix}${nextValue}${suffix}`;
+        }
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(step);
+        } else {
+          isAnimatingRef.current = false;
+          if (element) {
+            element.textContent = `${prefix}${target}${suffix}`;
+          }
+        }
+      };
+
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    // If IntersectionObserver is not available in environment, show target
+    if (typeof IntersectionObserver === "undefined") {
       element.textContent = `${prefix}${target}${suffix}`;
       return;
     }
 
-    // Set initial 0 before viewport entrance
+    // Set initial 0 before entering view
     if (!hasAnimatedRef.current) {
       element.textContent = `${prefix}0${suffix}`;
     }
 
-    let animationFrameId: number;
-
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        if (entry && entry.isIntersecting && !hasAnimatedRef.current) {
-          hasAnimatedRef.current = true;
-          observer.disconnect();
+        if (!entry) return;
 
-          const startTime = performance.now();
-
-          const step = (now: number) => {
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easedProgress = easeOutExpo(progress);
-            const nextValue = Math.round(easedProgress * target);
-
-            if (element) {
-              element.textContent = `${prefix}${nextValue}${suffix}`;
-            }
-
-            if (progress < 1) {
-              animationFrameId = requestAnimationFrame(step);
-            } else if (element) {
-              element.textContent = `${prefix}${target}${suffix}`;
-            }
-          };
-
-          animationFrameId = requestAnimationFrame(step);
+        if (entry.isIntersecting) {
+          if (!hasAnimatedRef.current) {
+            hasAnimatedRef.current = true;
+            // Short delay so the user perceives the count starting from 0
+            // and syncs gracefully with the card scroll reveal transition
+            delayTimeoutId = setTimeout(startAnimation, 120);
+          }
+        } else {
+          // Reset when scrolled out of view so user can re-trigger on return
+          hasAnimatedRef.current = false;
+          isAnimatingRef.current = false;
+          if (animationFrameId !== undefined) {
+            cancelAnimationFrame(animationFrameId);
+          }
+          if (delayTimeoutId !== undefined) {
+            clearTimeout(delayTimeoutId);
+          }
+          if (element) {
+            element.textContent = `${prefix}0${suffix}`;
+          }
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -30px 0px" },
+      { threshold: 0.1, rootMargin: "0px" },
     );
 
     observer.observe(element);
 
     return () => {
       observer.disconnect();
-      if (animationFrameId) {
+      if (delayTimeoutId !== undefined) {
+        clearTimeout(delayTimeoutId);
+      }
+      if (animationFrameId !== undefined) {
         cancelAnimationFrame(animationFrameId);
       }
     };
   }, [prefix, target, suffix, duration]);
 
   return (
-    <span ref={ref} className={className} aria-label={value}>
+    <span
+      ref={ref}
+      className={cn("tabular-nums inline-block", className)}
+      aria-label={value}
+    >
       {value}
     </span>
   );
