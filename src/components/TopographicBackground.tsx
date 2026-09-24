@@ -16,7 +16,6 @@ varying vec2 v_uv;
 
 void main() {
     v_uv = (a_position + 1.0) * 0.5;
-    // Align coordinates so (0,0) is top-left
     v_uv.y = 1.0 - v_uv.y;
     gl_Position = vec4(a_position, 0.0, 1.0);
 }
@@ -34,55 +33,42 @@ uniform float u_keycap_grid;
 uniform float u_glow_intensity;
 uniform float u_speed;
 uniform float u_density;
-uniform int u_color_palette;
+uniform float u_color_palette;
 uniform float u_dark_mode;
 
-// Simplex noise by Stefan Gustavson
-vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-
-float snoise(vec2 v) {
-  const vec4 C = vec4(0.211324865405187,
-                      0.366025403784439,
-                     -0.577350269189626,
-                      0.024390243902439);
-  vec2 i  = floor(v + dot(v, C.yy) );
-  vec2 x0 = v -   i + dot(i, C.xx);
-  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-  vec4 x12 = x0.xyxy + C.xxzz;
-  x12.xy -= i1;
-  i = mod289(i);
-  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
-        + i.x + vec3(0.0, i1.x, 1.0 ));
-  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-  m = m*m;
-  m = m*m;
-  vec3 x = 2.0 * fract(p * C.www) - 1.0;
-  vec3 h = abs(x) - 0.5;
-  vec3 ox = floor(x + 0.5);
-  vec3 a0 = x - ox;
-  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
-  vec3 g;
-  g.x  = a0.x  * x0.x  + h.x  * x0.y;
-  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-  return 130.0 * dot(m, g);
+// Pseudo-random hash
+float hash(vec2 p) {
+    p = fract(p * vec2(234.34, 435.345));
+    p += dot(p, p + 34.23);
+    return fract(p.x * p.y);
 }
 
-// 4-octave Fractional Brownian Motion for natural topographic relief
+// 2D Value Noise
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(
+        mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
+        mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+        u.y
+    );
+}
+
+// Multi-octave FBM for smooth natural topographic relief
 float fbm(vec2 p) {
-    float total = 0.0;
-    float amp = 0.54;
-    float freq = 1.0;
-    for (int i = 0; i < 4; i++) {
-        total += snoise(p * freq) * amp;
-        freq *= 2.04;
-        amp *= 0.48;
+    float v = 0.0;
+    float a = 0.5;
+    mat2 r = mat2(0.80, 0.60, -0.60, 0.80);
+    for (int i = 0; i < 5; i++) {
+        v += a * noise(p);
+        p = r * p * 2.02 + vec2(17.3, 31.7);
+        a *= 0.5;
     }
-    return total;
+    return v;
 }
 
-// Exact RGB spectrum matching the topographic backlit mechanical keyboard
+// Exact RGB spectrum matching the topographic mechanical keyboard image
 vec3 getKeyboardRGB(float t) {
     t = clamp(t, 0.0, 1.0);
     vec3 cOrange  = vec3(1.0, 0.32, 0.02);  // Fiery Orange
@@ -120,21 +106,20 @@ vec3 getSunset(float t) {
 }
 
 void main() {
-    vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
+    vec2 aspect = vec2(u_resolution.x / max(u_resolution.y, 1.0), 1.0);
     vec2 st = (v_uv - 0.5) * aspect;
     
-    // Organic slow drift over time
+    // Slow organic drift
     float time = u_time * u_speed;
-    vec2 drift = vec2(sin(time * 0.12) * 0.25, cos(time * 0.10) * 0.25);
+    vec2 drift = vec2(sin(time * 0.15) * 0.25, cos(time * 0.12) * 0.25);
     
-    // Topographic space
-    vec2 p = st * (u_density * 2.3) + drift;
+    vec2 p = st * (u_density * 2.2) + drift;
     
-    // Interactive mouse distortion & ripples
+    // Interactive mouse distortion & ripple
     if (u_mouse_active > 0.0) {
         vec2 mouseSt = (u_mouse - 0.5) * aspect;
         float dMouse = length(st - mouseSt);
-        float mouseWave = exp(-dMouse * 3.2) * sin(dMouse * 16.0 - time * 2.5);
+        float mouseWave = exp(-dMouse * 3.5) * sin(dMouse * 16.0 - time * 2.5);
         p += normalize(st - mouseSt + 0.0001) * mouseWave * 0.25 * u_mouse_active;
     }
     
@@ -142,25 +127,25 @@ void main() {
     float elevation = fbm(p);
     
     // Topographic contour lines
-    float numLevels = 17.0;
+    float numLevels = 18.0;
     float level = elevation * numLevels;
     float fracLevel = fract(level);
     float distToLine = abs(fracLevel - 0.5);
     
-    // Crisp contour line profile
+    // Crisp contour line
     float lineThickness = 0.048;
-    float line = smoothstep(lineThickness, 0.0, distToLine);
+    float line = 1.0 - smoothstep(0.0, lineThickness, distToLine);
     
     // Diffused neon glow emanating from the contour lines
-    float glow = exp(-distToLine * 13.0) * (0.65 * u_glow_intensity);
+    float glow = exp(-distToLine * 12.0) * (0.65 * u_glow_intensity);
     
-    // Horizontal RGB spectrum with subtle organic curvature
+    // Horizontal RGB color spectrum based on keyboard x
     float colorCoord = v_uv.x + sin(v_uv.y * 3.14159 + time * 0.2) * 0.05;
     vec3 lineColor;
-    if (u_color_palette == 1) {
-        lineColor = getCyberCyan(colorCoord);
-    } else if (u_color_palette == 2) {
+    if (u_color_palette > 1.5) {
         lineColor = getSunset(colorCoord);
+    } else if (u_color_palette > 0.5) {
+        lineColor = getCyberCyan(colorCoord);
     } else {
         lineColor = getKeyboardRGB(colorCoord);
     }
@@ -169,7 +154,6 @@ void main() {
     float keycapMask = 1.0;
     float keycapBezel = 0.0;
     if (u_keycap_grid > 0.01) {
-        // Standard 65% keyboard ratio: ~15 columns by 5 rows
         vec2 keyUV = v_uv * vec2(15.0, 5.5);
         float row = floor(keyUV.y);
         float stagger = mod(row, 2.0) == 1.0 ? 0.35 : 0.0;
@@ -177,11 +161,9 @@ void main() {
         
         vec2 cell = fract(keyUV) - 0.5;
         vec2 d = abs(cell) - vec2(0.42, 0.40);
-        float distBox = length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - 0.04;
+        float distBox = length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - 0.04;
         
-        // Faint keycap border highlight
-        keycapBezel = smoothstep(0.025, 0.0, abs(distBox)) * 0.18 * u_keycap_grid;
-        // Key gap slight depth
+        keycapBezel = (1.0 - smoothstep(0.0, 0.025, abs(distBox))) * 0.18 * u_keycap_grid;
         float keyGap = smoothstep(0.0, 0.04, distBox);
         keycapMask = mix(1.0, 0.78, keyGap * u_keycap_grid);
     }
@@ -226,11 +208,6 @@ void main() {
 }
 `;
 
-/**
- * TopographicBackground component
- * Recreates the exact RGB backlit topographic mechanical keyboard effect as a 60fps
- * full-viewport responsive background with interactive lighting and controls.
- */
 interface UniformLocations {
   u_resolution: WebGLUniformLocation | null;
   u_time: WebGLUniformLocation | null;
@@ -244,8 +221,8 @@ interface UniformLocations {
   u_dark_mode: WebGLUniformLocation | null;
 }
 
-// 2D Canvas Fallback in case WebGL is unavailable
-function initCanvas2DFallback(canvas: HTMLCanvasElement, getIsDarkMode: () => number) {
+// 2D Canvas Fallback
+function startCanvas2DFallback(canvas: HTMLCanvasElement, getIsDarkMode: () => number) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return () => {};
 
@@ -260,14 +237,13 @@ function initCanvas2DFallback(canvas: HTMLCanvasElement, getIsDarkMode: () => nu
   window.addEventListener("resize", resize);
 
   const draw = () => {
-    t += 0.005;
+    t += 0.006;
     const w = canvas.width;
     const h = canvas.height;
 
     ctx.fillStyle = getIsDarkMode() > 0.5 ? "#08080a" : "#f8f8f6";
     ctx.fillRect(0, 0, w, h);
 
-    // Rainbow horizontal gradient matching keyboard
     const grad = ctx.createLinearGradient(0, 0, w, 0);
     grad.addColorStop(0.0, "#ff4500");
     grad.addColorStop(0.2, "#ffb300");
@@ -281,7 +257,7 @@ function initCanvas2DFallback(canvas: HTMLCanvasElement, getIsDarkMode: () => nu
     ctx.shadowColor = "#00e5ff";
     ctx.shadowBlur = 6;
 
-    const numLines = 16;
+    const numLines = 18;
     for (let i = 0; i < numLines; i++) {
       ctx.beginPath();
       const yOffset = (h / numLines) * i;
@@ -308,10 +284,12 @@ function initCanvas2DFallback(canvas: HTMLCanvasElement, getIsDarkMode: () => nu
 
 export default function TopographicBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const fallbackCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const { theme, resolvedTheme } = useTheme();
   const isMounted = useMounted();
 
   // Background visual configuration
+  const [useFallback2D, setUseFallback2D] = useState<boolean>(false);
   const [keycapGrid, setKeycapGrid] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [colorPalette, setColorPalette] = useState<number>(0); // 0: Keyboard RGB, 1: Cyber Cyan, 2: Sunset
@@ -340,9 +318,9 @@ export default function TopographicBackground() {
     mouse: { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5, active: 0 },
     animationFrameId: 0,
     isPlaying: true,
-    keycapGrid: 0.7,
+    keycapGrid: 0.75,
     glowIntensity: 1.0,
-    colorPalette: 0,
+    colorPalette: 0.0,
     isDarkMode: 1.0,
   });
 
@@ -369,7 +347,10 @@ export default function TopographicBackground() {
     stateRef.current.glowIntensity = glowIntensity;
   }, [glowIntensity]);
 
+  // WebGL initialization & render effect
   useEffect(() => {
+    if (useFallback2D) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -386,25 +367,29 @@ export default function TopographicBackground() {
     }
 
     // Try initializing WebGL
-    const gl =
-      canvas.getContext("webgl", {
-        powerPreference: "high-performance",
-        alpha: false,
-        antialias: true,
-      }) || (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null);
+    let gl: WebGLRenderingContext | null = null;
+    try {
+      gl =
+        canvas.getContext("webgl", {
+          powerPreference: "high-performance",
+          alpha: false,
+          antialias: true,
+        }) || (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null);
+    } catch {
+      gl = null;
+    }
 
     if (!gl) {
-      console.warn("WebGL not supported; falling back to 2D canvas.");
-      const cleanupFallback = initCanvas2DFallback(canvas, () => state.isDarkMode);
-      return () => {
-        cleanupFallback();
-      };
+      console.warn("WebGL not supported; activating 2D canvas fallback.");
+      setUseFallback2D(true);
+      return;
     }
 
     state.gl = gl;
 
     // Compile shaders
     const compileShader = (type: number, source: string) => {
+      if (!gl) return null;
       const shader = gl.createShader(type);
       if (!shader) return null;
       gl.shaderSource(shader, source);
@@ -421,24 +406,24 @@ export default function TopographicBackground() {
     const fragShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
 
     if (!vertShader || !fragShader) {
-      const cleanupFallback = initCanvas2DFallback(canvas, () => state.isDarkMode);
-      return () => {
-        cleanupFallback();
-      };
+      console.error("Failed to compile shaders, activating 2D fallback.");
+      setUseFallback2D(true);
+      return;
     }
 
     const program = gl.createProgram();
-    if (!program) return;
+    if (!program) {
+      setUseFallback2D(true);
+      return;
+    }
     gl.attachShader(program, vertShader);
     gl.attachShader(program, fragShader);
     gl.linkProgram(program);
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.error("Program link error:", gl.getProgramInfoLog(program));
-      const cleanupFallback = initCanvas2DFallback(canvas, () => state.isDarkMode);
-      return () => {
-        cleanupFallback();
-      };
+      setUseFallback2D(true);
+      return;
     }
 
     state.program = program;
@@ -479,7 +464,9 @@ export default function TopographicBackground() {
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      if (gl) {
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
     };
 
     handleResize();
@@ -540,7 +527,7 @@ export default function TopographicBackground() {
         gl.uniform1f(uniforms.u_glow_intensity, state.glowIntensity);
         gl.uniform1f(uniforms.u_speed, 0.4);
         gl.uniform1f(uniforms.u_density, 1.25);
-        gl.uniform1i(uniforms.u_color_palette, state.colorPalette);
+        gl.uniform1f(uniforms.u_color_palette, state.colorPalette);
         gl.uniform1f(uniforms.u_dark_mode, state.isDarkMode);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -577,166 +564,185 @@ export default function TopographicBackground() {
         gl.deleteBuffer(positionBuffer);
       }
     };
-  }, []);
+  }, [useFallback2D]);
 
-  if (!isMounted) return null;
+  // Fallback 2D effect (runs only if WebGL failed)
+  useEffect(() => {
+    if (!useFallback2D) return;
+
+    const canvas = fallbackCanvasRef.current;
+    if (!canvas) return;
+
+    const cleanup = startCanvas2DFallback(canvas, () => stateRef.current.isDarkMode);
+    return () => cleanup();
+  }, [useFallback2D]);
 
   return (
     <>
-      {/* Background Canvas */}
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="fixed inset-0 pointer-events-none z-0 w-full h-full object-cover transition-opacity duration-700"
-      />
+      {/* Background Canvas: Always rendered directly into the DOM */}
+      {!useFallback2D ? (
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-0 w-full h-full object-cover"
+        />
+      ) : (
+        <canvas
+          ref={fallbackCanvasRef}
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-0 w-full h-full object-cover"
+        />
+      )}
 
       {/* Floating Interactive Controls Pill for the Keyboard Effect */}
-      <div className="fixed bottom-6 left-6 z-40">
-        {!isControlsOpen ? (
-          <button
-            onClick={() => setIsControlsOpen(true)}
-            aria-label="Personalizar efeito Topo RGB do teclado"
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/15 dark:border-white/10 bg-white/80 dark:bg-black/75 backdrop-blur-xl shadow-lg hover:shadow-cyan-500/20 text-xs font-medium text-foreground transition-all duration-300 hover:scale-105 active:scale-95 group"
-          >
-            <span className="size-2 rounded-full bg-gradient-to-r from-orange-500 via-cyan-400 to-fuchsia-500 animate-pulse" />
-            <span className="font-mono tracking-tight">Topo RGB v2</span>
-            <Sliders className="size-3.5 text-muted-foreground group-hover:text-cyan-400 transition-colors" />
-          </button>
-        ) : (
-          <div className="w-72 p-4 rounded-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-black/90 backdrop-blur-2xl shadow-2xl animate-menu-slide text-xs">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-border/50">
-              <div className="flex items-center gap-2">
-                <span className="size-2.5 rounded-full bg-gradient-to-r from-orange-500 via-cyan-400 to-fuchsia-500" />
-                <span className="font-semibold text-foreground tracking-tight">
-                  Efeito Teclado Topo RGB
-                </span>
-              </div>
-              <button
-                onClick={() => setIsControlsOpen(false)}
-                className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Fechar controles"
-              >
-                <X className="size-3.5" />
-              </button>
-            </div>
-
-            {/* Controls */}
-            <div className="mt-3.5 space-y-3">
-              {/* Palette */}
-              <div>
-                <label className="text-[11px] text-muted-foreground font-medium mb-1.5 block">
-                  Paleta de Cores
-                </label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <button
-                    onClick={() => setColorPalette(0)}
-                    className={cn(
-                      "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                      colorPalette === 0
-                        ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
-                        : "border-border/40 hover:bg-muted text-muted-foreground",
-                    )}
-                  >
-                    RGB Teclado
-                  </button>
-                  <button
-                    onClick={() => setColorPalette(1)}
-                    className={cn(
-                      "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                      colorPalette === 1
-                        ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
-                        : "border-border/40 hover:bg-muted text-muted-foreground",
-                    )}
-                  >
-                    Cyber Aqua
-                  </button>
-                  <button
-                    onClick={() => setColorPalette(2)}
-                    className={cn(
-                      "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                      colorPalette === 2
-                        ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
-                        : "border-border/40 hover:bg-muted text-muted-foreground",
-                    )}
-                  >
-                    Sunset
-                  </button>
+      {isMounted && (
+        <div className="fixed bottom-6 left-6 z-40">
+          {!isControlsOpen ? (
+            <button
+              onClick={() => setIsControlsOpen(true)}
+              aria-label="Personalizar efeito Topo RGB do teclado"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/15 dark:border-white/10 bg-white/80 dark:bg-black/75 backdrop-blur-xl shadow-lg hover:shadow-cyan-500/20 text-xs font-medium text-foreground transition-all duration-300 hover:scale-105 active:scale-95 group"
+            >
+              <span className="size-2 rounded-full bg-gradient-to-r from-orange-500 via-cyan-400 to-fuchsia-500 animate-pulse" />
+              <span className="font-mono tracking-tight">Topo RGB v2</span>
+              <Sliders className="size-3.5 text-muted-foreground group-hover:text-cyan-400 transition-colors" />
+            </button>
+          ) : (
+            <div className="w-72 p-4 rounded-2xl border border-white/20 dark:border-white/10 bg-white/95 dark:bg-black/90 backdrop-blur-2xl shadow-2xl animate-menu-slide text-xs">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-3 border-b border-border/50">
+                <div className="flex items-center gap-2">
+                  <span className="size-2.5 rounded-full bg-gradient-to-r from-orange-500 via-cyan-400 to-fuchsia-500" />
+                  <span className="font-semibold text-foreground tracking-tight">
+                    Efeito Teclado Topo RGB
+                  </span>
                 </div>
-              </div>
-
-              {/* Keycap grid toggle */}
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
-                  <Grid className="size-3.5" /> Grade de Teclas
-                </span>
                 <button
-                  onClick={() => setKeycapGrid(!keycapGrid)}
-                  className={cn(
-                    "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border",
-                    keycapGrid
-                      ? "border-cyan-500/50 bg-cyan-500/15 text-cyan-400"
-                      : "border-border/40 bg-muted/50 text-muted-foreground",
-                  )}
+                  onClick={() => setIsControlsOpen(false)}
+                  className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Fechar controles"
                 >
-                  {keycapGrid ? "Ativada" : "Desativada"}
+                  <X className="size-3.5" />
                 </button>
               </div>
 
-              {/* Glow intensity */}
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
-                  <Sparkles className="size-3.5" /> Brilho Neon
-                </span>
-                <div className="flex items-center gap-1">
-                  {[0.5, 1.0, 1.6].map((level, idx) => (
+              {/* Controls */}
+              <div className="mt-3.5 space-y-3">
+                {/* Palette */}
+                <div>
+                  <label className="text-[11px] text-muted-foreground font-medium mb-1.5 block">
+                    Paleta de Cores
+                  </label>
+                  <div className="grid grid-cols-3 gap-1.5">
                     <button
-                      key={level}
-                      onClick={() => setGlowIntensity(level)}
+                      onClick={() => setColorPalette(0)}
                       className={cn(
-                        "size-6 rounded-md text-[10px] font-medium transition-all border flex items-center justify-center",
-                        glowIntensity === level
-                          ? "border-cyan-500/70 bg-cyan-500/20 text-cyan-400"
-                          : "border-border/40 text-muted-foreground hover:bg-muted",
+                        "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
+                        colorPalette === 0
+                          ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
+                          : "border-border/40 hover:bg-muted text-muted-foreground",
                       )}
                     >
-                      {idx === 0 ? "S" : idx === 1 ? "M" : "L"}
+                      RGB Teclado
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setColorPalette(1)}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
+                        colorPalette === 1
+                          ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
+                          : "border-border/40 hover:bg-muted text-muted-foreground",
+                      )}
+                    >
+                      Cyber Aqua
+                    </button>
+                    <button
+                      onClick={() => setColorPalette(2)}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
+                        colorPalette === 2
+                          ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
+                          : "border-border/40 hover:bg-muted text-muted-foreground",
+                      )}
+                    >
+                      Sunset
+                    </button>
+                  </div>
+                </div>
+
+                {/* Keycap grid toggle */}
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
+                    <Grid className="size-3.5" /> Grade de Teclas
+                  </span>
+                  <button
+                    onClick={() => setKeycapGrid(!keycapGrid)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border",
+                      keycapGrid
+                        ? "border-cyan-500/50 bg-cyan-500/15 text-cyan-400"
+                        : "border-border/40 bg-muted/50 text-muted-foreground",
+                    )}
+                  >
+                    {keycapGrid ? "Ativada" : "Desativada"}
+                  </button>
+                </div>
+
+                {/* Glow intensity */}
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
+                    <Sparkles className="size-3.5" /> Brilho Neon
+                  </span>
+                  <div className="flex items-center gap-1">
+                    {[0.5, 1.0, 1.6].map((level, idx) => (
+                      <button
+                        key={level}
+                        onClick={() => setGlowIntensity(level)}
+                        className={cn(
+                          "size-6 rounded-md text-[10px] font-medium transition-all border flex items-center justify-center",
+                          glowIntensity === level
+                            ? "border-cyan-500/70 bg-cyan-500/20 text-cyan-400"
+                            : "border-border/40 text-muted-foreground hover:bg-muted",
+                        )}
+                      >
+                        {idx === 0 ? "S" : idx === 1 ? "M" : "L"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Play / Pause Animation */}
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
+                    {isPlaying ? (
+                      <Play className="size-3.5" />
+                    ) : (
+                      <Pause className="size-3.5" />
+                    )}{" "}
+                    Animação
+                  </span>
+                  <button
+                    onClick={() => setIsPlaying(!isPlaying)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border",
+                      isPlaying
+                        ? "border-cyan-500/50 bg-cyan-500/15 text-cyan-400"
+                        : "border-border/40 bg-muted/50 text-muted-foreground",
+                    )}
+                  >
+                    {isPlaying ? "Ondulação Ativa" : "Pausada"}
+                  </button>
                 </div>
               </div>
 
-              {/* Play / Pause Animation */}
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
-                  {isPlaying ? (
-                    <Play className="size-3.5" />
-                  ) : (
-                    <Pause className="size-3.5" />
-                  )}{" "}
-                  Animação
-                </span>
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className={cn(
-                    "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border",
-                    isPlaying
-                      ? "border-cyan-500/50 bg-cyan-500/15 text-cyan-400"
-                      : "border-border/40 bg-muted/50 text-muted-foreground",
-                  )}
-                >
-                  {isPlaying ? "Ondulação Ativa" : "Pausada"}
-                </button>
-              </div>
+              {/* Footer tip */}
+              <p className="mt-3 pt-2 text-[10px] text-muted-foreground/75 border-t border-border/40 text-center">
+                💡 Mova o mouse na tela para interagir com o relevo topográfico!
+              </p>
             </div>
-
-            {/* Footer tip */}
-            <p className="mt-3 pt-2 text-[10px] text-muted-foreground/75 border-t border-border/40 text-center">
-              💡 Mova o mouse na tela para interagir com o relevo topográfico!
-            </p>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </>
   );
 }
