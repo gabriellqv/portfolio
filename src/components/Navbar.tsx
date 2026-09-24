@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-import { Globe, Menu, Moon, Sun, X } from "lucide-react";
+import { Languages, Menu, Moon, Sun, X } from "lucide-react";
 
 import { SECTION_IDS } from "@/constants";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -104,10 +104,11 @@ const Navbar = () => {
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
               onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Globe className="size-4" />
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -131,10 +132,11 @@ const Navbar = () => {
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
               onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground text-xs font-semibold tracking-wider"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Globe className="size-5" />
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
