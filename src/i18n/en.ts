@@ -26,11 +26,11 @@ const en: Dictionary = {
     bioP1:
       "My degree in Computer Science (UNINOVE) has shaped the way I view software: not merely as isolated code or UI screens, but as integrated systems that turn complex business processes into intuitive, secure, and efficient tools.",
     bioP2:
-      "I work end-to-end focusing on the Node.js (NestJS), TypeScript, React/Next.js, and Laravel ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
+      "I work end-to-end focusing on the TypeScript, Node.js (NestJS, Express), PHP (Laravel), and modern web interfaces (Next.js, React, Vue.js, Angular) ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
     stats: [
-      { value: "3+", label: "Years of Experience" },
-      { value: "3", label: "Production Systems" },
-      { value: "116+", label: "Automated Tests" },
+      { value: "5", label: "Full Stack Systems" },
+      { value: "3", label: "Production Deploys" },
+      { value: "178+", label: "Automated Tests" },
     ],
     cards: [
       {
@@ -41,9 +41,9 @@ const en: Dictionary = {
         skills: [
           "React & Next.js (App Router)",
           "TypeScript & Strict Typing",
+          "Vue.js & Angular",
           "Tailwind CSS & Design Systems",
-          "Zustand, Pinia & Global State",
-          "Zod & React Hook Form",
+          "Zustand, Pinia & Zod",
         ],
       },
       {
@@ -65,7 +65,7 @@ const en: Dictionary = {
         description:
           "Rigorous software engineering practices and system reliability. Automated test suites covering critical business logic, environment containerization, and continuous deployment automation.",
         skills: [
-          "Testing with Jest, Vitest, Pest & Supertest",
+          "Testing (Jest, Vitest, Pest, Playwright)",
           "Docker & Docker Compose",
           "CI/CD with GitHub Actions",
           "SOLID Principles & Clean Architecture",

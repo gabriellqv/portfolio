@@ -26,11 +26,11 @@ const pt: Dictionary = {
     bioP1:
       "Minha formação em Ciência da Computação (UNINOVE) moldou a forma como enxergo software: não apenas como interfaces ou código isolado, mas como sistemas integrados capazes de traduzir processos complexos de negócio em ferramentas intuitivas, seguras e eficientes.",
     bioP2:
-      "Atuo de ponta a ponta com foco no ecossistema Node.js (NestJS), TypeScript, React/Next.js e Laravel. Trabalho onde arquitetura técnica rigorosa (SOLID, Clean Code, transações ACID com lock pessimista) e experiência do usuário precisam coexistir em perfeita sintonia.",
+      "Atuo de ponta a ponta com foco no ecossistema TypeScript, Node.js (NestJS, Express), PHP (Laravel) e interfaces modernas (Next.js, React, Vue.js, Angular). Trabalho onde arquitetura técnica rigorosa (SOLID, Clean Code, transações ACID com lock pessimista) e experiência do usuário precisam coexistir em perfeita sintonia.",
     stats: [
-      { value: "3+", label: "Anos de Experiência" },
-      { value: "3", label: "Sistemas em Produção" },
-      { value: "116+", label: "Testes Automatizados" },
+      { value: "5", label: "Sistemas Full Stack" },
+      { value: "3", label: "Deploys em Produção" },
+      { value: "178+", label: "Testes Automatizados" },
     ],
     cards: [
       {
@@ -41,9 +41,9 @@ const pt: Dictionary = {
         skills: [
           "React & Next.js (App Router)",
           "TypeScript & Tipagem Estrita",
+          "Vue.js & Angular",
           "Tailwind CSS & Design Systems",
-          "Zustand, Pinia & Estado Global",
-          "Zod & React Hook Form",
+          "Zustand, Pinia & Zod",
         ],
       },
       {
@@ -65,7 +65,7 @@ const pt: Dictionary = {
         description:
           "Práticas rigorosas de engenharia de software e confiabilidade de sistemas. Criação de suítes de testes automatizados para regras críticas, conteinerização de ambientes e automação de deploys contínuos.",
         skills: [
-          "Testes com Jest, Vitest, Pest & Supertest",
+          "Testes (Jest, Vitest, Pest, Playwright)",
           "Docker & Docker Compose",
           "CI/CD com GitHub Actions",
           "Princípios SOLID & Clean Architecture",
