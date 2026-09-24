@@ -2,7 +2,16 @@
 
 import { type FormEvent, useState } from "react";
 
-import { ArrowUpRight, CheckCircle2, Loader2, MapPin, Send } from "lucide-react";
+import {
+  ArrowUpRight,
+  CheckCircle2,
+  Loader2,
+  Mail,
+  MapPin,
+  Send,
+  Text,
+  User,
+} from "lucide-react";
 
 import { Button } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
@@ -133,20 +142,23 @@ export default function Contact() {
                 >
                   {dict.contact.name}
                 </label>
-                <input
-                  id="contact-name"
-                  type="text"
-                  required
-                  placeholder={dict.contact.namePlaceholder}
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  className="form-input"
-                />
+                <div className="relative flex items-center">
+                  <User className="absolute left-3.5 size-4 text-muted-foreground pointer-events-none" />
+                  <input
+                    id="contact-name"
+                    type="text"
+                    required
+                    placeholder={dict.contact.namePlaceholder}
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      }))
+                    }
+                    className="form-input pl-10"
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
@@ -156,20 +168,23 @@ export default function Contact() {
                 >
                   {dict.contact.email}
                 </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  required
-                  placeholder={dict.contact.emailPlaceholder}
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      email: e.target.value,
-                    }))
-                  }
-                  className="form-input"
-                />
+                <div className="relative flex items-center">
+                  <Mail className="absolute left-3.5 size-4 text-muted-foreground pointer-events-none" />
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    placeholder={dict.contact.emailPlaceholder}
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
+                    className="form-input pl-10"
+                  />
+                </div>
               </div>
             </div>
 
@@ -180,20 +195,23 @@ export default function Contact() {
               >
                 {dict.contact.message}
               </label>
-              <textarea
-                id="contact-message"
-                required
-                rows={7}
-                placeholder={dict.contact.messagePlaceholder}
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    message: e.target.value,
-                  }))
-                }
-                className="form-input resize-none"
-              />
+              <div className="relative flex items-start">
+                <Text className="absolute left-3.5 top-3.5 size-4 text-muted-foreground pointer-events-none" />
+                <textarea
+                  id="contact-message"
+                  required
+                  rows={7}
+                  placeholder={dict.contact.messagePlaceholder}
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      message: e.target.value,
+                    }))
+                  }
+                  className="form-input pl-10 resize-none"
+                />
+              </div>
             </div>
 
             <Button
