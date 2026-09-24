@@ -6,9 +6,10 @@
 export const SITE = {
   name: "Gabriel Queiroz",
   title: "Desenvolvedor Full Stack",
-  tagline: "Especializado em React, Next.js, Vue.js, NestJS e Laravel",
+  tagline:
+    "Foco em TypeScript, Node.js e PHP. Experiência prática em APIs REST (NestJS, Express, Laravel) e interfaces web (Next.js, React, Vue.js, Angular)",
   description:
-    "Desenvolvedor Full Stack — React, Next.js, NestJS, Laravel. Portfolio profissional com projetos em destaque.",
+    "Desenvolvedor Full Stack com foco em TypeScript, Node.js e PHP. Experiência prática em APIs REST (NestJS, Express, Laravel) e interfaces web (Next.js, React, Vue.js, Angular).",
   location: "São Paulo, Brasil",
   email: "gabriellqv@gmail.com",
   githubUsername: "gabriellqv",

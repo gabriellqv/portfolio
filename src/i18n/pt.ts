@@ -12,7 +12,8 @@ const pt: Dictionary = {
   hero: {
     roleMuted: "Desenvolvedor ",
     roleAccent: "Full Stack",
-    tagline: "Especializado em React, Next.js, Vue.js, NestJS e Laravel",
+    tagline:
+      "Foco em TypeScript, Node.js e PHP. Experiência prática em APIs REST (NestJS, Express, Laravel) e interfaces web (Next.js, React, Vue.js, Angular)",
     viewProjects: "Ver Projetos",
     downloadCV: "Baixar CV",
   },
