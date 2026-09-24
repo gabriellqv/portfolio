@@ -1,80 +1,55 @@
 "use client";
 
-import Link from "next/link";
-
 import { SITE } from "@/constants";
-import { useDictionary } from "@/i18n";
 
 /**
- * Minimalist luxury footer matching laschisa.dev 1:1:
- * - Direct seamless transparency over the undulating waves background
- * - Left: Dark circular monogram badge with letter "G"
- * - Center: Wide-tracked uppercase copyright and intentionality tagline
- * - Right: Clean uppercase text links in lavender tone (LinkedIn, Mail, GitHub, Source Code)
+ * Exact footer from laschisabella/laschisa:
+ * - Left: Copyright & Intentionality tagline in text-zinc-400 text-xs font-bold tracking-wide lg:tracking-widest
+ * - Right: Action links in exact laschisa accent color #8A6D95 (linkedin, mail, github, source code)
  */
 export default function Footer() {
-  const { dict } = useDictionary();
-
-  const footerLinks = [
-    {
-      label: "LINKEDIN",
-      href: `https://www.linkedin.com/in/${SITE.linkedinUsername}/`,
-      isExternal: true,
-    },
-    {
-      label: "MAIL",
-      href: `mailto:${SITE.email}`,
-      isExternal: false,
-    },
-    {
-      label: "GITHUB",
-      href: `https://github.com/${SITE.githubUsername}`,
-      isExternal: true,
-    },
-    {
-      label: dict.footer.sourceCode ?? "SOURCE CODE",
-      href: SITE.repoUrl,
-      isExternal: true,
-    },
-  ];
-
   return (
-    <footer className="w-full mt-auto py-8 sm:py-10 px-6 sm:px-10 lg:px-16 bg-transparent relative z-20">
-      <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
-        {/* Left: Circular Monogram / Brand Badge */}
-        <div className="flex items-center justify-center md:justify-start md:w-1/4">
-          <Link
-            href="#home"
-            aria-label={dict.a11y.backToTop ?? "Voltar ao topo"}
-            className="group flex items-center justify-center size-9 sm:size-10 rounded-full bg-[#18181b] border border-white/20 text-white shadow-sm hover:border-white/50 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white/40"
+    <footer className="w-full flex items-center px-3 lg:px-20 min-h-[8vh] mb-4 lg:mb-0 py-6">
+      <div className="lg:max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-4 lg:gap-0">
+        <div className="text-zinc-400 text-xs font-bold tracking-wide lg:tracking-widest select-none">
+          &copy; {new Date().getFullYear()} {SITE.brandDomain} &bull; BUILD WITH
+          INTENTIONALITY
+        </div>
+
+        <div className="flex items-center z-50 flex-wrap justify-center">
+          <a
+            href={`https://linkedin.com/in/${SITE.linkedinUsername}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
           >
-            <span className="font-sans font-bold text-sm tracking-tight text-white select-none transition-transform duration-300 group-hover:scale-110">
-              G
-            </span>
-          </Link>
-        </div>
+            linkedin
+          </a>
 
-        {/* Center: Copyright & Intentionality Tagline */}
-        <div className="flex items-center justify-center text-center md:w-2/4">
-          <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-medium text-[#988dae] select-none">
-            &copy; {new Date().getFullYear()} {SITE.brandDomain} &bull;{" "}
-            {dict.footer.builtWith}
-          </p>
-        </div>
+          <a
+            href={`mailto:${SITE.email}`}
+            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
+          >
+            mail
+          </a>
 
-        {/* Right: Text Navigation Links */}
-        <div className="flex items-center justify-center md:justify-end gap-6 sm:gap-8 md:w-1/4 flex-wrap">
-          {footerLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.isExternal ? "_blank" : undefined}
-              rel={link.isExternal ? "noreferrer" : undefined}
-              className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-[#988dae] hover:text-white transition-colors duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          <a
+            href={`https://github.com/${SITE.githubUsername}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
+          >
+            github
+          </a>
+
+          <a
+            href={SITE.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
+          >
+            source code
+          </a>
         </div>
       </div>
     </footer>
