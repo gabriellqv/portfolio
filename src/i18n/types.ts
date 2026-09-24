@@ -71,6 +71,8 @@ export interface Dictionary {
   };
   footer: {
     rights: string;
+    builtWith: string;
+    sourceCode: string;
   };
   errors: {
     somethingWrong: string;

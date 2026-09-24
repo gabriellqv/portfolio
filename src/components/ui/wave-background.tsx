@@ -217,7 +217,7 @@ export function Waves({
       const d = Math.hypot(dx, dy);
       mouse.v = d;
       mouse.vs += (d - mouse.vs) * 0.1;
-      mouse.vs = Math.min(100, mouse.vs);
+      mouse.vs = Math.min(55, mouse.vs);
       mouse.lx = mouse.x;
       mouse.ly = mouse.y;
       mouse.a = Math.atan2(dy, dx);

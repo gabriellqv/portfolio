@@ -101,6 +101,8 @@ const en: Dictionary = {
   },
   footer: {
     rights: "All rights reserved.",
+    builtWith: "BUILD WITH INTENTIONALITY",
+    sourceCode: "SOURCE CODE",
   },
   errors: {
     somethingWrong: "Something went wrong",
