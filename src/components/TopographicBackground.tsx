@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 import { useTheme } from "next-themes";
 
-import { Grid, Sliders, Sparkles, X } from "lucide-react";
+import { Sliders, Sparkles, X } from "lucide-react";
 
 import { useMounted } from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";
@@ -115,7 +115,6 @@ export default function TopographicBackground() {
   // - Glow level: Minimo (much less than S, razor-sharp vector line with ultra-subtle sheen)
   const [colorPalette, setColorPalette] = useState<"cyber" | "rgb" | "sunset">("cyber");
   const [glowLevel, setGlowLevel] = useState<"none" | "minimal" | "subtle">("minimal");
-  const [keycapGrid, setKeycapGrid] = useState<boolean>(false);
   const [isControlsOpen, setIsControlsOpen] = useState<boolean>(false);
 
   // Pre-generate mathematically smooth topographic contour vector paths
@@ -219,33 +218,6 @@ export default function TopographicBackground() {
               <stop offset="100%" stopColor="#2563eb" />
             </linearGradient>
           </defs>
-
-          {/* Optional Mechanical Keycap Grid */}
-          {keycapGrid && (
-            <g
-              stroke={isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(0, 0, 0, 0.04)"}
-              strokeWidth="1"
-              fill="none"
-            >
-              {Array.from({ length: 6 }).map((_, row) =>
-                Array.from({ length: 15 }).map((__, col) => {
-                  const stagger = row % 2 === 1 ? 40 : 0;
-                  const x = 70 + col * 118 + stagger;
-                  const y = 80 + row * 155;
-                  return (
-                    <rect
-                      key={`${row}-${col}`}
-                      x={x}
-                      y={y}
-                      width={106}
-                      height={140}
-                      rx={12}
-                    />
-                  );
-                }),
-              )}
-            </g>
-          )}
 
           {/* Topographic Contour Paths: Crisp 1.2px vector precision */}
           <g
@@ -382,24 +354,6 @@ export default function TopographicBackground() {
                       </button>
                     ))}
                   </div>
-                </div>
-
-                {/* Keycap grid toggle */}
-                <div className="flex items-center justify-between pt-1">
-                  <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
-                    <Grid className="size-3.5" /> Grade de Teclas
-                  </span>
-                  <button
-                    onClick={() => setKeycapGrid(!keycapGrid)}
-                    className={cn(
-                      "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border",
-                      keycapGrid
-                        ? "border-cyan-500/50 bg-cyan-500/15 text-cyan-400"
-                        : "border-border/40 bg-muted/50 text-muted-foreground",
-                    )}
-                  >
-                    {keycapGrid ? "Ativada" : "Desativada"}
-                  </button>
                 </div>
               </div>
 
