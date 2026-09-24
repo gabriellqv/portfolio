@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 
 import { AppProviders } from "@/components/AppProviders";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import TopographicBackground from "@/components/TopographicBackground";
 import { SITE } from "@/constants";
 
 import "./globals.css";
@@ -130,7 +131,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <AppProviders initialLang="pt">{children}</AppProviders>
+          <AppProviders initialLang="pt">
+            <TopographicBackground />
+            {children}
+          </AppProviders>
         </ThemeProvider>
       </body>
     </html>

@@ -23,7 +23,7 @@ export default function Home() {
       <SkipToContent />
       <main
         id="main-content"
-        className="min-h-screen flex flex-col items-center w-full overflow-x-clip"
+        className="relative z-10 min-h-screen flex flex-col items-center w-full overflow-x-clip"
       >
         <Navbar />
         <Hero />
