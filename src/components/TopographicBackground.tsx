@@ -9,14 +9,32 @@ import { Activity, CircleDot, Sliders, Sparkles, X } from "lucide-react";
 import { useMounted } from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";
 
-// Interface for elevation center
-interface ElevationCenter {
-  cx: number;
-  cy: number;
-  rings: number[];
-  seed: number;
-  speed: number;
-}
+// Lookup table for Marching Squares cell line segments
+// Edges: 0: top, 1: right, 2: bottom, 3: left
+const EDGE_TABLE: [number, number][][] = [
+  [], // 0
+  [[3, 0]], // 1
+  [[0, 1]], // 2
+  [[3, 1]], // 3
+  [[1, 2]], // 4
+  [
+    [3, 0],
+    [1, 2],
+  ], // 5 (saddle)
+  [[0, 2]], // 6
+  [[3, 2]], // 7
+  [[2, 3]], // 8
+  [[2, 0]], // 9
+  [
+    [0, 1],
+    [2, 3],
+  ], // 10 (saddle)
+  [[2, 1]], // 11
+  [[1, 3]], // 12
+  [[1, 0]], // 13
+  [[0, 3]], // 14
+  [], // 15
+];
 
 export default function TopographicBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -24,11 +42,6 @@ export default function TopographicBackground() {
   const isMounted = useMounted();
   const isDark = (resolvedTheme || theme) === "dark";
 
-  // Configuration tuned to user feedback:
-  // - Real living interactive effect (NOT a static PNG!)
-  // - Orange Neon & Dot Grid by default (matching the user's latest aesthetic)
-  // - Crisp 1.2px/2.4px lines (curvas mestras + secundárias) with zero blur
-  // - Smooth interactive mouse lighting & subtle fluid pulse
   const [colorMode, setColorMode] = useState<"orange" | "cyber" | "rgb" | "mono">(
     "orange",
   );
@@ -39,7 +52,6 @@ export default function TopographicBackground() {
   );
   const [isControlsOpen, setIsControlsOpen] = useState<boolean>(false);
 
-  // Mutable refs for animation state
   const stateRef = useRef({
     time: 0,
     mouse: { x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: 0 },
@@ -51,7 +63,6 @@ export default function TopographicBackground() {
     isDark: true,
   });
 
-  // Sync state with refs for 60fps render loop
   useEffect(() => {
     stateRef.current.colorMode = colorMode;
   }, [colorMode]);
@@ -81,7 +92,6 @@ export default function TopographicBackground() {
 
     const state = stateRef.current;
 
-    // Check user preference for reduced motion
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -89,56 +99,53 @@ export default function TopographicBackground() {
       state.motionMode = "static";
     }
 
-    // Topographic Elevation Centers (configured in normalized 0-1 coords for full responsiveness)
-    const centers: ElevationCenter[] = [
-      {
-        cx: 0.22,
-        cy: 0.28,
-        rings: [0.04, 0.08, 0.13, 0.19, 0.26, 0.34, 0.43],
-        seed: 1.2,
-        speed: 0.8,
-      },
-      {
-        cx: 0.78,
-        cy: 0.35,
-        rings: [0.05, 0.09, 0.14, 0.21, 0.28, 0.36, 0.45],
-        seed: 2.7,
-        speed: -0.7,
-      },
-      {
-        cx: 0.15,
-        cy: 0.78,
-        rings: [0.03, 0.07, 0.12, 0.18, 0.25, 0.33],
-        seed: 3.9,
-        speed: 0.9,
-      },
-      {
-        cx: 0.62,
-        cy: 0.75,
-        rings: [0.04, 0.08, 0.13, 0.19, 0.27, 0.35],
-        seed: 4.5,
-        speed: -0.8,
-      },
-      {
-        cx: 0.88,
-        cy: 0.82,
-        rings: [0.03, 0.07, 0.12, 0.17, 0.24],
-        seed: 5.3,
-        speed: 0.75,
-      },
-    ];
+    // Grid resolution for 60fps Marching Squares (< 0.4ms evaluation per frame)
+    const GRID_X = 110;
+    const GRID_Y = 70;
+    const grid = new Float32Array((GRID_X + 1) * (GRID_Y + 1));
 
-    // Saddle / Envelope pairs
-    const saddles = [
-      { c1: centers[0], c2: centers[1], r: 0.2, seed: 1.6 },
-      { c1: centers[0], c2: centers[1], r: 0.3, seed: 2.1 },
-      { c1: centers[2], c2: centers[3], r: 0.18, seed: 3.4 },
-      { c1: centers[3], c2: centers[4], r: 0.16, seed: 4.2 },
-      { c1: centers[0], c2: centers[2], r: 0.17, seed: 2.9 },
-    ];
+    // Perlin noise permutation table
+    const P = new Uint8Array(512);
+    for (let i = 0; i < 256; i++) {
+      P[i] = P[i + 256] = Math.floor(Math.sin(i * 12.9898 + 78.233) * 43758.5453) & 255;
+    }
 
-    // Transverse flowing curves
-    const flowYOffsets = [0.08, 0.22, 0.38, 0.54, 0.68, 0.84, 0.96];
+    const fade = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
+    const lerp = (t: number, a: number, b: number) => a + t * (b - a);
+    const grad = (hash: number, x: number, y: number) => {
+      const h = hash & 7;
+      const u = h < 4 ? x : y;
+      const v = h < 4 ? y : x;
+      return (h & 1 ? -u : u) + (h & 2 ? -2.0 * v : 2.0 * v);
+    };
+
+    const noise2D = (x: number, y: number) => {
+      const X = Math.floor(x) & 255;
+      const Y = Math.floor(y) & 255;
+      const xf = x - Math.floor(x);
+      const yf = y - Math.floor(y);
+      const u = fade(xf);
+      const v = fade(yf);
+      const a = (P[X] ?? 0) + Y;
+      const b = (P[X + 1] ?? 0) + Y;
+      return lerp(
+        v,
+        lerp(u, grad(P[a] ?? 0, xf, yf), grad(P[b] ?? 0, xf - 1, yf)),
+        lerp(u, grad(P[a + 1] ?? 0, xf, yf - 1), grad(P[b + 1] ?? 0, xf - 1, yf - 1)),
+      );
+    };
+
+    // 8 Organic Summits (arranged naturally to give rich perimeter ridges and open center)
+    const summits = [
+      { x: 0.18, y: 0.18, h: 2.2, r: 0.15, s: 0.22, p: 0.4, dx: 0.025, dy: 0.02 },
+      { x: 0.85, y: 0.2, h: 2.4, r: 0.16, s: 0.18, p: 1.6, dx: 0.02, dy: 0.025 },
+      { x: 0.32, y: 0.42, h: 2.1, r: 0.14, s: 0.25, p: 2.8, dx: 0.02, dy: 0.02 },
+      { x: 0.68, y: 0.4, h: 2.3, r: 0.15, s: 0.2, p: 3.5, dx: 0.025, dy: 0.02 },
+      { x: 0.16, y: 0.72, h: 2.0, r: 0.15, s: 0.24, p: 4.6, dx: 0.02, dy: 0.02 },
+      { x: 0.84, y: 0.76, h: 2.2, r: 0.16, s: 0.21, p: 5.3, dx: 0.025, dy: 0.02 },
+      { x: 0.5, y: 0.68, h: 1.9, r: 0.14, s: 0.26, p: 0.9, dx: 0.02, dy: 0.02 },
+      { x: 0.5, y: 0.22, h: 1.8, r: 0.13, s: 0.23, p: 2.0, dx: 0.02, dy: 0.02 },
+    ];
 
     let width = 0;
     let height = 0;
@@ -156,7 +163,6 @@ export default function TopographicBackground() {
     handleResize();
     window.addEventListener("resize", handleResize, { passive: true });
 
-    // Interactive mouse listeners
     const handleMouseMove = (e: MouseEvent) => {
       state.mouse.targetX = e.clientX;
       state.mouse.targetY = e.clientY;
@@ -180,85 +186,35 @@ export default function TopographicBackground() {
     document.addEventListener("mouseleave", handleMouseLeave);
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
-    // Helper: Catmull-Rom spline interpolation on Canvas 2D
-    const drawSpline = (pts: [number, number][], closed = true) => {
-      if (pts.length < 3) return;
-      const n = pts.length;
-      const first = pts[0];
-      if (!first) return;
-
-      ctx.beginPath();
-      ctx.moveTo(first[0], first[1]);
-
-      const iters = closed ? n : n - 1;
-      for (let i = 0; i < iters; i++) {
-        const p0 = pts[(i - 1 + n) % n] ?? first;
-        const p1 = pts[i] ?? first;
-        const p2 = pts[(i + 1) % n] ?? first;
-        const p3 = pts[(i + 2) % n] ?? first;
-
-        const c1x = p1[0] + (p2[0] - p0[0]) / 6;
-        const c1y = p1[1] + (p2[1] - p0[1]) / 6;
-        const c2x = p2[0] - (p3[0] - p1[0]) / 6;
-        const c2y = p2[1] - (p3[1] - p1[1]) / 6;
-
-        ctx.bezierCurveTo(c1x, c1y, c2x, c2y, p2[0], p2[1]);
+    // Edge crossing interpolation helper
+    const getEdgePoint = (
+      edge: number,
+      x0: number,
+      y0: number,
+      x1: number,
+      y1: number,
+      v0: number,
+      v1: number,
+      v2: number,
+      v3: number,
+      iso: number,
+    ): [number, number] => {
+      if (edge === 0) {
+        const t = (iso - v0) / (v1 - v0 || 0.0001);
+        return [x0 + t * (x1 - x0), y0];
+      } else if (edge === 1) {
+        const t = (iso - v1) / (v2 - v1 || 0.0001);
+        return [x1, y0 + t * (y1 - y0)];
+      } else if (edge === 2) {
+        const t = (iso - v3) / (v2 - v3 || 0.0001);
+        return [x0 + t * (x1 - x0), y1];
+      } else {
+        const t = (iso - v0) / (v3 - v0 || 0.0001);
+        return [x0, y0 + t * (y1 - y0)];
       }
-
-      if (closed) ctx.closePath();
-      ctx.stroke();
     };
 
-    // Helper: calculate organic ring points with subtle breathing drift
-    const getRingPoints = (
-      cxNorm: number,
-      cyNorm: number,
-      rNorm: number,
-      seed: number,
-      speed: number,
-      steps = 36,
-    ): [number, number][] => {
-      const cx = cxNorm * width;
-      const cy = cyNorm * height;
-      const maxDim = Math.max(width, height);
-      const r = rNorm * maxDim;
-
-      const t =
-        state.motionMode === "static"
-          ? 0
-          : state.time * (state.motionMode === "calm" ? 0.3 : 0.8) * speed;
-      const pts: [number, number][] = [];
-
-      for (let i = 0; i < steps; i++) {
-        const th = (i / steps) * Math.PI * 2;
-        const w =
-          1 +
-          0.14 * Math.sin(th * 2 + seed + t * 0.4) +
-          0.1 * Math.cos(th * 3 + seed * 1.6 - t * 0.3) +
-          0.05 * Math.sin(th * 5 + seed * 2.5 + t * 0.5);
-
-        // Interactive mouse repulsion/ripple
-        let mouseDisplace = 0;
-        if (state.mouse.active > 0.05) {
-          const px = cx + r * w * Math.cos(th);
-          const py = cy + r * w * Math.sin(th) * 0.75;
-          const dx = px - state.mouse.x;
-          const dy = py - state.mouse.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 220) {
-            mouseDisplace =
-              Math.exp(-dist * 0.018) * 18 * Math.sin(dist * 0.06 - state.time * 3);
-          }
-        }
-
-        const finalR = r * w + mouseDisplace;
-        pts.push([cx + finalR * Math.cos(th), cy + finalR * Math.sin(th) * 0.75]);
-      }
-
-      return pts;
-    };
-
-    // Animation Render Loop
+    const NUM_LEVELS = 24;
     let lastTime = performance.now();
 
     const render = (now: number) => {
@@ -266,50 +222,54 @@ export default function TopographicBackground() {
       lastTime = now;
 
       if (state.motionMode !== "static") {
-        state.time += delta;
+        state.time += delta * (state.motionMode === "calm" ? 0.35 : 0.85);
       }
 
-      // Smooth mouse interpolation
       const m = state.mouse;
-      m.x += (m.targetX - m.x) * 0.1;
-      m.y += (m.targetY - m.y) * 0.1;
+      m.x += (m.targetX - m.x) * 0.12;
+      m.y += (m.targetY - m.y) * 0.12;
 
-      // 1. Draw Background
-      ctx.fillStyle = state.isDark ? "#050608" : "#f6f6f4";
+      // 1. OLED Dark Background
+      ctx.fillStyle = state.isDark ? "#060608" : "#f6f6f4";
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Ambient Dot Grid (Signature from uploaded wallpaper!)
+      // 2. Ambient Dot Matrix Grid
       if (state.showDotGrid) {
-        const gridSpacing = 38;
+        const dotSpacing = 32;
         const dotBaseColor = state.isDark
           ? state.colorMode === "orange"
-            ? "rgba(255, 122, 41, 0.18)"
+            ? "rgba(255, 122, 41, 0.12)"
             : state.colorMode === "cyber"
-              ? "rgba(0, 245, 212, 0.16)"
-              : "rgba(255, 255, 255, 0.12)"
-          : "rgba(0, 0, 0, 0.08)";
+              ? "rgba(0, 245, 212, 0.12)"
+              : state.colorMode === "rgb"
+                ? "rgba(180, 140, 255, 0.12)"
+                : "rgba(255, 255, 255, 0.10)"
+          : "rgba(0, 0, 0, 0.07)";
 
         ctx.fillStyle = dotBaseColor;
-        const cols = Math.ceil(width / gridSpacing) + 1;
-        const rows = Math.ceil(height / gridSpacing) + 1;
+        const cols = Math.ceil(width / dotSpacing) + 1;
+        const rows = Math.ceil(height / dotSpacing) + 1;
 
         for (let r = 0; r < rows; r++) {
-          const y = r * gridSpacing;
+          const py = r * dotSpacing;
           for (let c = 0; c < cols; c++) {
-            const x = c * gridSpacing;
+            const px = c * dotSpacing;
 
-            // Illuminate dots near the mouse cursor
-            if (m.active > 0.1) {
-              const dMouse = Math.hypot(x - m.x, y - m.y);
-              if (dMouse < 180) {
-                const boost = 1 - dMouse / 180;
+            if (m.active > 0.05) {
+              const d = Math.hypot(px - m.x, py - m.y);
+              if (d < 180) {
+                const boost = 1 - d / 180;
                 ctx.fillStyle = state.isDark
                   ? state.colorMode === "orange"
-                    ? `rgba(255, 150, 60, ${0.18 + boost * 0.45})`
-                    : `rgba(0, 245, 212, ${0.16 + boost * 0.4})`
-                  : `rgba(0, 0, 0, ${0.08 + boost * 0.25})`;
+                    ? `rgba(255, 150, 50, ${0.12 + boost * 0.5})`
+                    : state.colorMode === "cyber"
+                      ? `rgba(0, 245, 212, ${0.12 + boost * 0.45})`
+                      : state.colorMode === "rgb"
+                        ? `rgba(220, 100, 255, ${0.12 + boost * 0.45})`
+                        : `rgba(255, 255, 255, ${0.1 + boost * 0.4})`
+                  : `rgba(0, 0, 0, ${0.07 + boost * 0.25})`;
                 ctx.beginPath();
-                ctx.arc(x, y, 1.2 + boost * 1.0, 0, Math.PI * 2);
+                ctx.arc(px, py, 0.9 + boost * 0.8, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.fillStyle = dotBaseColor;
                 continue;
@@ -317,203 +277,200 @@ export default function TopographicBackground() {
             }
 
             ctx.beginPath();
-            ctx.arc(x, y, 1.0, 0, Math.PI * 2);
+            ctx.arc(px, py, 0.85, 0, Math.PI * 2);
             ctx.fill();
           }
         }
       }
 
-      // 3. Prepare Color Palettes & Stroke Gradients
-      let strokeGrad: CanvasGradient | string;
+      // 3. Compute Elevation Field on Grid
+      const cellW = width / GRID_X;
+      const cellH = height / GRID_Y;
 
-      if (state.colorMode === "orange") {
-        const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0.0, "#ff5500");
-        grad.addColorStop(0.35, "#ff7a29");
-        grad.addColorStop(0.7, "#ff9e42");
-        grad.addColorStop(1.0, "#ffb86c");
-        strokeGrad = grad;
-      } else if (state.colorMode === "cyber") {
-        const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0.0, "#00f5d4");
-        grad.addColorStop(0.4, "#00bbf9");
-        grad.addColorStop(0.75, "#0077b6");
-        grad.addColorStop(1.0, "#3a86ff");
-        strokeGrad = grad;
-      } else if (state.colorMode === "rgb") {
-        const grad = ctx.createLinearGradient(0, 0, width, 0);
-        grad.addColorStop(0.0, "#ff4500");
-        grad.addColorStop(0.2, "#ffb300");
-        grad.addColorStop(0.42, "#00e676");
-        grad.addColorStop(0.65, "#00e5ff");
-        grad.addColorStop(0.85, "#2979ff");
-        grad.addColorStop(1.0, "#e040fb");
-        strokeGrad = grad;
-      } else {
-        // Monochrome OLED
-        strokeGrad = state.isDark ? "#ffffff" : "#1e293b";
+      const currentSummits = summits.map((p) => ({
+        x: (p.x + Math.sin(state.time * p.s + p.p) * p.dx) * width,
+        y: (p.y + Math.cos(state.time * p.s + p.p) * p.dy) * height,
+        h: p.h,
+        rSq: Math.pow(p.r * Math.max(width, height), 2) * 2,
+      }));
+
+      const maxDim = Math.max(width, height);
+      const mouseRadiusSq = 2 * 130 * 130;
+
+      let minElev = 999;
+      let maxElev = -999;
+      let idx = 0;
+
+      for (let gy = 0; gy <= GRID_Y; gy++) {
+        const py = gy * cellH;
+        for (let gx = 0; gx <= GRID_X; gx++) {
+          const px = gx * cellW;
+
+          let elev = 0;
+          for (let i = 0; i < currentSummits.length; i++) {
+            const s = currentSummits[i];
+            if (!s) continue;
+            const dx = px - s.x;
+            const dy = py - s.y;
+            elev += s.h * Math.exp(-(dx * dx + dy * dy) / s.rSq);
+          }
+
+          // Ambient noise undulation
+          const nx = (px / maxDim) * 3.8;
+          const ny = (py / maxDim) * 3.8;
+          elev += 0.35 * noise2D(nx + state.time * 0.04, ny + state.time * 0.03);
+          elev +=
+            0.18 * noise2D(nx * 2.2 - state.time * 0.03, ny * 2.2 + state.time * 0.04);
+
+          // Mouse ripple
+          if (m.active > 0.05) {
+            const mdx = px - m.x;
+            const mdy = py - m.y;
+            const mDistSq = mdx * mdx + mdy * mdy;
+            if (mDistSq < mouseRadiusSq * 2.5) {
+              const mDist = Math.sqrt(mDistSq);
+              elev +=
+                0.5 *
+                Math.exp(-mDistSq / mouseRadiusSq) *
+                Math.cos(mDist * 0.055 - state.time * 4.0);
+            }
+          }
+
+          grid[idx++] = elev;
+          if (elev < minElev) minElev = elev;
+          if (elev > maxElev) maxElev = elev;
+        }
       }
 
-      // Glow parameters (crisp neon stroke, not a blurry fog!)
+      // 4. Extract & Render Isolines (Zero crossings guaranteed!)
+      const range = maxElev - minElev;
+      const isoStart = minElev + range * 0.08;
+      const isoEnd = maxElev - range * 0.04;
+      const step = (isoEnd - isoStart) / (NUM_LEVELS + 1);
+
+      // Glow setting
       const glowBlur =
-        state.glowIntensity === "subtle" ? 2 : state.glowIntensity === "normal" ? 4.5 : 8;
-      const glowColor =
-        state.colorMode === "orange"
-          ? "rgba(255, 122, 41, 0.45)"
-          : state.colorMode === "cyber"
+        state.glowIntensity === "subtle"
+          ? 2
+          : state.glowIntensity === "normal"
+            ? 4.5
+            : 7.5;
+
+      for (let l = 1; l <= NUM_LEVELS; l++) {
+        const iso = isoStart + l * step;
+        const isMaster = l % 4 === 0;
+
+        ctx.beginPath();
+
+        // Stroke styling based on colorMode and hierarchy
+        ctx.lineWidth = isMaster ? (state.isDark ? 2.2 : 1.8) : state.isDark ? 1.15 : 0.9;
+
+        if (state.colorMode === "orange") {
+          ctx.strokeStyle = isMaster
+            ? state.isDark
+              ? "#ff6c22"
+              : "#ea580c"
+            : state.isDark
+              ? "#b24212"
+              : "#c2410c";
+          ctx.shadowColor = isMaster
+            ? "rgba(255, 108, 34, 0.45)"
+            : "rgba(255, 75, 20, 0.12)";
+        } else if (state.colorMode === "cyber") {
+          ctx.strokeStyle = isMaster
+            ? state.isDark
+              ? "#00f5d4"
+              : "#0284c7"
+            : state.isDark
+              ? "#0077b6"
+              : "#0369a1";
+          ctx.shadowColor = isMaster
             ? "rgba(0, 245, 212, 0.45)"
-            : state.colorMode === "rgb"
-              ? "rgba(0, 229, 255, 0.4)"
-              : "rgba(255, 255, 255, 0.35)";
-
-      ctx.save();
-      ctx.shadowColor = glowColor;
-      ctx.shadowBlur = state.isDark ? glowBlur : 0;
-      ctx.strokeStyle = strokeGrad;
-
-      // 4. Render Nested Rings around Elevation Centers
-      centers.forEach((center) => {
-        if (!center) return;
-        center.rings.forEach((r, idx) => {
-          // Distinction: Index curves (Curvas Mestras) vs Intermediate curves
-          const isIndexCurve = idx % 2 === 1;
-          ctx.lineWidth = isIndexCurve
+            : "rgba(0, 187, 249, 0.12)";
+        } else if (state.colorMode === "rgb") {
+          const hue = (l * 15 + state.time * 20) % 360;
+          ctx.strokeStyle = `hsl(${hue}, 95%, ${isMaster ? "65%" : "45%"})`;
+          ctx.shadowColor = `hsla(${hue}, 95%, 60%, ${isMaster ? 0.45 : 0.15})`;
+        } else {
+          // Monochrome OLED
+          ctx.strokeStyle = isMaster
             ? state.isDark
-              ? 2.3
-              : 1.8
+              ? "#ffffff"
+              : "#0f172a"
             : state.isDark
-              ? 1.15
-              : 0.9;
-          ctx.globalAlpha = isIndexCurve
+              ? "#52525b"
+              : "#94a3b8";
+          ctx.shadowColor = isMaster
             ? state.isDark
-              ? 0.95
-              : 0.75
-            : state.isDark
-              ? 0.65
-              : 0.45;
-
-          const pts = getRingPoints(
-            center.cx,
-            center.cy,
-            r,
-            center.seed + idx * 0.32,
-            center.speed,
-          );
-          drawSpline(pts, true);
-        });
-      });
-
-      // 5. Render Saddle / Dual Envelope Contours connecting peaks
-      saddles.forEach((saddle, sIdx) => {
-        if (!saddle.c1 || !saddle.c2) return;
-        const c1x = saddle.c1.cx * width;
-        const c1y = saddle.c1.cy * height;
-        const c2x = saddle.c2.cx * width;
-        const c2y = saddle.c2.cy * height;
-        const midX = (c1x + c2x) / 2;
-        const midY = (c1y + c2y) / 2;
-        const dx = c2x - c1x;
-        const dy = c2y - c1y;
-        const dist = Math.hypot(dx, dy);
-        const angle = Math.atan2(dy, dx);
-        const maxDim = Math.max(width, height);
-        const r = saddle.r * maxDim;
-
-        const t = state.motionMode === "static" ? 0 : state.time * 0.4;
-        const steps = 44;
-        const pts: [number, number][] = [];
-
-        for (let i = 0; i < steps; i++) {
-          const th = (i / steps) * Math.PI * 2;
-          const wobble =
-            1 +
-            0.1 * Math.sin(th * 2 + saddle.seed + t * 0.3) +
-            0.07 * Math.cos(th * 3 + saddle.seed * 1.5 - t * 0.2);
-
-          const rx = (dist / 2 + r) * wobble;
-          const ry = r * 0.82 * wobble;
-          const px = rx * Math.cos(th);
-          const py = ry * Math.sin(th);
-          const rotX = px * Math.cos(angle) - py * Math.sin(angle);
-          const rotY = px * Math.sin(angle) + py * Math.cos(angle);
-
-          pts.push([midX + rotX, midY + rotY]);
+              ? "rgba(255, 255, 255, 0.4)"
+              : "rgba(0, 0, 0, 0.15)"
+            : "transparent";
         }
 
-        ctx.lineWidth = sIdx === 1 ? 2.2 : 1.15;
-        ctx.globalAlpha =
-          sIdx === 1 ? (state.isDark ? 0.9 : 0.7) : state.isDark ? 0.6 : 0.4;
-        drawSpline(pts, true);
-      });
+        ctx.shadowBlur = state.isDark ? (isMaster ? glowBlur : glowBlur * 0.4) : 0;
 
-      // 6. Render Flowing Transverse Contours across full width
-      flowYOffsets.forEach((yNorm, i) => {
-        const yBase = yNorm * height;
-        const amp = 42 + i * 5;
-        const steps = 32;
-        const t = state.motionMode === "static" ? 0 : state.time * (0.3 + (i % 3) * 0.1);
-        const pts: [number, number][] = [];
+        for (let gy = 0; gy < GRID_Y; gy++) {
+          const row0 = gy * (GRID_X + 1);
+          const row1 = (gy + 1) * (GRID_X + 1);
+          const y0 = gy * cellH;
+          const y1 = (gy + 1) * cellH;
 
-        for (let s = 0; s <= steps; s++) {
-          const x = (s / steps) * (width + 120) - 60;
-          const th = (s / steps) * Math.PI * 3.4;
-          const y =
-            yBase +
-            amp *
-              (Math.sin(th + i * 1.2 + t * 0.4) * 0.65 +
-                Math.cos(th * 1.7 + i * 1.7 - t * 0.3) * 0.35);
-          pts.push([x, y]);
+          for (let gx = 0; gx < GRID_X; gx++) {
+            const x0 = gx * cellW;
+            const x1 = (gx + 1) * cellW;
+
+            const v0 = grid[row0 + gx] ?? 0;
+            const v1 = grid[row0 + gx + 1] ?? 0;
+            const v2 = grid[row1 + gx + 1] ?? 0;
+            const v3 = grid[row1 + gx] ?? 0;
+
+            let mask = 0;
+            if (v0 >= iso) mask |= 1;
+            if (v1 >= iso) mask |= 2;
+            if (v2 >= iso) mask |= 4;
+            if (v3 >= iso) mask |= 8;
+
+            if (mask === 0 || mask === 15) continue;
+
+            const segs = EDGE_TABLE[mask];
+            if (!segs) continue;
+            for (let s = 0; s < segs.length; s++) {
+              const seg = segs[s];
+              if (!seg) continue;
+              const eA = seg[0];
+              const eB = seg[1];
+
+              const ptA = getEdgePoint(eA, x0, y0, x1, y1, v0, v1, v2, v3, iso);
+              const ptB = getEdgePoint(eB, x0, y0, x1, y1, v0, v1, v2, v3, iso);
+
+              ctx.moveTo(ptA[0], ptA[1]);
+              ctx.lineTo(ptB[0], ptB[1]);
+            }
+          }
         }
 
-        ctx.lineWidth = i % 3 === 0 ? 2.1 : 1.1;
-        ctx.globalAlpha =
-          i % 3 === 0 ? (state.isDark ? 0.85 : 0.65) : state.isDark ? 0.55 : 0.35;
-        drawSpline(pts, false);
-      });
-
-      // 7. Interactive Pulse / Light Beam along contours
-      if (state.motionMode !== "static") {
-        const pulseCycle = (state.time * 0.6) % 1;
-        const pulseX = pulseCycle * (width + 400) - 200;
-        const gradPulse = ctx.createRadialGradient(
-          pulseX,
-          height * 0.45,
-          10,
-          pulseX,
-          height * 0.45,
-          300,
-        );
-        gradPulse.addColorStop(
-          0.0,
-          state.colorMode === "orange"
-            ? "rgba(255, 180, 80, 0.35)"
-            : "rgba(0, 245, 212, 0.35)",
-        );
-        gradPulse.addColorStop(1.0, "rgba(0, 0, 0, 0)");
-
-        ctx.fillStyle = gradPulse;
-        ctx.fillRect(0, 0, width, height);
+        ctx.stroke();
       }
 
-      ctx.restore();
+      ctx.shadowBlur = 0;
 
-      // 8. Soft central vignette to preserve 100% text readability
+      // 5. Soft Vignette to protect hero typography
       const vignette = ctx.createRadialGradient(
         width * 0.5,
         height * 0.48,
-        Math.min(width, height) * 0.25,
+        Math.min(width, height) * 0.22,
         width * 0.5,
         height * 0.48,
-        Math.max(width, height) * 0.7,
+        Math.max(width, height) * 0.68,
       );
       if (state.isDark) {
-        vignette.addColorStop(0.0, "rgba(5, 6, 8, 0.45)");
-        vignette.addColorStop(0.65, "rgba(5, 6, 8, 0.72)");
-        vignette.addColorStop(1.0, "rgba(5, 6, 8, 0.92)");
+        vignette.addColorStop(0.0, "rgba(6, 6, 8, 0.40)");
+        vignette.addColorStop(0.65, "rgba(6, 6, 8, 0.70)");
+        vignette.addColorStop(1.0, "rgba(6, 6, 8, 0.90)");
       } else {
-        vignette.addColorStop(0.0, "rgba(246, 246, 244, 0.35)");
-        vignette.addColorStop(0.65, "rgba(246, 246, 244, 0.65)");
-        vignette.addColorStop(1.0, "rgba(246, 246, 244, 0.90)");
+        vignette.addColorStop(0.0, "rgba(246, 246, 244, 0.30)");
+        vignette.addColorStop(0.65, "rgba(246, 246, 244, 0.60)");
+        vignette.addColorStop(1.0, "rgba(246, 246, 244, 0.88)");
       }
 
       ctx.fillStyle = vignette;
@@ -522,7 +479,6 @@ export default function TopographicBackground() {
       state.animationFrameId = requestAnimationFrame(render);
     };
 
-    // Pause rendering when tab is hidden to save battery & CPU
     const handleVisibilityChange = () => {
       if (document.hidden) {
         cancelAnimationFrame(state.animationFrameId);
@@ -625,7 +581,7 @@ export default function TopographicBackground() {
                           : "border-border/40 hover:bg-muted text-muted-foreground",
                       )}
                     >
-                      RGB Teclado
+                      RGB Dinâmico
                     </button>
                     <button
                       onClick={() => setColorMode("mono")}
@@ -716,7 +672,7 @@ export default function TopographicBackground() {
 
               {/* Status info */}
               <p className="mt-3 pt-2 text-[10px] text-muted-foreground/75 border-t border-border/40 text-center">
-                ✨ 100% gerado por código a 60 FPS com resposta ao mouse
+                ✨ Curvas de nível 100% autênticas a 60 FPS com resposta ao mouse
               </p>
             </div>
           )}

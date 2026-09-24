@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeria de 20 Efeitos Topográficos | Portfolio v2</title>
+  <title>Galeria de 20 Efeitos Topográficos Autênticos | Portfolio v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090b0e;
-      --card-bg: #12151a;
-      --card-border: #1f252e;
+      --bg: #07080b;
+      --card-bg: #0e1117;
+      --card-border: #1b212c;
       --text: #f0f3f6;
       --text-muted: #8b949e;
-      --accent: #00f5d4;
-      --accent-rgb: 0, 245, 212;
+      --accent: #ff6c22;
+      --accent-rgb: 255, 108, 34;
     }
 
     * {
@@ -34,7 +34,7 @@
     }
 
     header {
-      padding: 3rem 1.5rem 2rem;
+      padding: 3.5rem 1.5rem 2rem;
       max-width: 1300px;
       margin: 0 auto;
       text-align: center;
@@ -46,102 +46,95 @@
       gap: 0.5rem;
       padding: 0.35rem 0.85rem;
       border-radius: 9999px;
-      background: rgba(0, 245, 212, 0.1);
-      border: 1px solid rgba(0, 245, 212, 0.25);
+      background: rgba(255, 108, 34, 0.12);
+      border: 1px solid rgba(255, 108, 34, 0.3);
       color: var(--accent);
       font-size: 0.75rem;
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 1rem;
+      letter-spacing: 0.05em;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
       letter-spacing: -0.04em;
       margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #ffffff 40%, #8b949e 100%);
+      background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     p.subtitle {
       color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 700px;
-      margin: 0 auto 2rem;
+      font-size: 1.05rem;
+      max-width: 720px;
+      margin: 0 auto 2.25rem;
     }
 
-    /* Filters */
     .filter-bar {
       display: flex;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.75rem;
     }
 
     .filter-btn {
-      background: #161b22;
+      background: #12161f;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 0.45rem 1rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 9999px;
       font-size: 0.825rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .filter-btn:hover, .filter-btn.active {
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.3);
-      background: #21262d;
+      border-color: rgba(255, 108, 34, 0.6);
+      background: rgba(255, 108, 34, 0.15);
     }
 
-    .filter-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(0, 245, 212, 0.08);
-    }
-
-    /* Grid */
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 1.5rem;
-      max-width: 1300px;
+      max-width: 1380px;
       margin: 0 auto;
       padding: 0 1.5rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.75rem;
     }
 
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 1rem;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
       position: relative;
     }
 
     .card:hover {
       transform: translateY(-4px);
-      border-color: rgba(0, 245, 212, 0.4);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 108, 34, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 108, 34, 0.1);
     }
 
     .card-preview {
-      width: 100%;
-      height: 220px;
       position: relative;
-      background: #0d1117;
+      width: 100%;
+      height: 230px;
+      background: #050608;
       overflow: hidden;
+      cursor: pointer;
     }
 
-    .card-preview canvas, .card-preview svg, .card-preview .preview-content {
+    .card-canvas {
       width: 100%;
       height: 100%;
       display: block;
@@ -151,14 +144,14 @@
       position: absolute;
       top: 0.75rem;
       right: 0.75rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.25rem 0.55rem;
       border-radius: 6px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
       font-weight: 600;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       color: #fff;
       z-index: 5;
     }
@@ -200,7 +193,7 @@
     }
 
     .btn-fullscreen {
-      font-size: 0.75rem;
+      font-size: 0.775rem;
       font-weight: 600;
       color: var(--accent);
       background: none;
@@ -208,15 +201,21 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-fullscreen:hover {
+      opacity: 0.85;
+      text-decoration: underline;
     }
 
     .btn-apply {
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
       font-size: 0.75rem;
       font-weight: 600;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #fff;
       cursor: pointer;
@@ -248,32 +247,48 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
     }
 
-    #fs-canvas-container canvas, #fs-canvas-container svg, #fs-canvas-container div {
+    #fs-canvas {
       width: 100%;
       height: 100%;
       display: block;
     }
 
     .fs-header {
-      position: relative;
-      z-index: 20;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       padding: 1.25rem 2rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+      justify-content: space-between;
+      z-index: 20;
+      background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+    }
+
+    .fs-header > * {
+      pointer-events: auto;
+    }
+
+    .fs-title-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
     }
 
     .fs-title {
       font-size: 1.25rem;
       font-weight: 700;
       color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .fs-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .fs-controls {
@@ -283,9 +298,9 @@
     }
 
     .fs-btn {
-      padding: 0.5rem 1.1rem;
+      padding: 0.55rem 1rem;
       border-radius: 9999px;
-      font-size: 0.825rem;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -294,26 +309,27 @@
       gap: 0.4rem;
     }
 
-    .fs-btn-close {
+    .fs-btn-nav {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
     }
 
-    .fs-btn-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
     .fs-btn-mockup {
-      background: #21262d;
-      border: 1px solid #30363d;
-      color: #c9d1d9;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      backdrop-filter: blur(10px);
     }
 
-    .fs-btn-mockup.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
+    .fs-btn-close {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .fs-btn-close:hover {
+      background: rgba(255, 255, 255, 0.25);
     }
 
     /* Portfolio Mockup Overlay */
@@ -321,93 +337,97 @@
       position: absolute;
       inset: 0;
       z-index: 10;
-      display: none;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 2rem;
       pointer-events: none;
+      transition: opacity 0.3s ease;
     }
 
-    #fs-mockup.active {
-      display: flex;
+    #fs-mockup.hidden {
+      opacity: 0;
     }
 
     .mockup-hero {
-      max-width: 650px;
       text-align: center;
-      padding: 2.5rem;
-      background: rgba(14, 18, 24, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      border-radius: 1.5rem;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      max-width: 760px;
     }
 
     .mockup-name {
-      font-size: 2.5rem;
+      font-size: 4rem;
       font-weight: 800;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
       margin-bottom: 0.5rem;
       color: #fff;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
     }
 
     .mockup-role {
-      font-size: 1.25rem;
-      color: #8b949e;
+      font-size: 1.85rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
       margin-bottom: 1.25rem;
     }
 
     .mockup-role span {
-      color: var(--accent);
+      font-weight: 700;
+      color: #fff;
     }
 
     .mockup-text {
-      font-size: 0.95rem;
-      color: #a1a1aa;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 2rem;
       line-height: 1.6;
-      margin-bottom: 1.75rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
 
     .mockup-buttons {
       display: flex;
-      justify-content: center;
       gap: 1rem;
+      justify-content: center;
     }
 
     .mockup-btn-primary {
       background: #fff;
       color: #000;
-      padding: 0.65rem 1.4rem;
+      padding: 0.75rem 1.6rem;
       border-radius: 9999px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
     .mockup-btn-sec {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 0.65rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 0.75rem 1.6rem;
       border-radius: 9999px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="badge">🎨 TOPOGRAPHIC SUITE V2 • 20 ESTILOS ÚNICOS</div>
+    <div class="badge">🏔️ TOPOGRAPHIC SUITE V2 • 20 ESTILOS AUTÊNTICOS</div>
     <h1>20 Efeitos Topográficos de Alto Padrão</h1>
     <p class="subtitle">
-      Explore estilos que vão do minimalista OLED de traço ultrafino até gradientes Cyberpunk, isobandas de altitude e relevos vetoriais. Clique em qualquer card para ver em <strong>Tela Cheia</strong> com o mockup do seu portfólio.
+      Curvas de nível 100% autênticas geradas por campos escalares a 60 FPS com garantia matemática de <strong>zero cruzamentos</strong>. Clique em qualquer card para ver em <strong>Tela Cheia</strong> com o portfólio.
     </p>
 
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">Todos (20)</button>
+      <button class="filter-btn" data-filter="neon">Laranja & Neon</button>
+      <button class="filter-btn" data-filter="cyber">Cyberpunk & Aqua</button>
       <button class="filter-btn" data-filter="dark">Monocromático & OLED</button>
-      <button class="filter-btn" data-filter="cyber">Cyberpunk & Neon</button>
-      <button class="filter-btn" data-filter="minimal">Minimalista & Vector</button>
-      <button class="filter-btn" data-filter="colored">Gradientes & Luxo</button>
+      <button class="filter-btn" data-filter="colored">Especiais & Radar</button>
     </div>
   </header>
 
@@ -416,23 +436,30 @@
   <!-- Fullscreen Modal -->
   <div id="fs-modal">
     <div class="fs-header">
-      <div class="fs-title" id="fs-title">Efeito</div>
+      <div class="fs-title-box">
+        <div class="fs-title" id="fs-title">Efeito</div>
+        <div class="fs-desc" id="fs-desc">Descrição do efeito</div>
+      </div>
       <div class="fs-controls">
-        <button class="fs-btn fs-btn-mockup" id="btn-toggle-mockup">👁️ Testar com Portfólio</button>
+        <button class="fs-btn fs-btn-nav" id="btn-prev-effect">← Anterior</button>
+        <button class="fs-btn fs-btn-nav" id="btn-next-effect">Próximo →</button>
+        <button class="fs-btn fs-btn-mockup" id="btn-toggle-mockup">👁️ Alternar Portfólio</button>
         <button class="fs-btn fs-btn-close" id="btn-close-fs">✕ Fechar</button>
       </div>
     </div>
-    <div id="fs-canvas-container"></div>
+    <div id="fs-canvas-container">
+      <canvas id="fs-canvas"></canvas>
+    </div>
     <div id="fs-mockup">
       <div class="mockup-hero">
         <div class="mockup-name">Gabriel Queiroz</div>
         <div class="mockup-role">Desenvolvedor <span>Full Stack</span></div>
         <p class="mockup-text">
-          Criando aplicações web escaláveis, APIs de alta performance e experiências digitais intuitivas de ponta a ponta com Next.js, React e TypeScript.
+          Desenvolvedor Full Stack especializado em React, Next.js, Vue.js, NestJS e Laravel. Criando experiências digitais modernas e robustas.
         </p>
         <div class="mockup-buttons">
           <div class="mockup-btn-primary">Ver Projetos →</div>
-          <div class="mockup-btn-sec">Download CV</div>
+          <div class="mockup-btn-sec">Baixar CV</div>
         </div>
       </div>
     </div>
@@ -440,775 +467,887 @@
 
   <script>
     // =========================================================================
-    // 20 DISTINCT TOPOGRAPHIC GENERATORS
+    // MATHEMATICALLY EXACT MARCHING SQUARES ENGINE
+    // Guaranteed ZERO crossing lines, true nested elevation isolines
     // =========================================================================
 
-    // Utility: Catmull-Rom spline to smooth SVG path
-    function pointsToPath(pts, closed = true) {
-      if (pts.length < 3) return '';
-      const n = pts.length;
-      let d = 'M ' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
-      const iters = closed ? n : n - 1;
-      for (let i = 0; i < iters; i++) {
-        const p0 = pts[(i - 1 + n) % n];
-        const p1 = pts[i];
-        const p2 = pts[(i + 1) % n];
-        const p3 = pts[(i + 2) % n];
-        const c1x = p1[0] + (p2[0] - p0[0]) / 6;
-        const c1y = p1[1] + (p2[1] - p0[1]) / 6;
-        const c2x = p2[0] - (p3[0] - p1[0]) / 6;
-        const c2y = p2[1] - (p3[1] - p1[1]) / 6;
-        d += ' C ' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ', ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ', ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
-      }
-      if (closed) d += ' Z';
-      return d;
+    const EDGE_TABLE = [
+      [],
+      [[3, 0]],
+      [[0, 1]],
+      [[3, 1]],
+      [[1, 2]],
+      [[3, 0], [1, 2]],
+      [[0, 2]],
+      [[3, 2]],
+      [[2, 3]],
+      [[2, 0]],
+      [[0, 1], [2, 3]],
+      [[2, 1]],
+      [[1, 3]],
+      [[1, 0]],
+      [[0, 3]],
+      []
+    ];
+
+    // Fast Pseudo-Random Table for Noise
+    const P = new Uint8Array(512);
+    for (let i = 0; i < 256; i++) {
+      P[i] = P[i + 256] = Math.floor(Math.sin(i * 12.9898 + 78.233) * 43758.5453) & 255;
+    }
+    const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+    const lerp = (t, a, b) => a + t * (b - a);
+    const grad = (hash, x, y) => {
+      const h = hash & 7;
+      const u = h < 4 ? x : y;
+      const v = h < 4 ? y : x;
+      return ((h & 1) ? -u : u) + ((h & 2) ? -2.0 * v : 2.0 * v);
+    };
+    function noise2D(x, y) {
+      const X = Math.floor(x) & 255;
+      const Y = Math.floor(y) & 255;
+      const xf = x - Math.floor(x);
+      const yf = y - Math.floor(y);
+      const u = fade(xf);
+      const v = fade(yf);
+      const a = P[X] + Y;
+      const b = P[X + 1] + Y;
+      return lerp(v,
+        lerp(u, grad(P[a], xf, yf), grad(P[b], xf - 1, yf)),
+        lerp(u, grad(P[a + 1], xf, yf - 1), grad(P[b + 1], xf - 1, yf - 1))
+      );
     }
 
-    function makeWobblyRing(cx, cy, r, seed, steps = 36, aspect = 0.75) {
-      const pts = [];
-      for (let i = 0; i < steps; i++) {
-        const th = (i / steps) * Math.PI * 2;
-        const wobble = 1 + 0.16 * Math.sin(th * 2 + seed) + 0.12 * Math.cos(th * 3 + seed * 1.6) + 0.06 * Math.sin(th * 5 + seed * 2.5);
-        pts.push([cx + r * wobble * Math.cos(th), cy + r * wobble * Math.sin(th) * aspect]);
+    function getEdgePoint(edge, x0, y0, x1, y1, v0, v1, v2, v3, iso) {
+      if (edge === 0) {
+        const t = (iso - v0) / (v1 - v0 || 0.0001);
+        return [x0 + t * (x1 - x0), y0];
+      } else if (edge === 1) {
+        const t = (iso - v1) / (v2 - v1 || 0.0001);
+        return [x1, y0 + t * (y1 - y0)];
+      } else if (edge === 2) {
+        const t = (iso - v3) / (v2 - v3 || 0.0001);
+        return [x0 + t * (x1 - x0), y1];
+      } else {
+        const t = (iso - v0) / (v3 - v0 || 0.0001);
+        return [x0, y0 + t * (y1 - y0)];
       }
-      return pointsToPath(pts, true);
     }
 
-    function makeDualSaddle(c1, c2, r, seed, steps = 40) {
-      const pts = [];
-      const midX = (c1[0] + c2[0]) / 2;
-      const midY = (c1[1] + c2[1]) / 2;
-      const dx = c2[0] - c1[0];
-      const dy = c2[1] - c1[1];
-      const dist = Math.hypot(dx, dy);
-      const angle = Math.atan2(dy, dx);
-      for (let i = 0; i < steps; i++) {
-        const th = (i / steps) * Math.PI * 2;
-        const wobble = 1 + 0.11 * Math.sin(th * 2 + seed) + 0.07 * Math.cos(th * 3 + seed * 1.4);
-        const rx = (dist / 2 + r) * wobble;
-        const ry = (r * 0.82) * wobble;
-        const px = rx * Math.cos(th);
-        const py = ry * Math.sin(th);
-        const rotX = px * Math.cos(angle) - py * Math.sin(angle);
-        const rotY = px * Math.sin(angle) + py * Math.cos(angle);
-        pts.push([midX + rotX, midY + rotY]);
-      }
-      return pointsToPath(pts, true);
-    }
-
-    function makeFlowLine(yBase, amp, seed, steps = 30) {
-      const pts = [];
-      for (let i = 0; i <= steps; i++) {
-        const x = (i / steps) * 1920;
-        const th = (i / steps) * Math.PI * 3.5;
-        const y = yBase + amp * (Math.sin(th + seed) * 0.65 + Math.cos(th * 1.8 + seed * 1.8) * 0.35);
-        pts.push([x, y]);
-      }
-      return pointsToPath(pts, false);
-    }
-
-    // List of 20 effects definition
+    // =========================================================================
+    // 20 DISTINCT TOPOGRAPHIC STYLES CONFIGURATION
+    // =========================================================================
     const EFFECTS = [
       {
-        id: "oled-index",
-        category: "dark",
-        title: "01. OLED Preto Puro com Curvas Mestras",
-        desc: "Fundo preto absoluto com isolinhas finas de 1px e curvas mestras espessas (2.8px), exatamente como na imagem de mapa topográfico enviada.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#090b0e;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#ffffff">
-                  <!-- Regular Thin Lines -->
-                  <g stroke-width="1.1" stroke-opacity="0.85">
-                    ${[50, 90, 130, 210, 250, 330, 370].map((r, i) => `<path d="${makeWobblyRing(420, 280, r, 1.2 + i * 0.3)}" />`).join('')}
-                    ${[60, 100, 140, 220, 260, 340].map((r, i) => `<path d="${makeWobblyRing(1460, 380, r, 2.5 + i * 0.3)}" />`).join('')}
-                    ${[40, 80, 160, 200, 280].map((r, i) => `<path d="${makeWobblyRing(280, 800, r, 3.8 + i * 0.3)}" />`).join('')}
-                    ${[50, 90, 170, 210, 290].map((r, i) => `<path d="${makeWobblyRing(1150, 760, r, 4.4 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([420, 280], [1460, 380], 190, 1.5)}" />
-                    <path d="${makeDualSaddle([280, 800], [1150, 760], 170, 2.2)}" />
-                    ${[120, 320, 520, 720, 920].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <!-- Bold Index Contours (Curvas Mestras) -->
-                  <g stroke-width="2.8" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(420, 280, 170, 1.8)}" />
-                    <path d="${makeWobblyRing(420, 280, 290, 2.4)}" />
-                    <path d="${makeWobblyRing(1460, 380, 180, 3.1)}" />
-                    <path d="${makeWobblyRing(1460, 380, 300, 3.7)}" />
-                    <path d="${makeWobblyRing(280, 800, 120, 4.2)}" />
-                    <path d="${makeWobblyRing(1150, 760, 130, 4.8)}" />
-                    <path d="${makeDualSaddle([420, 280], [1460, 380], 280, 2.0)}" />
-                    <path d="${makeFlowLine(440, 55, 3.3)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'neon-orange',
+        category: 'neon',
+        name: '01. Neon Contour (Signature)',
+        desc: 'Relevo autêntico com curvas mestras neon âmbar, grid pontilhado e vale central amplo.',
+        bg: '#060608',
+        masterStroke: '#ff6c22',
+        minorStroke: '#b24212',
+        masterGlow: 'rgba(255, 108, 34, 0.45)',
+        minorGlow: 'rgba(255, 75, 20, 0.12)',
+        dotColor: 'rgba(255, 122, 41, 0.12)',
+        dotRadius: 0.85,
+        gridSpacing: 32,
+        levels: 24,
+        speed: 0.8,
+        summits: [
+          { x: 0.18, y: 0.18, h: 2.2, r: 0.15, s: 0.22, p: 0.4, dx: 0.025, dy: 0.02 },
+          { x: 0.85, y: 0.20, h: 2.4, r: 0.16, s: 0.18, p: 1.6, dx: 0.02, dy: 0.025 },
+          { x: 0.32, y: 0.42, h: 2.1, r: 0.14, s: 0.25, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.68, y: 0.40, h: 2.3, r: 0.15, s: 0.20, p: 3.5, dx: 0.025, dy: 0.02 },
+          { x: 0.16, y: 0.72, h: 2.0, r: 0.15, s: 0.24, p: 4.6, dx: 0.02, dy: 0.02 },
+          { x: 0.84, y: 0.76, h: 2.2, r: 0.16, s: 0.21, p: 5.3, dx: 0.025, dy: 0.02 },
+          { x: 0.50, y: 0.68, h: 1.9, r: 0.14, s: 0.26, p: 0.9, dx: 0.02, dy: 0.02 },
+          { x: 0.50, y: 0.22, h: 1.8, r: 0.13, s: 0.23, p: 2.0, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "cyber-aqua-laser",
-        category: "cyber",
-        title: "02. Cyber Aqua Laser-Cut",
-        desc: "Traços vetoriais ultra-finos em gradiente Ciano Elétrico para Azul Neon sobre preto espacial, estilo interface futurista.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#06080d;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;filter:drop-shadow(0 0 1.2px rgba(0, 245, 212, 0.4));">
-                <defs>
-                  <linearGradient id="cyber-g-${el.id || Math.random()}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#00f5d4"/>
-                    <stop offset="40%" stop-color="#00bbf9"/>
-                    <stop offset="80%" stop-color="#0077b6"/>
-                    <stop offset="100%" stop-color="#3a86ff"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#cyber-g-${el.id || Math.random()})">
-                  <g stroke-width="1.2" stroke-opacity="0.8">
-                    ${[40, 75, 115, 160, 210, 265, 325, 390].map((r, i) => `<path d="${makeWobblyRing(400, 320, r, 1.1 + i * 0.3)}" />`).join('')}
-                    ${[45, 85, 130, 180, 235, 295, 360].map((r, i) => `<path d="${makeWobblyRing(1450, 400, r, 2.4 + i * 0.3)}" />`).join('')}
-                    ${[35, 75, 120, 170, 225, 285].map((r, i) => `<path d="${makeWobblyRing(900, 780, r, 3.7 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([400, 320], [1450, 400], 190, 1.7)}" />
-                    <path d="${makeDualSaddle([400, 320], [1450, 400], 280, 2.1)}" />
-                    ${[100, 260, 500, 720, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.4)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.5" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(400, 320, 160, 1.8)}" />
-                    <path d="${makeWobblyRing(1450, 400, 180, 3.1)}" />
-                    <path d="${makeWobblyRing(900, 780, 170, 4.2)}" />
-                    <path d="${makeFlowLine(500, 50, 2.5)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'cyber-aqua',
+        category: 'cyber',
+        name: '02. Cyber Aqua Matrix',
+        desc: 'Visual futurista ciano e turquesa com traço cirúrgico e matriz luminosa.',
+        bg: '#04090e',
+        masterStroke: '#00f5d4',
+        minorStroke: '#0077b6',
+        masterGlow: 'rgba(0, 245, 212, 0.5)',
+        minorGlow: 'rgba(0, 187, 249, 0.15)',
+        dotColor: 'rgba(0, 245, 212, 0.14)',
+        dotRadius: 0.9,
+        gridSpacing: 34,
+        levels: 22,
+        speed: 0.75,
+        summits: [
+          { x: 0.20, y: 0.25, h: 2.3, r: 0.17, s: 0.24, p: 0.8, dx: 0.03, dy: 0.02 },
+          { x: 0.80, y: 0.28, h: 2.1, r: 0.16, s: 0.20, p: 2.1, dx: 0.02, dy: 0.03 },
+          { x: 0.40, y: 0.55, h: 2.0, r: 0.15, s: 0.28, p: 3.2, dx: 0.02, dy: 0.02 },
+          { x: 0.75, y: 0.70, h: 2.4, r: 0.18, s: 0.22, p: 4.5, dx: 0.03, dy: 0.02 },
+          { x: 0.15, y: 0.80, h: 2.2, r: 0.16, s: 0.25, p: 1.4, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "keyboard-rgb",
-        category: "colored",
-        title: "03. Teclado Mecânico RGB (Foto Original)",
-        desc: "O gradiente horizontal idêntico ao teclado da foto: Laranja → Âmbar → Verde Limão → Ciano → Azul → Magenta Neon sobre preto fosco.",
-        render: (el, isFs) => {
-          const gid = 'rgb-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#090a0d;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#ff4500"/>
-                    <stop offset="20%" stop-color="#ffb300"/>
-                    <stop offset="42%" stop-color="#00e676"/>
-                    <stop offset="65%" stop-color="#00e5ff"/>
-                    <stop offset="85%" stop-color="#2979ff"/>
-                    <stop offset="100%" stop-color="#e040fb"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})">
-                  <g stroke-width="1.3" stroke-opacity="0.82">
-                    ${[45, 85, 130, 180, 235, 295, 360].map((r, i) => `<path d="${makeWobblyRing(380, 280, r, 1.3 + i * 0.3)}" />`).join('')}
-                    ${[50, 95, 145, 200, 260, 325].map((r, i) => `<path d="${makeWobblyRing(1480, 360, r, 2.6 + i * 0.3)}" />`).join('')}
-                    ${[40, 80, 125, 175, 230].map((r, i) => `<path d="${makeWobblyRing(300, 820, r, 3.9 + i * 0.3)}" />`).join('')}
-                    ${[45, 90, 140, 195, 255].map((r, i) => `<path d="${makeWobblyRing(1120, 780, r, 4.5 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([380, 280], [1480, 360], 190, 1.8)}" />
-                    <path d="${makeDualSaddle([380, 280], [1480, 360], 280, 2.2)}" />
-                    ${[90, 240, 480, 700, 920].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.6" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(380, 280, 180, 1.9)}" />
-                    <path d="${makeWobblyRing(1480, 360, 200, 3.2)}" />
-                    <path d="${makeFlowLine(480, 50, 3.0)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'oled-mono',
+        category: 'dark',
+        name: '03. Monochrome OLED Vector',
+        desc: 'Preto puro absoluto (#000) com curvas ultrafinas brancas e prateadas de alta precisão.',
+        bg: '#000000',
+        masterStroke: '#ffffff',
+        minorStroke: '#52525b',
+        masterGlow: 'rgba(255, 255, 255, 0.35)',
+        minorGlow: 'transparent',
+        dotColor: 'rgba(255, 255, 255, 0.08)',
+        dotRadius: 0.75,
+        gridSpacing: 36,
+        levels: 26,
+        speed: 0.6,
+        summits: [
+          { x: 0.15, y: 0.20, h: 2.4, r: 0.16, s: 0.18, p: 0.5, dx: 0.02, dy: 0.02 },
+          { x: 0.85, y: 0.22, h: 2.5, r: 0.17, s: 0.22, p: 1.8, dx: 0.02, dy: 0.02 },
+          { x: 0.30, y: 0.48, h: 2.1, r: 0.14, s: 0.24, p: 3.0, dx: 0.02, dy: 0.02 },
+          { x: 0.70, y: 0.45, h: 2.2, r: 0.15, s: 0.19, p: 4.1, dx: 0.02, dy: 0.02 },
+          { x: 0.20, y: 0.80, h: 2.3, r: 0.16, s: 0.21, p: 5.2, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.82, h: 2.4, r: 0.17, s: 0.20, p: 2.6, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "elevation-bands",
-        category: "colored",
-        title: "04. Isobandas / Altitude Escalonada",
-        desc: "Áreas de relevo com preenchimentos sutis em camadas translúcidas (estilo mapa cartográfico de altitude de precisão).",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#090d13;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g stroke="#38bdf8" stroke-width="1.2">
-                  ${[320, 260, 200, 150, 105, 65, 30].map((r, i) => `
-                    <path d="${makeWobblyRing(500, 400, r, 1.2 + i * 0.35)}" fill="rgba(56, 189, 248, ${0.03 + i * 0.035})" stroke-opacity="${0.4 + i * 0.08}" />
-                  `).join('')}
-                  ${[340, 275, 215, 160, 110, 70, 35].map((r, i) => `
-                    <path d="${makeWobblyRing(1400, 500, r, 2.5 + i * 0.35)}" fill="rgba(56, 189, 248, ${0.03 + i * 0.035})" stroke-opacity="${0.4 + i * 0.08}" />
-                  `).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'tokyo-cyber',
+        category: 'cyber',
+        name: '04. Tokyo Cyberpunk',
+        desc: 'Gradiente elétrico de magenta neon (#f72585) e âmbar com forte contraste e brilho.',
+        bg: '#080309',
+        masterStroke: '#f72585',
+        minorStroke: '#7209b7',
+        masterGlow: 'rgba(247, 37, 133, 0.55)',
+        minorGlow: 'rgba(114, 9, 183, 0.2)',
+        dotColor: 'rgba(247, 37, 133, 0.13)',
+        dotRadius: 0.9,
+        gridSpacing: 30,
+        levels: 22,
+        speed: 0.85,
+        summits: [
+          { x: 0.25, y: 0.20, h: 2.2, r: 0.16, s: 0.26, p: 0.3, dx: 0.03, dy: 0.02 },
+          { x: 0.78, y: 0.25, h: 2.4, r: 0.17, s: 0.21, p: 1.5, dx: 0.02, dy: 0.03 },
+          { x: 0.45, y: 0.50, h: 2.0, r: 0.14, s: 0.28, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.18, y: 0.75, h: 2.3, r: 0.16, s: 0.24, p: 4.0, dx: 0.03, dy: 0.02 },
+          { x: 0.82, y: 0.78, h: 2.1, r: 0.15, s: 0.22, p: 5.2, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "gold-carbon",
-        category: "colored",
-        title: "05. Ouro Nobre em Carbono Escovado",
-        desc: "Visual luxury minimalista com traços dourados champanhe acetinados (#d4af37) sobre fundo carbono escuro profundo.",
-        render: (el, isFs) => {
-          const gid = 'gold-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#0c0d0f;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#f5e6a8"/>
-                    <stop offset="50%" stop-color="#d4af37"/>
-                    <stop offset="100%" stop-color="#aa7c11"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})">
-                  <g stroke-width="1.1" stroke-opacity="0.65">
-                    ${[40, 80, 130, 185, 245, 310, 380].map((r, i) => `<path d="${makeWobblyRing(450, 300, r, 1.2 + i * 0.3)}" />`).join('')}
-                    ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1420, 420, r, 2.5 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([450, 300], [1420, 420], 210, 1.7)}" />
-                    ${[100, 300, 520, 740, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.4" stroke-opacity="0.9">
-                    <path d="${makeWobblyRing(450, 300, 185, 1.8)}" />
-                    <path d="${makeWobblyRing(1420, 420, 195, 3.1)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'emerald-bio',
+        category: 'colored',
+        name: '05. Emerald Bioluminescence',
+        desc: 'Verde esmeralda orgânico e limão fluorescente sobre fundo de obsidiana florestal.',
+        bg: '#030d07',
+        masterStroke: '#10b981',
+        minorStroke: '#065f46',
+        masterGlow: 'rgba(16, 185, 129, 0.5)',
+        minorGlow: 'rgba(5, 150, 105, 0.15)',
+        dotColor: 'rgba(16, 185, 129, 0.14)',
+        dotRadius: 0.85,
+        gridSpacing: 32,
+        levels: 23,
+        speed: 0.7,
+        summits: [
+          { x: 0.18, y: 0.22, h: 2.3, r: 0.16, s: 0.22, p: 0.6, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.24, h: 2.2, r: 0.15, s: 0.20, p: 1.9, dx: 0.03, dy: 0.02 },
+          { x: 0.35, y: 0.46, h: 2.0, r: 0.14, s: 0.25, p: 3.1, dx: 0.02, dy: 0.02 },
+          { x: 0.65, y: 0.44, h: 2.1, r: 0.15, s: 0.21, p: 4.2, dx: 0.02, dy: 0.03 },
+          { x: 0.20, y: 0.78, h: 2.4, r: 0.17, s: 0.23, p: 5.4, dx: 0.03, dy: 0.02 },
+          { x: 0.85, y: 0.80, h: 2.2, r: 0.16, s: 0.19, p: 2.2, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "ocean-bathymetry",
-        category: "colored",
-        title: "06. Batimetria Oceânica Profunda",
-        desc: "Curvas de profundidade marinha em azul marinho profundo, ciano abissal e azul cobalto, inspiradas em cartas náuticas.",
-        render: (el, isFs) => {
-          const gid = 'ocean-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#040914;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#38bdf8"/>
-                    <stop offset="40%" stop-color="#0284c7"/>
-                    <stop offset="80%" stop-color="#0369a1"/>
-                    <stop offset="100%" stop-color="#1e3a8a"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})">
-                  <g stroke-width="1.2" stroke-opacity="0.75">
-                    ${[50, 100, 155, 215, 280, 350].map((r, i) => `<path d="${makeWobblyRing(500, 340, r, 1.3 + i * 0.3)}" />`).join('')}
-                    ${[45, 95, 150, 210, 275, 345].map((r, i) => `<path d="${makeWobblyRing(1400, 450, r, 2.4 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([500, 340], [1400, 450], 210, 1.6)}" />
-                    ${[80, 260, 490, 720, 930].map((y, i) => `<path d="${makeFlowLine(y, 48, i * 1.4)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.5" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(500, 340, 215, 2.0)}" />
-                    <path d="${makeWobblyRing(1400, 450, 210, 3.2)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'magma-ridge',
+        category: 'neon',
+        name: '06. Solar Magma Ridge',
+        desc: 'Rachaduras tectônicas em vermelho vulcânico e laranja incandescente.',
+        bg: '#0d0403',
+        masterStroke: '#ef4444',
+        minorStroke: '#991b1b',
+        masterGlow: 'rgba(239, 68, 68, 0.55)',
+        minorGlow: 'rgba(185, 28, 28, 0.2)',
+        dotColor: 'rgba(239, 68, 68, 0.13)',
+        dotRadius: 0.9,
+        gridSpacing: 32,
+        levels: 24,
+        speed: 0.8,
+        summits: [
+          { x: 0.16, y: 0.22, h: 2.4, r: 0.16, s: 0.25, p: 0.5, dx: 0.03, dy: 0.02 },
+          { x: 0.84, y: 0.25, h: 2.2, r: 0.15, s: 0.20, p: 1.7, dx: 0.02, dy: 0.02 },
+          { x: 0.50, y: 0.38, h: 2.1, r: 0.14, s: 0.27, p: 2.9, dx: 0.02, dy: 0.03 },
+          { x: 0.22, y: 0.72, h: 2.3, r: 0.16, s: 0.22, p: 4.1, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.75, h: 2.5, r: 0.17, s: 0.24, p: 5.3, dx: 0.03, dy: 0.02 },
+        ]
       },
       {
-        id: "sunset-neon",
-        category: "cyber",
-        title: "07. Pôr do Sol Neon (Sunset Violet)",
-        desc: "Contornos com transição elegante de Magenta Intenso (#ff007f) para Laranja Pôr do Sol (#ff5400) e Violeta (#7928ca).",
-        render: (el, isFs) => {
-          const gid = 'sunset-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#09060e;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ff007f"/>
-                    <stop offset="50%" stop-color="#ff5400"/>
-                    <stop offset="100%" stop-color="#7928ca"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})">
-                  <g stroke-width="1.2" stroke-opacity="0.75">
-                    ${[40, 80, 130, 185, 245, 310].map((r, i) => `<path d="${makeWobblyRing(420, 300, r, 1.1 + i * 0.3)}" />`).join('')}
-                    ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1450, 380, r, 2.4 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([420, 300], [1450, 380], 200, 1.8)}" />
-                    ${[100, 300, 520, 740, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.6" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(420, 300, 185, 1.9)}" />
-                    <path d="${makeWobblyRing(1450, 380, 195, 3.2)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'nordic-aurora',
+        category: 'colored',
+        name: '07. Nordic Aurora',
+        desc: 'Ondulação suave de violeta estelar (#8b5cf6) fluindo para turquesa boreal.',
+        bg: '#05040a',
+        masterStroke: '#a855f7',
+        minorStroke: '#4c1d95',
+        masterGlow: 'rgba(168, 85, 247, 0.5)',
+        minorGlow: 'rgba(124, 58, 237, 0.15)',
+        dotColor: 'rgba(168, 85, 247, 0.12)',
+        dotRadius: 0.85,
+        gridSpacing: 34,
+        levels: 22,
+        speed: 0.65,
+        summits: [
+          { x: 0.22, y: 0.18, h: 2.3, r: 0.16, s: 0.20, p: 0.4, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.22, h: 2.1, r: 0.15, s: 0.18, p: 1.6, dx: 0.03, dy: 0.02 },
+          { x: 0.40, y: 0.48, h: 2.0, r: 0.14, s: 0.22, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.72, y: 0.46, h: 2.2, r: 0.15, s: 0.19, p: 3.9, dx: 0.02, dy: 0.02 },
+          { x: 0.18, y: 0.80, h: 2.4, r: 0.17, s: 0.21, p: 5.1, dx: 0.03, dy: 0.02 },
+          { x: 0.82, y: 0.82, h: 2.2, r: 0.16, s: 0.18, p: 2.5, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "swiss-minimal",
-        category: "minimal",
-        title: "08. Minimalismo Suíço (Linear / Vercel)",
-        desc: "Traços cinza grafite ultrafinos (0.9px) em altíssima densidade. Elegância pura e silenciosa para máxima legibilidade.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#05070a;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#334155" stroke-width="0.9" stroke-opacity="0.6">
-                  ${[30, 60, 95, 135, 180, 230, 285, 345, 410].map((r, i) => `<path d="${makeWobblyRing(480, 320, r, 1.2 + i * 0.25)}" />`).join('')}
-                  ${[35, 70, 110, 155, 205, 260, 320, 385].map((r, i) => `<path d="${makeWobblyRing(1400, 400, r, 2.5 + i * 0.25)}" />`).join('')}
-                  ${[30, 65, 105, 150, 200, 255, 315].map((r, i) => `<path d="${makeWobblyRing(900, 800, r, 3.8 + i * 0.25)}" />`).join('')}
-                  <path d="${makeDualSaddle([480, 320], [1400, 400], 190, 1.6)}" />
-                  <path d="${makeDualSaddle([480, 320], [1400, 400], 280, 2.1)}" />
-                  ${[80, 220, 400, 580, 740, 900].map((y, i) => `<path d="${makeFlowLine(y, 40, i * 1.3)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'ocean-bathy',
+        category: 'colored',
+        name: '08. Deep Ocean Bathymetry',
+        desc: 'Fossa abissal marítima com azul profundo e ciano luminoso de sonar.',
+        bg: '#020612',
+        masterStroke: '#38bdf8',
+        minorStroke: '#075985',
+        masterGlow: 'rgba(56, 189, 248, 0.45)',
+        minorGlow: 'rgba(14, 116, 144, 0.15)',
+        dotColor: 'rgba(56, 189, 248, 0.12)',
+        dotRadius: 0.8,
+        gridSpacing: 32,
+        levels: 24,
+        speed: 0.7,
+        summits: [
+          { x: 0.18, y: 0.24, h: 2.4, r: 0.17, s: 0.22, p: 0.7, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.26, h: 2.2, r: 0.16, s: 0.20, p: 2.0, dx: 0.03, dy: 0.02 },
+          { x: 0.50, y: 0.52, h: 1.9, r: 0.14, s: 0.25, p: 3.3, dx: 0.02, dy: 0.02 },
+          { x: 0.20, y: 0.78, h: 2.3, r: 0.16, s: 0.21, p: 4.6, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.76, h: 2.5, r: 0.18, s: 0.23, p: 5.7, dx: 0.03, dy: 0.02 },
+        ]
       },
       {
-        id: "radar-hud",
-        category: "cyber",
-        title: "09. Radar Militar HUD (Verde Fósforo)",
-        desc: "Visual tático militar com linhas verde fósforo (#00ff66), mira circular central e marcações de grade topográfica de coordenadas.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#040905;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#00ff66" stop-opacity="0.08" />
-                    <stop offset="100%" stop-color="#00ff66" stop-opacity="0" />
-                  </radialGradient>
-                </defs>
-                <circle cx="960" cy="540" r="500" fill="url(#radar-glow)" stroke="rgba(0, 255, 102, 0.2)" stroke-width="1.2" stroke-dasharray="8 6" />
-                <circle cx="960" cy="540" r="300" fill="none" stroke="rgba(0, 255, 102, 0.25)" stroke-width="1" />
-                <circle cx="960" cy="540" r="120" fill="none" stroke="rgba(0, 255, 102, 0.3)" stroke-width="1" />
-                <line x1="960" y1="40" x2="960" y2="1040" stroke="rgba(0, 255, 102, 0.15)" stroke-width="1" stroke-dasharray="4 4" />
-                <line x1="460" y1="540" x2="1460" y2="540" stroke="rgba(0, 255, 102, 0.15)" stroke-width="1" stroke-dasharray="4 4" />
-                <g fill="none" stroke="#00ff66" stroke-width="1.1" stroke-opacity="0.65">
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(650, 420, r, 1.4 + i * 0.3)}" />`).join('')}
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1250, 620, r, 2.7 + i * 0.3)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'gold-luxury',
+        category: 'dark',
+        name: '09. Titanium & Champagne Gold',
+        desc: 'Estilo de luxo requintado: titânio escovado com linhas finas em ouro champagne.',
+        bg: '#0c0c0e',
+        masterStroke: '#d4af37',
+        minorStroke: '#715822',
+        masterGlow: 'rgba(212, 175, 55, 0.4)',
+        minorGlow: 'rgba(180, 140, 40, 0.12)',
+        dotColor: 'rgba(212, 175, 55, 0.12)',
+        dotRadius: 0.8,
+        gridSpacing: 34,
+        levels: 25,
+        speed: 0.55,
+        summits: [
+          { x: 0.15, y: 0.18, h: 2.3, r: 0.15, s: 0.18, p: 0.4, dx: 0.02, dy: 0.02 },
+          { x: 0.85, y: 0.20, h: 2.4, r: 0.16, s: 0.16, p: 1.6, dx: 0.02, dy: 0.02 },
+          { x: 0.32, y: 0.44, h: 2.1, r: 0.14, s: 0.20, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.68, y: 0.42, h: 2.2, r: 0.15, s: 0.17, p: 3.8, dx: 0.02, dy: 0.02 },
+          { x: 0.16, y: 0.74, h: 2.0, r: 0.15, s: 0.19, p: 4.8, dx: 0.02, dy: 0.02 },
+          { x: 0.84, y: 0.78, h: 2.3, r: 0.16, s: 0.18, p: 5.8, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "papercut-layers",
-        category: "colored",
-        title: "10. Papel Esculpido em Camadas (Papercut)",
-        desc: "Sensação tátil de relevo recortado a laser em camadas sobrepostas de cartolina com sombras de profundidade real.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#0b0f14;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <filter id="paper-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.65" />
-                  </filter>
-                </defs>
-                <g filter="url(#paper-shadow)">
-                  ${[
-                    { r: 480, fill: '#0f172a' },
-                    { r: 380, fill: '#1e293b' },
-                    { r: 290, fill: '#334155' },
-                    { r: 200, fill: '#475569' },
-                    { r: 120, fill: '#64748b' }
-                  ].map((layer, i) => `
-                    <path d="${makeWobblyRing(960, 540, layer.r, 1.5 + i * 0.4, 40, 0.65)}" fill="${layer.fill}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />
-                  `).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'quantum-gravity',
+        category: 'cyber',
+        name: '10. Quantum Gravitational Field',
+        desc: 'Distorção do espaço-tempo com poços gravitacionais densos e curvas deformadas.',
+        bg: '#05020a',
+        masterStroke: '#c084fc',
+        minorStroke: '#581c87',
+        masterGlow: 'rgba(192, 132, 252, 0.5)',
+        minorGlow: 'rgba(126, 34, 206, 0.15)',
+        dotColor: 'rgba(192, 132, 252, 0.13)',
+        dotRadius: 0.85,
+        gridSpacing: 30,
+        levels: 26,
+        speed: 0.9,
+        summits: [
+          { x: 0.25, y: 0.25, h: 2.6, r: 0.18, s: 0.28, p: 0.5, dx: 0.03, dy: 0.03 },
+          { x: 0.75, y: 0.30, h: 2.5, r: 0.17, s: 0.24, p: 2.0, dx: 0.03, dy: 0.02 },
+          { x: 0.50, y: 0.60, h: 2.8, r: 0.19, s: 0.30, p: 3.5, dx: 0.03, dy: 0.03 },
+          { x: 0.18, y: 0.80, h: 2.2, r: 0.15, s: 0.22, p: 4.8, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.78, h: 2.3, r: 0.16, s: 0.25, p: 1.2, dx: 0.02, dy: 0.03 },
+        ]
       },
       {
-        id: "magma-volcanic",
-        category: "colored",
-        title: "11. Fenda Vulcânica & Magma",
-        desc: "Rocha vulcânica escura com curvas incandescentes de lava em gradiente escarlate, carmesim e fogo.",
-        render: (el, isFs) => {
-          const gid = 'magma-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#0a0504;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ff3b00"/>
-                    <stop offset="50%" stop-color="#ff0055"/>
-                    <stop offset="100%" stop-color="#800020"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})">
-                  <g stroke-width="1.2" stroke-opacity="0.75">
-                    ${[40, 80, 130, 185, 245, 310].map((r, i) => `<path d="${makeWobblyRing(460, 320, r, 1.2 + i * 0.3)}" />`).join('')}
-                    ${[45, 90, 140, 195, 255].map((r, i) => `<path d="${makeWobblyRing(1400, 420, r, 2.5 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([460, 320], [1400, 420], 210, 1.7)}" />
-                    ${[90, 280, 500, 720, 930].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.6" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(460, 320, 185, 1.8)}" />
-                    <path d="${makeWobblyRing(1400, 420, 195, 3.1)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'radar-sweep',
+        category: 'colored',
+        name: '11. Sonar Radar Sweep',
+        desc: 'Feixe de radar contínuo varrendo as elevações com fósforo verde de navegação.',
+        bg: '#020b05',
+        masterStroke: '#22c55e',
+        minorStroke: '#14532d',
+        masterGlow: 'rgba(34, 197, 94, 0.5)',
+        minorGlow: 'rgba(21, 128, 61, 0.15)',
+        dotColor: 'rgba(34, 197, 94, 0.14)',
+        dotRadius: 0.9,
+        gridSpacing: 32,
+        levels: 22,
+        speed: 0.75,
+        summits: [
+          { x: 0.20, y: 0.20, h: 2.2, r: 0.16, s: 0.22, p: 0.5, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.22, h: 2.3, r: 0.16, s: 0.20, p: 1.7, dx: 0.02, dy: 0.02 },
+          { x: 0.35, y: 0.48, h: 2.0, r: 0.14, s: 0.24, p: 3.0, dx: 0.02, dy: 0.02 },
+          { x: 0.65, y: 0.46, h: 2.1, r: 0.15, s: 0.21, p: 4.0, dx: 0.02, dy: 0.02 },
+          { x: 0.22, y: 0.78, h: 2.3, r: 0.16, s: 0.23, p: 5.2, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.80, h: 2.2, r: 0.15, s: 0.19, p: 2.3, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "aurora-borealis",
-        category: "cyber",
-        title: "12. Aurora Boreal Polar",
-        desc: "Curvas magnéticas fluidas em verde esmeralda místico e ciano etéreo cintilante na noite ártica.",
-        render: (el, isFs) => {
-          const gid = 'aurora-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#040c0b;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#10b981"/>
-                    <stop offset="50%" stop-color="#06b6d4"/>
-                    <stop offset="100%" stop-color="#3b82f6"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})" stroke-width="1.2" stroke-opacity="0.75">
-                  ${[45, 90, 140, 195, 255, 320, 390].map((r, i) => `<path d="${makeWobblyRing(500, 350, r, 1.3 + i * 0.3)}" />`).join('')}
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1420, 420, r, 2.4 + i * 0.3)}" />`).join('')}
-                  <path d="${makeDualSaddle([500, 350], [1420, 420], 210, 1.6)}" stroke-width="2.2" stroke-opacity="0.9" />
-                  ${[80, 240, 460, 680, 900].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.4)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'pointillism-cloud',
+        category: 'dark',
+        name: '12. Topographic Pointillism',
+        desc: 'Constelação de microesferas luminosas formando curvas pontilhadas esculturais.',
+        bg: '#050608',
+        masterStroke: '#38bdf8',
+        minorStroke: '#1e293b',
+        masterGlow: 'rgba(56, 189, 248, 0.4)',
+        minorGlow: 'transparent',
+        dotColor: 'rgba(255, 255, 255, 0.1)',
+        dotRadius: 0.85,
+        gridSpacing: 28,
+        levels: 20,
+        speed: 0.7,
+        summits: [
+          { x: 0.18, y: 0.20, h: 2.3, r: 0.16, s: 0.22, p: 0.4, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.22, h: 2.4, r: 0.16, s: 0.20, p: 1.6, dx: 0.02, dy: 0.02 },
+          { x: 0.35, y: 0.46, h: 2.1, r: 0.14, s: 0.25, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.70, y: 0.44, h: 2.2, r: 0.15, s: 0.21, p: 3.8, dx: 0.02, dy: 0.02 },
+          { x: 0.18, y: 0.78, h: 2.2, r: 0.15, s: 0.23, p: 5.0, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.80, h: 2.3, r: 0.16, s: 0.20, p: 2.4, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "concentric-atolls",
-        category: "minimal",
-        title: "13. Arquipélago de Ilhas (Atóis)",
-        desc: "Centros circulares orgânicos de grande densidade concêntrica imitando lagoas e atóis de corais do Pacífico.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#070b10;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#38bdf8" stroke-width="1.15" stroke-opacity="0.75">
-                  ${[25, 50, 75, 105, 140, 180, 225, 275, 330].map((r, i) => `<path d="${makeWobblyRing(360, 320, r, 1.2 + i * 0.28, 36, 0.85)}" />`).join('')}
-                  ${[30, 60, 95, 135, 180, 230, 285, 345].map((r, i) => `<path d="${makeWobblyRing(1450, 360, r, 2.5 + i * 0.28, 36, 0.85)}" />`).join('')}
-                  ${[25, 55, 90, 130, 175, 225].map((r, i) => `<path d="${makeWobblyRing(880, 720, r, 3.8 + i * 0.28, 36, 0.85)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'prismatic-holo',
+        category: 'colored',
+        name: '13. Prismatic Hologram',
+        desc: 'Efeito holográfico iridescente com dispersão cromática fluindo entre as curvas.',
+        bg: '#040408',
+        masterStroke: '#f43f5e',
+        minorStroke: '#3b82f6',
+        masterGlow: 'rgba(244, 63, 94, 0.45)',
+        minorGlow: 'rgba(59, 130, 246, 0.2)',
+        dotColor: 'rgba(236, 72, 153, 0.13)',
+        dotRadius: 0.85,
+        gridSpacing: 32,
+        levels: 24,
+        speed: 0.9,
+        summits: [
+          { x: 0.20, y: 0.20, h: 2.3, r: 0.16, s: 0.24, p: 0.5, dx: 0.03, dy: 0.02 },
+          { x: 0.80, y: 0.22, h: 2.2, r: 0.15, s: 0.21, p: 1.8, dx: 0.02, dy: 0.02 },
+          { x: 0.45, y: 0.48, h: 2.0, r: 0.14, s: 0.26, p: 3.1, dx: 0.02, dy: 0.02 },
+          { x: 0.20, y: 0.78, h: 2.4, r: 0.17, s: 0.22, p: 4.3, dx: 0.03, dy: 0.02 },
+          { x: 0.82, y: 0.80, h: 2.1, r: 0.15, s: 0.20, p: 5.5, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "blueprint-tech",
-        category: "minimal",
-        title: "14. Blueprint Arquitetônico / CAD",
-        desc: "Fundo azul ciano escuro clássico (#0a192f) com curvas técnicas brancas e grade milimétrica de projeto de engenharia.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#081324;position:relative;overflow:hidden;background-image:linear-gradient(to right, rgba(100, 180, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(100, 180, 255, 0.05) 1px, transparent 1px);background-size:32px 32px;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#7dd3fc" stroke-width="1.1" stroke-opacity="0.8">
-                  ${[40, 80, 130, 185, 245, 310].map((r, i) => `<path d="${makeWobblyRing(480, 340, r, 1.2 + i * 0.3)}" />`).join('')}
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1400, 420, r, 2.5 + i * 0.3)}" />`).join('')}
-                  <path d="${makeDualSaddle([480, 340], [1400, 420], 210, 1.7)}" stroke-width="2.2" />
-                  ${[100, 280, 500, 720, 920].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'glacial-fjord',
+        category: 'dark',
+        name: '14. Alpine Glacial Fjord',
+        desc: 'Relevo polar com tons de gelo ártico, branco cristalino e azul glacial.',
+        bg: '#03070d',
+        masterStroke: '#e0f2fe',
+        minorStroke: '#0284c7',
+        masterGlow: 'rgba(224, 242, 254, 0.4)',
+        minorGlow: 'rgba(2, 132, 199, 0.15)',
+        dotColor: 'rgba(224, 242, 254, 0.12)',
+        dotRadius: 0.85,
+        gridSpacing: 34,
+        levels: 25,
+        speed: 0.65,
+        summits: [
+          { x: 0.16, y: 0.18, h: 2.4, r: 0.16, s: 0.19, p: 0.5, dx: 0.02, dy: 0.02 },
+          { x: 0.84, y: 0.20, h: 2.5, r: 0.17, s: 0.17, p: 1.7, dx: 0.02, dy: 0.02 },
+          { x: 0.32, y: 0.45, h: 2.1, r: 0.14, s: 0.22, p: 2.9, dx: 0.02, dy: 0.02 },
+          { x: 0.68, y: 0.42, h: 2.2, r: 0.15, s: 0.18, p: 4.0, dx: 0.02, dy: 0.02 },
+          { x: 0.18, y: 0.76, h: 2.2, r: 0.15, s: 0.21, p: 5.1, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.80, h: 2.4, r: 0.16, s: 0.19, p: 2.3, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "cliff-edge-dense",
-        category: "dark",
-        title: "15. Encostas Escarpadas (Cliff Relief)",
-        desc: "Variação extrema de gradiente topográfico: encostas com feixes ultra-densos de linhas contrastando com platôs vazios.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#090b0e;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#e2e8f0" stroke-width="1.05">
-                  <!-- Compressed lines near cliff -->
-                  ${[40, 52, 65, 80, 96, 114, 134, 156, 180, 230, 290, 360].map((r, i) => `<path d="${makeWobblyRing(440, 300, r, 1.2 + i * 0.2)}" stroke-opacity="${i < 8 ? 0.9 : 0.6}" />`).join('')}
-                  ${[45, 58, 72, 88, 106, 126, 148, 172, 220, 280, 350].map((r, i) => `<path d="${makeWobblyRing(1440, 420, r, 2.5 + i * 0.2)}" stroke-opacity="${i < 8 ? 0.9 : 0.6}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'acoustic-frequency',
+        category: 'cyber',
+        name: '15. Acoustic Frequency Landscape',
+        desc: 'Ondulações acústicas harmônicas reagindo como um equalizador de áudio orquestral.',
+        bg: '#07050e',
+        masterStroke: '#818cf8',
+        minorStroke: '#3730a3',
+        masterGlow: 'rgba(129, 140, 248, 0.45)',
+        minorGlow: 'rgba(55, 48, 163, 0.15)',
+        dotColor: 'rgba(129, 140, 248, 0.13)',
+        dotRadius: 0.85,
+        gridSpacing: 30,
+        levels: 24,
+        speed: 1.05,
+        summits: [
+          { x: 0.20, y: 0.22, h: 2.3, r: 0.16, s: 0.32, p: 0.5, dx: 0.03, dy: 0.03 },
+          { x: 0.80, y: 0.24, h: 2.4, r: 0.16, s: 0.28, p: 1.8, dx: 0.03, dy: 0.02 },
+          { x: 0.40, y: 0.50, h: 2.1, r: 0.14, s: 0.35, p: 3.1, dx: 0.02, dy: 0.03 },
+          { x: 0.70, y: 0.48, h: 2.2, r: 0.15, s: 0.29, p: 4.2, dx: 0.03, dy: 0.02 },
+          { x: 0.18, y: 0.80, h: 2.4, r: 0.17, s: 0.31, p: 5.4, dx: 0.03, dy: 0.03 },
+          { x: 0.82, y: 0.82, h: 2.3, r: 0.16, s: 0.27, p: 2.4, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "matrix-stream",
-        category: "cyber",
-        title: "16. Matrix Digital Code Stream",
-        desc: "Curvas de nível pontilhadas em verde digital (#22c55e) simulando dados e topografia de inteligência artificial.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#030804;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#22c55e" stroke-width="1.2" stroke-dasharray="6 4" stroke-opacity="0.8">
-                  ${[40, 80, 130, 185, 245, 310, 380].map((r, i) => `<path d="${makeWobblyRing(450, 320, r, 1.2 + i * 0.3)}" />`).join('')}
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1400, 400, r, 2.5 + i * 0.3)}" />`).join('')}
-                  ${[120, 300, 520, 740, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'magnetic-dipole',
+        category: 'cyber',
+        name: '16. Magnetic Dipole Flux',
+        desc: 'Linhas de indução eletromagnética convergindo entre polos energizados.',
+        bg: '#02090c',
+        masterStroke: '#06b6d4',
+        minorStroke: '#155e75',
+        masterGlow: 'rgba(6, 182, 212, 0.5)',
+        minorGlow: 'rgba(21, 94, 117, 0.15)',
+        dotColor: 'rgba(6, 182, 212, 0.13)',
+        dotRadius: 0.85,
+        gridSpacing: 32,
+        levels: 22,
+        speed: 0.8,
+        summits: [
+          { x: 0.22, y: 0.30, h: 2.5, r: 0.18, s: 0.22, p: 0.6, dx: 0.02, dy: 0.02 },
+          { x: 0.78, y: 0.30, h: -2.3, r: 0.18, s: 0.22, p: 0.6, dx: 0.02, dy: 0.02 },
+          { x: 0.22, y: 0.70, h: -2.4, r: 0.18, s: 0.24, p: 3.1, dx: 0.02, dy: 0.02 },
+          { x: 0.78, y: 0.70, h: 2.6, r: 0.18, s: 0.24, p: 3.1, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "iridescent-prism",
-        category: "colored",
-        title: "17. Prisma Holográfico Iridescente",
-        desc: "Reflexos prismáticos coloridos em tons pastéis metálicos: lilás, menta, pêssego e azul celeste sobre fundo escuro.",
-        render: (el, isFs) => {
-          const gid = 'prism-' + Math.random().toString(36).substr(2, 6);
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#0a0c10;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <defs>
-                  <linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#f472b6"/>
-                    <stop offset="33%" stop-color="#c084fc"/>
-                    <stop offset="66%" stop-color="#38bdf8"/>
-                    <stop offset="100%" stop-color="#4ade80"/>
-                  </linearGradient>
-                </defs>
-                <g fill="none" stroke="url(#${gid})" stroke-width="1.25" stroke-opacity="0.85">
-                  ${[40, 80, 130, 185, 245, 310, 380].map((r, i) => `<path d="${makeWobblyRing(420, 300, r, 1.2 + i * 0.3)}" />`).join('')}
-                  ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1450, 420, r, 2.5 + i * 0.3)}" />`).join('')}
-                  <path d="${makeDualSaddle([420, 300], [1450, 420], 210, 1.7)}" stroke-width="2.4" />
-                  ${[100, 300, 520, 740, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'volcanic-caldera',
+        category: 'neon',
+        name: '17. Volcanic Caldera Ring',
+        desc: 'Cratera vulcânica colapsada com anéis de falha e núcleo pulsante de calor.',
+        bg: '#0c0503',
+        masterStroke: '#f97316',
+        minorStroke: '#7c2d12',
+        masterGlow: 'rgba(249, 115, 22, 0.5)',
+        minorGlow: 'rgba(154, 52, 18, 0.15)',
+        dotColor: 'rgba(249, 115, 22, 0.12)',
+        dotRadius: 0.9,
+        gridSpacing: 32,
+        levels: 24,
+        speed: 0.75,
+        summits: [
+          { x: 0.50, y: 0.50, h: -2.2, r: 0.22, s: 0.18, p: 0.5, dx: 0.015, dy: 0.015 },
+          { x: 0.20, y: 0.22, h: 2.4, r: 0.16, s: 0.22, p: 1.5, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.22, h: 2.5, r: 0.16, s: 0.20, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.20, y: 0.78, h: 2.3, r: 0.16, s: 0.23, p: 4.1, dx: 0.02, dy: 0.02 },
+          { x: 0.80, y: 0.78, h: 2.4, r: 0.16, s: 0.21, p: 5.3, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "pointillism-dots",
-        category: "dark",
-        title: "18. Pontilhismo Estelar (Starfield Topo)",
-        desc: "As curvas de nível são desenhadas exclusivamente por constelações de micro-pontos luminosos com densidade variável.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#06080b;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#e2e8f0" stroke-width="1.6" stroke-dasharray="2 12" stroke-linecap="round" stroke-opacity="0.8">
-                  ${[35, 70, 110, 155, 205, 260, 320, 385].map((r, i) => `<path d="${makeWobblyRing(440, 320, r, 1.2 + i * 0.3)}" />`).join('')}
-                  ${[40, 80, 125, 175, 230, 290, 355].map((r, i) => `<path d="${makeWobblyRing(1420, 400, r, 2.5 + i * 0.3)}" />`).join('')}
-                  ${[90, 260, 480, 700, 920].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'stepped-isometric',
+        category: 'dark',
+        name: '18. Stepped Terrace Contour',
+        desc: 'Camadas de terraço em relevo arquitetônico com sombras suaves de oclusão.',
+        bg: '#090a0f',
+        masterStroke: '#94a3b8',
+        minorStroke: '#334155',
+        masterGlow: 'rgba(148, 163, 184, 0.3)',
+        minorGlow: 'transparent',
+        dotColor: 'rgba(148, 163, 184, 0.1)',
+        dotRadius: 0.8,
+        gridSpacing: 36,
+        levels: 25,
+        speed: 0.6,
+        summits: [
+          { x: 0.18, y: 0.20, h: 2.3, r: 0.15, s: 0.18, p: 0.4, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.22, h: 2.4, r: 0.16, s: 0.17, p: 1.6, dx: 0.02, dy: 0.02 },
+          { x: 0.35, y: 0.45, h: 2.1, r: 0.14, s: 0.21, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.68, y: 0.44, h: 2.2, r: 0.15, s: 0.18, p: 3.9, dx: 0.02, dy: 0.02 },
+          { x: 0.18, y: 0.78, h: 2.1, r: 0.15, s: 0.20, p: 5.0, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.80, h: 2.3, r: 0.16, s: 0.18, p: 2.3, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "titanium-carbon",
-        category: "dark",
-        title: "19. Titânio Escovado & Grafite Espacial",
-        desc: "Curvas em cinza titânio frio (#94a3b8) com curvas mestras reforçadas sobre textura grafite aeroespacial profunda.",
-        render: (el, isFs) => {
-          el.innerHTML = `
-            <div style="width:100%;height:100%;background:#090a0d;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-                <g fill="none" stroke="#94a3b8">
-                  <g stroke-width="1.1" stroke-opacity="0.7">
-                    ${[40, 80, 125, 175, 230, 290, 355].map((r, i) => `<path d="${makeWobblyRing(450, 300, r, 1.2 + i * 0.3)}" />`).join('')}
-                    ${[45, 90, 140, 195, 255, 320].map((r, i) => `<path d="${makeWobblyRing(1440, 420, r, 2.5 + i * 0.3)}" />`).join('')}
-                    <path d="${makeDualSaddle([450, 300], [1440, 420], 210, 1.7)}" />
-                    ${[100, 300, 520, 740, 940].map((y, i) => `<path d="${makeFlowLine(y, 45, i * 1.5)}" />`).join('')}
-                  </g>
-                  <g stroke-width="2.5" stroke-opacity="0.95">
-                    <path d="${makeWobblyRing(450, 300, 175, 1.8)}" />
-                    <path d="${makeWobblyRing(1440, 420, 195, 3.1)}" />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          `;
-        }
+        id: 'matrix-hex',
+        category: 'cyber',
+        name: '19. Matrix Digital Lattice',
+        desc: 'Relevo digitalizado com nós cibernéticos e curvas de densidade de dados.',
+        bg: '#020d06',
+        masterStroke: '#4ade80',
+        minorStroke: '#166534',
+        masterGlow: 'rgba(74, 222, 128, 0.5)',
+        minorGlow: 'rgba(22, 101, 52, 0.15)',
+        dotColor: 'rgba(74, 222, 128, 0.14)',
+        dotRadius: 0.9,
+        gridSpacing: 28,
+        levels: 22,
+        speed: 0.8,
+        summits: [
+          { x: 0.20, y: 0.22, h: 2.3, r: 0.16, s: 0.24, p: 0.5, dx: 0.03, dy: 0.02 },
+          { x: 0.80, y: 0.24, h: 2.4, r: 0.16, s: 0.21, p: 1.8, dx: 0.02, dy: 0.02 },
+          { x: 0.42, y: 0.48, h: 2.0, r: 0.14, s: 0.27, p: 3.1, dx: 0.02, dy: 0.02 },
+          { x: 0.72, y: 0.46, h: 2.2, r: 0.15, s: 0.22, p: 4.2, dx: 0.03, dy: 0.02 },
+          { x: 0.18, y: 0.80, h: 2.3, r: 0.16, s: 0.23, p: 5.4, dx: 0.02, dy: 0.02 },
+          { x: 0.82, y: 0.82, h: 2.2, r: 0.15, s: 0.19, p: 2.2, dx: 0.02, dy: 0.02 },
+        ]
       },
       {
-        id: "interactive-mouse-ripple",
-        category: "cyber",
-        title: "20. Interativo Dinâmico (Reativo ao Mouse)",
-        desc: "Curvas vetoriais limpas que reagem dinamicamente à posição do cursor, gerando um relevo vivo e responsivo.",
-        render: (el, isFs) => {
-          const canvas = document.createElement('canvas');
-          el.appendChild(canvas);
-          const ctx = canvas.getContext('2d');
-          let animId = 0;
-          let mouseX = 960, mouseY = 540;
-
-          const resize = () => {
-            canvas.width = el.clientWidth || 400;
-            canvas.height = el.clientHeight || 220;
-          };
-          resize();
-
-          const onMove = (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
-            mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
-          };
-
-          window.addEventListener('mousemove', onMove);
-
-          let t = 0;
-          const draw = () => {
-            t += 0.01;
-            const w = canvas.width;
-            const h = canvas.height;
-            ctx.fillStyle = '#06090e';
-            ctx.fillRect(0, 0, w, h);
-
-            const numLines = 14;
-            for (let i = 0; i < numLines; i++) {
-              ctx.beginPath();
-              const yBase = (h / numLines) * i + 10;
-              for (let x = 0; x <= w; x += 10) {
-                const dx = x - mouseX;
-                const dy = yBase - mouseY;
-                const d = Math.hypot(dx, dy);
-                const mouseDisplace = Math.exp(-d * 0.015) * 25 * Math.sin(d * 0.05 - t * 2);
-                const y = yBase + Math.sin(x * 0.01 + t * 0.5 + i * 0.5) * 15 + mouseDisplace;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-              }
-
-              ctx.strokeStyle = i % 4 === 0 ? '#00f5d4' : 'rgba(0, 187, 249, 0.65)';
-              ctx.lineWidth = i % 4 === 0 ? 1.8 : 1.1;
-              ctx.stroke();
-            }
-
-            animId = requestAnimationFrame(draw);
-          };
-
-          animId = requestAnimationFrame(draw);
-          el._cleanup = () => {
-            cancelAnimationFrame(animId);
-            window.removeEventListener('mousemove', onMove);
-          };
-        }
+        id: 'liquid-mercury',
+        category: 'dark',
+        name: '20. Liquid Mercury Fluid',
+        desc: 'Cromado líquido espelhado de alta viscosidade com curvaturas arredondadas orgânicas.',
+        bg: '#08080a',
+        masterStroke: '#f8fafc',
+        minorStroke: '#64748b',
+        masterGlow: 'rgba(248, 250, 252, 0.45)',
+        minorGlow: 'rgba(100, 116, 139, 0.15)',
+        dotColor: 'rgba(255, 255, 255, 0.11)',
+        dotRadius: 0.85,
+        gridSpacing: 34,
+        levels: 24,
+        speed: 0.65,
+        summits: [
+          { x: 0.18, y: 0.18, h: 2.4, r: 0.16, s: 0.20, p: 0.4, dx: 0.025, dy: 0.02 },
+          { x: 0.85, y: 0.20, h: 2.5, r: 0.17, s: 0.17, p: 1.6, dx: 0.02, dy: 0.025 },
+          { x: 0.32, y: 0.44, h: 2.1, r: 0.14, s: 0.23, p: 2.8, dx: 0.02, dy: 0.02 },
+          { x: 0.68, y: 0.42, h: 2.3, r: 0.15, s: 0.19, p: 3.8, dx: 0.025, dy: 0.02 },
+          { x: 0.16, y: 0.74, h: 2.1, r: 0.15, s: 0.22, p: 4.8, dx: 0.02, dy: 0.02 },
+          { x: 0.84, y: 0.78, h: 2.4, r: 0.17, s: 0.19, p: 5.6, dx: 0.025, dy: 0.02 },
+        ]
       }
     ];
 
     // =========================================================================
-    // GALLERY CONTROLLER & MODAL
+    // GALLERY GENERATOR & CONTROLLER
     // =========================================================================
-    const grid = document.getElementById('grid');
-    const modal = document.getElementById('fs-modal');
-    const fsContainer = document.getElementById('fs-canvas-container');
+    const gridEl = document.getElementById('grid');
+    const fsModal = document.getElementById('fs-modal');
+    const fsCanvas = document.getElementById('fs-canvas');
+    const fsCtx = fsCanvas.getContext('2d');
     const fsTitle = document.getElementById('fs-title');
-    const btnCloseFs = document.getElementById('btn-close-fs');
-    const btnToggleMockup = document.getElementById('btn-toggle-mockup');
-    const mockup = document.getElementById('fs-mockup');
+    const fsDesc = document.getElementById('fs-desc');
+    const fsMockup = document.getElementById('fs-mockup');
 
-    let currentFsCleanup = null;
+    let currentEffectIndex = 0;
+    let fsAnimId = 0;
+    let fsStartTime = performance.now();
+    const fsMouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: 0 };
 
-    function renderGrid(filter = 'all') {
-      grid.innerHTML = '';
-      EFFECTS.forEach((eff) => {
-        if (filter !== 'all' && eff.category !== filter) return;
+    // Create cards in grid
+    EFFECTS.forEach((eff, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.category = eff.category;
 
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="card-preview" id="preview-${eff.id}">
-            <div class="card-tag">${eff.category.toUpperCase()}</div>
+      card.innerHTML = `
+        <div class="card-preview" data-index="${index}">
+          <span class="card-tag">#${String(index + 1).padStart(2, '0')}</span>
+          <canvas class="card-canvas" id="canvas-card-${index}"></canvas>
+        </div>
+        <div class="card-info">
+          <div class="card-title-row">
+            <h3 class="card-title">${eff.name}</h3>
           </div>
-          <div class="card-info">
-            <div class="card-title-row">
-              <div class="card-title">${eff.title}</div>
-            </div>
-            <div class="card-desc">${eff.desc}</div>
-            <div class="card-actions">
-              <span class="btn-fullscreen">🔍 Ver em Tela Cheia</span>
-              <button class="btn-apply" onclick="event.stopPropagation(); selectEffect('${eff.id}')">Copiar Código</button>
-            </div>
+          <p class="card-desc">${eff.desc}</p>
+          <div class="card-actions">
+            <button class="btn-fullscreen" data-index="${index}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              Ver em Tela Cheia
+            </button>
+            <button class="btn-apply" data-index="${index}">Ver Efeito</button>
           </div>
-        `;
+        </div>
+      `;
 
-        card.addEventListener('click', () => openFullscreen(eff));
-        grid.appendChild(card);
+      gridEl.appendChild(card);
+    });
 
-        // Render preview
-        const previewEl = card.querySelector(`#preview-${eff.id}`);
-        eff.render(previewEl, false);
+    // Animate mini canvas cards using IntersectionObserver
+    const cardCanvases = EFFECTS.map((eff, index) => {
+      const canvas = document.getElementById(`canvas-card-${index}`);
+      const ctx = canvas.getContext('2d');
+      return { canvas, ctx, eff, visible: false, startTime: performance.now() };
+    });
+
+    function resizeCardCanvases() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cardCanvases.forEach(item => {
+        const rect = item.canvas.getBoundingClientRect();
+        item.canvas.width = Math.floor(rect.width * dpr);
+        item.canvas.height = Math.floor(rect.height * dpr);
+        item.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       });
     }
 
-    function openFullscreen(eff) {
-      if (currentFsCleanup) {
-        currentFsCleanup();
-        currentFsCleanup = null;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const idStr = entry.target.id.replace('canvas-card-', '');
+        const idx = parseInt(idStr, 10);
+        if (cardCanvases[idx]) {
+          cardCanvases[idx].visible = entry.isIntersecting;
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cardCanvases.forEach(item => observer.observe(item.canvas));
+
+    // Shared Marching Squares drawer
+    function renderFieldToCanvas(ctx, eff, width, height, time, mouseObj) {
+      const GRID_X = 64;
+      const GRID_Y = 40;
+      const grid = new Float32Array((GRID_X + 1) * (GRID_Y + 1));
+      const cellW = width / GRID_X;
+      const cellH = height / GRID_Y;
+
+      // 1. Background
+      ctx.fillStyle = eff.bg;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Dot Matrix
+      const dotSpacing = eff.gridSpacing;
+      ctx.fillStyle = eff.dotColor;
+      const cols = Math.ceil(width / dotSpacing) + 1;
+      const rows = Math.ceil(height / dotSpacing) + 1;
+
+      for (let r = 0; r < rows; r++) {
+        const py = r * dotSpacing;
+        for (let c = 0; c < cols; c++) {
+          const px = c * dotSpacing;
+          if (mouseObj && mouseObj.active > 0.05) {
+            const d = Math.hypot(px - mouseObj.x, py - mouseObj.y);
+            if (d < 160) {
+              const boost = (1 - d / 160);
+              ctx.fillStyle = eff.masterStroke;
+              ctx.beginPath();
+              ctx.arc(px, py, eff.dotRadius + boost * 0.8, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.fillStyle = eff.dotColor;
+              continue;
+            }
+          }
+          ctx.beginPath();
+          ctx.arc(px, py, eff.dotRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
-      fsContainer.innerHTML = '';
-      fsTitle.textContent = eff.title;
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      // 3. Compute Elevation
+      const currentSummits = eff.summits.map(p => ({
+        x: (p.x + Math.sin(time * p.s * eff.speed + p.p) * p.dx) * width,
+        y: (p.y + Math.cos(time * p.s * eff.speed + p.p) * p.dy) * height,
+        h: p.h,
+        rSq: Math.pow(p.r * Math.max(width, height), 2) * 2,
+      }));
 
-      eff.render(fsContainer, true);
-      if (fsContainer._cleanup) {
-        currentFsCleanup = fsContainer._cleanup;
+      const maxDim = Math.max(width, height);
+      let minElev = 999;
+      let maxElev = -999;
+      let idx = 0;
+
+      for (let gy = 0; gy <= GRID_Y; gy++) {
+        const py = gy * cellH;
+        for (let gx = 0; gx <= GRID_X; gx++) {
+          const px = gx * cellW;
+
+          let elev = 0;
+          for (let i = 0; i < currentSummits.length; i++) {
+            const s = currentSummits[i];
+            const dx = px - s.x;
+            const dy = py - s.y;
+            elev += s.h * Math.exp(-(dx * dx + dy * dy) / s.rSq);
+          }
+
+          const nx = (px / maxDim) * 3.6;
+          const ny = (py / maxDim) * 3.6;
+          elev += 0.32 * noise2D(nx + time * 0.04 * eff.speed, ny + time * 0.03 * eff.speed);
+          elev += 0.16 * noise2D(nx * 2.2 - time * 0.03 * eff.speed, ny * 2.2 + time * 0.04 * eff.speed);
+
+          if (mouseObj && mouseObj.active > 0.05) {
+            const mdx = px - mouseObj.x;
+            const mdy = py - mouseObj.y;
+            const mDistSq = mdx * mdx + mdy * mdy;
+            if (mDistSq < 2 * 130 * 130) {
+              const mDist = Math.sqrt(mDistSq);
+              elev += 0.45 * Math.exp(-mDistSq / (2 * 130 * 130)) * Math.cos(mDist * 0.055 - time * 3.5);
+            }
+          }
+
+          grid[idx++] = elev;
+          if (elev < minElev) minElev = elev;
+          if (elev > maxElev) maxElev = elev;
+        }
       }
+
+      // 4. Extract Isolines
+      const range = maxElev - minElev;
+      const isoStart = minElev + range * 0.08;
+      const isoEnd = maxElev - range * 0.04;
+      const step = (isoEnd - isoStart) / (eff.levels + 1);
+
+      for (let l = 1; l <= eff.levels; l++) {
+        const iso = isoStart + l * step;
+        const isMaster = (l % 4 === 0);
+
+        ctx.beginPath();
+        ctx.lineWidth = isMaster ? 2.1 : 1.15;
+        ctx.strokeStyle = isMaster ? eff.masterStroke : eff.minorStroke;
+        ctx.shadowColor = isMaster ? eff.masterGlow : eff.minorGlow;
+        ctx.shadowBlur = isMaster ? 4.5 : 1.5;
+
+        for (let gy = 0; gy < GRID_Y; gy++) {
+          const row0 = gy * (GRID_X + 1);
+          const row1 = (gy + 1) * (GRID_X + 1);
+          const y0 = gy * cellH;
+          const y1 = (gy + 1) * cellH;
+
+          for (let gx = 0; gx < GRID_X; gx++) {
+            const x0 = gx * cellW;
+            const x1 = (gx + 1) * cellW;
+
+            const v0 = grid[row0 + gx];
+            const v1 = grid[row0 + gx + 1];
+            const v2 = grid[row1 + gx + 1];
+            const v3 = grid[row1 + gx];
+
+            let mask = 0;
+            if (v0 >= iso) mask |= 1;
+            if (v1 >= iso) mask |= 2;
+            if (v2 >= iso) mask |= 4;
+            if (v3 >= iso) mask |= 8;
+
+            if (mask === 0 || mask === 15) continue;
+
+            const segs = EDGE_TABLE[mask];
+            for (let s = 0; s < segs.length; s++) {
+              const eA = segs[s][0];
+              const eB = segs[s][1];
+
+              const ptA = getEdgePoint(eA, x0, y0, x1, y1, v0, v1, v2, v3, iso);
+              const ptB = getEdgePoint(eB, x0, y0, x1, y1, v0, v1, v2, v3, iso);
+
+              ctx.moveTo(ptA[0], ptA[1]);
+              ctx.lineTo(ptB[0], ptB[1]);
+            }
+          }
+        }
+
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    // Card animation loop
+    function animateCards(now) {
+      cardCanvases.forEach(item => {
+        if (!item.visible) return;
+        const rect = item.canvas.getBoundingClientRect();
+        const time = (now - item.startTime) * 0.001;
+        renderFieldToCanvas(item.ctx, item.eff, rect.width, rect.height, time, null);
+      });
+      requestAnimationFrame(animateCards);
+    }
+
+    // =========================================================================
+    // FULLSCREEN INTERACTIVE MODAL CONTROLLER
+    // =========================================================================
+    function openFullscreen(index) {
+      currentEffectIndex = index;
+      const eff = EFFECTS[index];
+      fsTitle.textContent = eff.name;
+      fsDesc.textContent = eff.desc;
+
+      fsModal.classList.add('active');
+      resizeFsCanvas();
+
+      fsStartTime = performance.now();
+      cancelAnimationFrame(fsAnimId);
+
+      function loop(now) {
+        const time = (now - fsStartTime) * 0.001;
+        fsMouse.x += (fsMouse.targetX - fsMouse.x) * 0.12;
+        fsMouse.y += (fsMouse.targetY - fsMouse.y) * 0.12;
+
+        renderFieldToCanvas(fsCtx, eff, window.innerWidth, window.innerHeight, time, fsMouse);
+        fsAnimId = requestAnimationFrame(loop);
+      }
+      fsAnimId = requestAnimationFrame(loop);
     }
 
     function closeFullscreen() {
-      if (currentFsCleanup) {
-        currentFsCleanup();
-        currentFsCleanup = null;
-      }
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-      fsContainer.innerHTML = '';
+      fsModal.classList.remove('active');
+      cancelAnimationFrame(fsAnimId);
     }
 
-    btnCloseFs.addEventListener('click', closeFullscreen);
+    function resizeFsCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      fsCanvas.width = Math.floor(window.innerWidth * dpr);
+      fsCanvas.height = Math.floor(window.innerHeight * dpr);
+      fsCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
 
-    btnToggleMockup.addEventListener('click', () => {
-      mockup.classList.toggle('active');
-      btnToggleMockup.classList.toggle('active');
+    window.addEventListener('resize', () => {
+      resizeCardCanvases();
+      if (fsModal.classList.contains('active')) {
+        resizeFsCanvas();
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      fsMouse.targetX = e.clientX;
+      fsMouse.targetY = e.clientY;
+      fsMouse.active = 1.0;
+    });
+
+    document.getElementById('btn-close-fs').addEventListener('click', closeFullscreen);
+
+    document.getElementById('btn-prev-effect').addEventListener('click', () => {
+      const prevIdx = (currentEffectIndex - 1 + EFFECTS.length) % EFFECTS.length;
+      openFullscreen(prevIdx);
+    });
+
+    document.getElementById('btn-next-effect').addEventListener('click', () => {
+      const nextIdx = (currentEffectIndex + 1) % EFFECTS.length;
+      openFullscreen(nextIdx);
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeFullscreen();
-      }
+      if (!fsModal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeFullscreen();
+      if (e.key === 'ArrowLeft') document.getElementById('btn-prev-effect').click();
+      if (e.key === 'ArrowRight') document.getElementById('btn-next-effect').click();
     });
 
-    // Filter Buttons
-    document.querySelectorAll('.filter-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderGrid(btn.getAttribute('data-filter'));
+    document.getElementById('btn-toggle-mockup').addEventListener('click', () => {
+      fsMockup.classList.toggle('hidden');
+    });
+
+    // Click on cards
+    document.querySelectorAll('.card-preview, .btn-fullscreen, .btn-apply').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const idx = parseInt(el.dataset.index, 10);
+        if (!isNaN(idx)) openFullscreen(idx);
       });
     });
 
-    function selectEffect(id) {
-      alert(`Você selecionou o efeito: ${id}.\nVocê pode escolher qualquer um dos 20 para ser o fundo oficial do portfólio! Basta me dizer o número ou nome!`);
-    }
+    // Filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
 
-    // Initial render
-    renderGrid('all');
+        document.querySelectorAll('.card').forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        resizeCardCanvases();
+      });
+    });
+
+    // Init
+    setTimeout(() => {
+      resizeCardCanvases();
+      requestAnimationFrame(animateCards);
+    }, 100);
   </script>
 </body>
 </html>
