@@ -19,11 +19,11 @@ const en: Dictionary = {
   about: {
     title: "About Me",
     subtitle:
-      "Solid background in Computer Science and Software Engineering applied to end-to-end web development.",
+      "Solid background in Computer Science applied to end-to-end web development.",
     eyebrow: "BEYOND THE CODE",
     headline: "Making complex workflows clearer, efficient, and scalable.",
     bioP1:
-      "My degree in Computer Science (UNINOVE) and post-graduate studies in Software Engineering (PUC Minas) have shaped the way I view software: not merely as isolated code or UI screens, but as integrated systems that turn complex business processes into intuitive, secure, and efficient tools.",
+      "My degree in Computer Science (UNINOVE) has shaped the way I view software: not merely as isolated code or UI screens, but as integrated systems that turn complex business processes into intuitive, secure, and efficient tools.",
     bioP2:
       "I work end-to-end focusing on the Node.js (NestJS), TypeScript, React/Next.js, and Laravel ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
     stats: [

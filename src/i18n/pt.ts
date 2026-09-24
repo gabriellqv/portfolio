@@ -19,11 +19,11 @@ const pt: Dictionary = {
   about: {
     title: "Sobre Mim",
     subtitle:
-      "Formação sólida em Ciência da Computação e Engenharia de Software aplicada ao desenvolvimento web de ponta a ponta.",
+      "Formação sólida em Ciência da Computação aplicada ao desenvolvimento web de ponta a ponta.",
     eyebrow: "ALÉM DO CÓDIGO",
     headline: "Fluxos complexos mais claros, eficientes e escaláveis.",
     bioP1:
-      "Minha formação em Ciência da Computação (UNINOVE) e especialização em Engenharia de Software (PUC Minas) moldaram a forma como enxergo software: não apenas como interfaces ou código isolado, mas como sistemas integrados capazes de traduzir processos complexos de negócio em ferramentas intuitivas, seguras e eficientes.",
+      "Minha formação em Ciência da Computação (UNINOVE) moldou a forma como enxergo software: não apenas como interfaces ou código isolado, mas como sistemas integrados capazes de traduzir processos complexos de negócio em ferramentas intuitivas, seguras e eficientes.",
     bioP2:
       "Atuo de ponta a ponta com foco no ecossistema Node.js (NestJS), TypeScript, React/Next.js e Laravel. Trabalho onde arquitetura técnica rigorosa (SOLID, Clean Code, transações ACID com lock pessimista) e experiência do usuário precisam coexistir em perfeita sintonia.",
     stats: [
