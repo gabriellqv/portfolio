@@ -102,13 +102,9 @@
     position: relative;
     background-color: var(--background);
     /**
-     * Static grid pattern on the body. The ambient glow is handled by
-     * the ::before pseudo-element below for GPU-accelerated animation.
+     * Grid pattern disabled. The ambient glow is handled by the
+     * ::before pseudo-element below for GPU-accelerated animation.
      */
-    background-image:
-      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-    background-size: 24px 24px;
     color: var(--foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;

@@ -123,7 +123,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
+      className={`dark ${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
     >
       <body className="bg-background text-foreground font-sans overflow-x-clip w-full">
         <script
