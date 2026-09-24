@@ -11,6 +11,7 @@ import {
   SiJavascript,
   SiJest,
   SiLaravel,
+  SiLeaflet,
   SiLinux,
   SiMongodb,
   SiMysql,
@@ -32,7 +33,7 @@ import {
   SiZod,
 } from "react-icons/si";
 
-import type { SkillCategory, SkillItem } from "@/types";
+import type { IconProps, SkillCategory, SkillItem } from "@/types";
 
 /**
  * Master list of all skills used by both the hero section carousel
@@ -151,3 +152,51 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
 ];
+
+/**
+ * Mapping of technologies used across portfolio projects to their official brand icon and color.
+ * Enables project tech badges to mirror the colorful styling of the Skills section.
+ */
+const techLookup: Record<string, { icon: React.ComponentType<IconProps>; hex: string }> =
+  {
+    "Vue 3": { icon: SiVuedotjs, hex: "#4FC08D" },
+    "Vue.js": { icon: SiVuedotjs, hex: "#4FC08D" },
+    PHP: { icon: SiPhp, hex: "#777BB4" },
+    Laravel: { icon: SiLaravel, hex: "#FF2D20" },
+    TypeScript: { icon: SiTypescript, hex: "#3178C6" },
+    JavaScript: { icon: SiJavascript, hex: "#F7DF1E" },
+    Leaflet: { icon: SiLeaflet, hex: "#199900" },
+    Pinia: { icon: SiPinia, hex: "#FFE262" },
+    TailwindCSS: { icon: SiTailwindcss, hex: "#06B6D4" },
+    "Tailwind CSS": { icon: SiTailwindcss, hex: "#06B6D4" },
+    "Next.js": { icon: SiNextdotjs, hex: "#FFFFFF" },
+    NestJS: { icon: SiNestjs, hex: "#E0234E" },
+    Prisma: { icon: SiPrisma, hex: "#FFFFFF" },
+    PostgreSQL: { icon: SiPostgresql, hex: "#4169E1" },
+    MySQL: { icon: SiMysql, hex: "#4479A1" },
+    MongoDB: { icon: SiMongodb, hex: "#47A248" },
+    Redis: { icon: SiRedis, hex: "#DC382D" },
+    "Node.js": { icon: SiNodedotjs, hex: "#339933" },
+    Express: { icon: SiExpress, hex: "#FFFFFF" },
+    React: { icon: SiReact, hex: "#61DAFB" },
+    Docker: { icon: SiDocker, hex: "#2496ED" },
+    Git: { icon: SiGit, hex: "#F05032" },
+    HTML: { icon: SiHtml5, hex: "#E34F26" },
+    CSS: { icon: SiCss, hex: "#1572B6" },
+    Vite: { icon: SiVite, hex: "#646CFF" },
+  };
+
+/**
+ * Returns brand metadata (icon and hex) for a given technology name.
+ */
+export function getTechMeta(name: string): {
+  icon?: React.ComponentType<IconProps>;
+  hex: string;
+} {
+  if (techLookup[name]) return techLookup[name];
+  const found = Object.entries(techLookup).find(
+    ([k]) => k.toLowerCase() === name.toLowerCase(),
+  );
+  if (found) return found[1];
+  return { hex: "#FFFFFF" };
+}

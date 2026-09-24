@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +10,8 @@ import { SiGithub } from "react-icons/si";
 import { buttonVariants } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
 import { projects } from "@/data/projects";
+import { getTechMeta } from "@/data/skills";
+import { useMounted } from "@/hooks/useMounted";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
@@ -21,6 +24,12 @@ import type { Project } from "@/types";
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();
+
+  const { resolvedTheme } = useTheme();
+  const mounted = useMounted();
+  const isLight = mounted && resolvedTheme === "light";
+  const bgOpacity = isLight ? "25" : "15";
+  const borderOpacity = isLight ? "40" : "30";
 
   const item = dict.projectItems[project.title] ?? {
     description: project.description,
@@ -66,14 +75,43 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </p>
 
         <div className="flex flex-wrap gap-2 mb-8">
-          {project.techs.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1 rounded-md border border-border/20 bg-white dark:bg-neutral-900/50 text-xs font-medium text-muted-foreground"
-            >
-              {tech}
-            </span>
-          ))}
+          {project.techs.map((tech) => {
+            const meta = getTechMeta(tech);
+            const Icon = meta.icon;
+            const isWhite = meta.hex === "#FFFFFF";
+
+            return (
+              <span
+                key={tech}
+                className={cn(
+                  "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all hover:scale-105",
+                  isWhite &&
+                    "border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10 text-foreground",
+                  !isWhite && "text-foreground",
+                )}
+                style={
+                  isWhite
+                    ? {}
+                    : {
+                        backgroundColor: `${meta.hex}${bgOpacity}`,
+                        borderColor: `${meta.hex}${borderOpacity}`,
+                      }
+                }
+              >
+                {Icon && (
+                  <Icon
+                    size={14}
+                    {...(isWhite ? {} : { style: { color: meta.hex } })}
+                    className={cn(
+                      "shrink-0",
+                      isWhite && "text-neutral-900 dark:text-white",
+                    )}
+                  />
+                )}
+                <span>{tech}</span>
+              </span>
+            );
+          })}
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-auto">
