@@ -164,7 +164,7 @@ const Navbar = () => {
                       className={cn(
                         "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                         theme === "dark"
-                          ? "scale-100 rotate-0 opacity-100 text-amber-300"
+                          ? "scale-100 rotate-0 opacity-100"
                           : "scale-0 -rotate-90 opacity-0",
                       )}
                     />
@@ -173,7 +173,7 @@ const Navbar = () => {
                         "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                         theme === "dark"
                           ? "scale-0 rotate-90 opacity-0"
-                          : "scale-100 rotate-0 opacity-100 text-neutral-800 dark:text-neutral-200",
+                          : "scale-100 rotate-0 opacity-100",
                       )}
                     />
                   </>
@@ -236,7 +236,7 @@ const Navbar = () => {
                       className={cn(
                         "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                         theme === "dark"
-                          ? "scale-100 rotate-0 opacity-100 text-amber-300"
+                          ? "scale-100 rotate-0 opacity-100"
                           : "scale-0 -rotate-90 opacity-0",
                       )}
                     />
@@ -245,7 +245,7 @@ const Navbar = () => {
                         "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
                         theme === "dark"
                           ? "scale-0 rotate-90 opacity-0"
-                          : "scale-100 rotate-0 opacity-100 text-neutral-800 dark:text-neutral-200",
+                          : "scale-100 rotate-0 opacity-100",
                       )}
                     />
                   </>
