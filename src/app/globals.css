@@ -37,8 +37,8 @@
   --muted: #e5e5e5;
   --muted-foreground: #52525b;
   --border: #d4d4d8;
-  --accent: #3b82f6;
-  --accent-foreground: #eff6ff;
+  --accent: #050505;
+  --accent-foreground: #fafafa;
   --card: rgba(245, 244, 240, 0.85);
   --card-foreground: #050505;
   --radius: 0.625rem;
@@ -58,8 +58,8 @@
   --muted: #1a1a1a;
   --muted-foreground: #a1a1aa;
   --border: #27272a;
-  --accent: #3b82f6;
-  --accent-foreground: #eff6ff;
+  --accent: #fafafa;
+  --accent-foreground: #050505;
   --card: rgba(10, 10, 14, 0.78);
   --card-foreground: #fafafa;
   --grid-color: rgba(255, 255, 255, 0.008);
@@ -270,7 +270,7 @@
  * so changes propagate to all inputs at once.
  */
 @utility form-input {
-  @apply border-border/50 text-foreground focus:ring-accent/40 focus:border-accent/60 w-full rounded-xl border bg-white px-4 py-3 text-sm transition-all placeholder:text-neutral-400 focus:ring-2 focus:outline-none dark:bg-black/40 dark:placeholder:text-neutral-600;
+  @apply border-border/70 text-foreground w-full rounded-xl border bg-white px-4 py-3 text-sm transition-all placeholder:text-neutral-400 hover:border-black focus:border-black focus:ring-2 focus:ring-black/15 focus:outline-none dark:border-white/15 dark:bg-black/40 dark:placeholder:text-neutral-500 dark:hover:border-white dark:focus:border-white dark:focus:ring-white/20;
 }
 
 /* ================================================================

@@ -198,13 +198,13 @@ export default function Contact() {
                 >
                   {dict.contact.name}
                 </label>
-                <div className="relative flex items-center">
+                <div className="group relative flex items-center">
                   <User
                     className={cn(
                       "absolute left-3.5 size-4 pointer-events-none transition-colors",
                       errors.name
                         ? "text-red-500/80 dark:text-red-400"
-                        : "text-muted-foreground",
+                        : "text-muted-foreground group-hover:text-black dark:group-hover:text-white group-focus-within:text-black dark:group-focus-within:text-white",
                     )}
                   />
                   <input
@@ -248,13 +248,13 @@ export default function Contact() {
                 >
                   {dict.contact.email}
                 </label>
-                <div className="relative flex items-center">
+                <div className="group relative flex items-center">
                   <Mail
                     className={cn(
                       "absolute left-3.5 size-4 pointer-events-none transition-colors",
                       errors.email
                         ? "text-red-500/80 dark:text-red-400"
-                        : "text-muted-foreground",
+                        : "text-muted-foreground group-hover:text-black dark:group-hover:text-white group-focus-within:text-black dark:group-focus-within:text-white",
                     )}
                   />
                   <input
@@ -299,13 +299,13 @@ export default function Contact() {
               >
                 {dict.contact.message}
               </label>
-              <div className="relative flex items-start">
+              <div className="group relative flex items-start">
                 <Text
                   className={cn(
                     "absolute left-3.5 top-3.5 size-4 pointer-events-none transition-colors",
                     errors.message
                       ? "text-red-500/80 dark:text-red-400"
-                      : "text-muted-foreground",
+                      : "text-muted-foreground group-hover:text-black dark:group-hover:text-white group-focus-within:text-black dark:group-focus-within:text-white",
                   )}
                 />
                 <textarea
