@@ -171,13 +171,13 @@ export function Waves({
         const dx = p.x - mouse.sx;
         const dy = p.y - mouse.sy;
         const d = Math.hypot(dx, dy);
-        const l = Math.max(175, mouse.vs);
+        const l = Math.max(140, mouse.vs);
 
         if (d < l) {
           const s = 1 - d / l;
           const f = Math.cos(d * 0.001) * s;
-          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00035;
-          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00035;
+          p.cursor.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00012;
+          p.cursor.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00012;
         }
 
         p.cursor.vx += (0 - p.cursor.x) * 0.01;

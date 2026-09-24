@@ -26,17 +26,11 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10 overflow-hidden"
     >
-      {/* Central depth glow: soft atmospheric illumination separating text from background waves */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] max-w-[90vw] h-[440px] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06)_0%,rgba(150,151,207,0.03)_45%,transparent_75%)] blur-3xl rounded-full -z-10"
-      />
-
       <h1
         className="hero-stagger text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-2 pb-1"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
-        <span className="bg-gradient-to-b from-white via-white/95 to-white/60 bg-clip-text text-transparent drop-shadow-[0_6px_35px_rgba(255,255,255,0.14)]">
+        <span className="bg-gradient-to-b from-white via-white/95 to-white/60 bg-clip-text text-transparent">
           {SITE.name}
         </span>
       </h1>
