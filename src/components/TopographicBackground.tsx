@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useTheme } from "next-themes";
 
@@ -10,245 +10,84 @@ import { useMounted } from "@/hooks/useMounted";
 import { cn } from "@/lib/utils";
 
 /**
- * Converts an array of 2D points into a smooth cubic Bézier SVG path
- * using Catmull-Rom spline interpolation.
+ * TopographicBackground component
+ * Displays the exact high-contrast topographic wallpaper uploaded by the user,
+ * with optional Cyber Aqua or RGB tint modes, smooth dark/light mode inversion,
+ * and a subtle readability vignette to maintain crystal clear contrast for text and cards.
  */
-function catmullRomToSvg(points: [number, number][], closed = true): string {
-  if (points.length < 3) return "";
-  const first = points[0];
-  if (!first) return "";
-  const n = points.length;
-  const iters = closed ? n : n - 1;
-  let d = `M ${first[0].toFixed(1)} ${first[1].toFixed(1)}`;
-
-  for (let i = 0; i < iters; i++) {
-    const p0 = points[(i - 1 + n) % n] ?? first;
-    const p1 = points[i] ?? first;
-    const p2 = points[(i + 1) % n] ?? first;
-    const p3 = points[(i + 2) % n] ?? first;
-
-    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
-    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
-    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
-    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
-
-    d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
-  }
-
-  if (closed) d += " Z";
-  return d;
-}
-
-/**
- * Generates an organic closed topographic contour ring around (cx, cy).
- */
-function makeRing(cx: number, cy: number, r: number, seed: number, steps = 36): string {
-  const pts: [number, number][] = [];
-  for (let i = 0; i < steps; i++) {
-    const th = (i / steps) * Math.PI * 2;
-    const w =
-      1 +
-      0.15 * Math.sin(th * 2 + seed) +
-      0.11 * Math.cos(th * 3 + seed * 1.7) +
-      0.06 * Math.sin(th * 5 + seed * 2.3);
-    pts.push([cx + r * w * Math.cos(th), cy + r * w * Math.sin(th) * 0.72]);
-  }
-  return catmullRomToSvg(pts, true);
-}
-
-/**
- * Generates a saddle envelope loop encircling two elevation centers.
- */
-function makeDualRing(
-  c1: [number, number],
-  c2: [number, number],
-  r: number,
-  seed: number,
-  steps = 42,
-): string {
-  const pts: [number, number][] = [];
-  const midX = (c1[0] + c2[0]) / 2;
-  const midY = (c1[1] + c2[1]) / 2;
-  const dx = c2[0] - c1[0];
-  const dy = c2[1] - c1[1];
-  const dist = Math.hypot(dx, dy);
-  const angleBase = Math.atan2(dy, dx);
-
-  for (let i = 0; i < steps; i++) {
-    const th = (i / steps) * Math.PI * 2;
-    const wobble =
-      1 + 0.1 * Math.sin(th * 2 + seed) + 0.07 * Math.cos(th * 3 + seed * 1.5);
-    const rx = (dist / 2 + r) * wobble;
-    const ry = r * 0.85 * wobble;
-    const px = rx * Math.cos(th);
-    const py = ry * Math.sin(th);
-    const rotX = px * Math.cos(angleBase) - py * Math.sin(angleBase);
-    const rotY = px * Math.sin(angleBase) + py * Math.cos(angleBase);
-    pts.push([midX + rotX, midY + rotY]);
-  }
-  return catmullRomToSvg(pts, true);
-}
-
-/**
- * Generates an open sweeping transverse topographic contour line.
- */
-function makeTransverse(yBase: number, amp: number, seed: number, steps = 30): string {
-  const pts: [number, number][] = [];
-  for (let i = 0; i <= steps; i++) {
-    const x = (i / steps) * 2100 - 90;
-    const th = (i / steps) * Math.PI * 3.2;
-    const y =
-      yBase + amp * (Math.sin(th + seed) * 0.65 + Math.cos(th * 1.6 + seed * 1.8) * 0.35);
-    pts.push([x, y]);
-  }
-  return catmullRomToSvg(pts, false);
-}
-
 export default function TopographicBackground() {
   const { theme, resolvedTheme } = useTheme();
   const isMounted = useMounted();
   const isDark = (resolvedTheme || theme) === "dark";
 
-  // Configuration tuned to user feedback:
-  // - Default color: Cyber Aqua
-  // - No animation / waving: completely static, calm and crisp
-  // - Glow level: Minimo (much less than S, razor-sharp vector line with ultra-subtle sheen)
-  const [colorPalette, setColorPalette] = useState<"cyber" | "rgb" | "sunset">("cyber");
-  const [glowLevel, setGlowLevel] = useState<"none" | "minimal" | "subtle">("minimal");
+  // Configuration:
+  // - tintMode: 'original' (exact black-and-white from uploaded image), 'cyber' (Cyber Aqua tint), or 'rgb' (Keyboard RGB)
+  // - opacityLevel: 'subtle' (0.55), 'balanced' (0.80), 'full' (1.0)
+  const [tintMode, setTintMode] = useState<"original" | "cyber" | "rgb">("original");
+  const [opacityLevel, setOpacityLevel] = useState<"subtle" | "balanced" | "full">(
+    "balanced",
+  );
   const [isControlsOpen, setIsControlsOpen] = useState<boolean>(false);
 
-  // Pre-generate mathematically smooth topographic contour vector paths
-  const topoPaths = useMemo(() => {
-    const paths: string[] = [];
-
-    // 5 Elevation Centers (Mountains / Knolls)
-    const centers: { cx: number; cy: number; rings: number[]; seed: number }[] = [
-      { cx: 380, cy: 260, rings: [35, 75, 120, 175, 235, 305, 385], seed: 1.2 },
-      { cx: 1480, cy: 340, rings: [40, 85, 135, 195, 265, 345, 435], seed: 2.5 },
-      { cx: 240, cy: 820, rings: [30, 70, 115, 170, 235, 315], seed: 3.8 },
-      { cx: 1120, cy: 780, rings: [35, 80, 130, 190, 260, 340], seed: 4.4 },
-      { cx: 1780, cy: 760, rings: [30, 75, 125, 185, 255], seed: 5.1 },
-    ];
-
-    centers.forEach((c) => {
-      c.rings.forEach((r, idx) => {
-        paths.push(makeRing(c.cx, c.cy, r, c.seed + idx * 0.32));
-      });
-    });
-
-    // Saddle / Envelope contours connecting neighboring peaks
-    paths.push(makeDualRing([380, 260], [1480, 340], 190, 1.7));
-    paths.push(makeDualRing([380, 260], [1480, 340], 290, 2.1));
-    paths.push(makeDualRing([240, 820], [1120, 780], 170, 3.2));
-    paths.push(makeDualRing([1120, 780], [1780, 760], 160, 4.1));
-    paths.push(makeDualRing([380, 260], [240, 820], 150, 2.8));
-
-    // Sweeping transverse contour lines across the canvas
-    [70, 200, 360, 520, 680, 840, 970].forEach((y, i) => {
-      paths.push(makeTransverse(y, 45 + i * 6, i * 1.3));
-    });
-
-    return paths;
-  }, []);
-
-  // Stroke and glow filter styling based on selected options
-  const filterStyle = useMemo(() => {
-    if (glowLevel === "none") return undefined;
-    if (glowLevel === "minimal") {
-      return colorPalette === "cyber"
-        ? "drop-shadow(0 0 1px rgba(0, 245, 212, 0.35))"
-        : colorPalette === "rgb"
-          ? "drop-shadow(0 0 1px rgba(0, 229, 255, 0.35))"
-          : "drop-shadow(0 0 1px rgba(255, 0, 127, 0.35))";
-    }
-    // "subtle"
-    return colorPalette === "cyber"
-      ? "drop-shadow(0 0 1.8px rgba(0, 245, 212, 0.5))"
-      : colorPalette === "rgb"
-        ? "drop-shadow(0 0 1.8px rgba(0, 229, 255, 0.5))"
-        : "drop-shadow(0 0 1.8px rgba(255, 0, 127, 0.5))";
-  }, [glowLevel, colorPalette]);
+  const opacityValue =
+    opacityLevel === "subtle" ? 0.55 : opacityLevel === "balanced" ? 0.8 : 1.0;
 
   return (
     <>
-      {/* Background SVG: Crisp, perfectly anti-aliased vector topographic isolines */}
+      {/* Background Container */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none z-0 w-full h-full overflow-hidden transition-colors duration-500"
         style={{
-          backgroundColor: isDark ? "#060608" : "#f8f8f6",
+          backgroundColor: isDark ? "#0e1215" : "#f5f5f3",
         }}
       >
-        <svg
-          viewBox="0 0 1920 1080"
-          preserveAspectRatio="xMidYMid slice"
-          className="w-full h-full object-cover"
-          style={{ filter: filterStyle }}
-        >
-          <defs>
-            {/* Cyber Aqua: Sleek neon aqua to electric cyan and azure */}
-            <linearGradient id="topo-cyber-aqua" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00f5d4" />
-              <stop offset="35%" stopColor="#00bbf9" />
-              <stop offset="70%" stopColor="#0077b6" />
-              <stop offset="100%" stopColor="#3a86ff" />
-            </linearGradient>
-
-            {/* RGB Teclado: Horizontal spectrum from photo */}
-            <linearGradient id="topo-rgb" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ff4500" />
-              <stop offset="22%" stopColor="#ffb300" />
-              <stop offset="45%" stopColor="#00e676" />
-              <stop offset="70%" stopColor="#00e5ff" />
-              <stop offset="88%" stopColor="#2979ff" />
-              <stop offset="100%" stopColor="#e040fb" />
-            </linearGradient>
-
-            {/* Sunset Neon */}
-            <linearGradient id="topo-sunset" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ff007f" />
-              <stop offset="50%" stopColor="#ff5400" />
-              <stop offset="100%" stopColor="#7928ca" />
-            </linearGradient>
-
-            {/* Light mode gradient */}
-            <linearGradient id="topo-light-mode" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0284c7" />
-              <stop offset="50%" stopColor="#0d9488" />
-              <stop offset="100%" stopColor="#2563eb" />
-            </linearGradient>
-          </defs>
-
-          {/* Topographic Contour Paths: Crisp 1.2px vector precision */}
-          <g
-            fill="none"
-            stroke={
-              !isDark
-                ? "url(#topo-light-mode)"
-                : colorPalette === "cyber"
-                  ? "url(#topo-cyber-aqua)"
-                  : colorPalette === "rgb"
-                    ? "url(#topo-rgb)"
-                    : "url(#topo-sunset)"
-            }
-            strokeWidth="1.25"
-            strokeOpacity={isDark ? 0.72 : 0.45}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {topoPaths.map((d, index) => (
-              <path key={index} d={d} />
-            ))}
-          </g>
-        </svg>
-
-        {/* Soft vignette to maintain 100% contrast and legibility for text & cards */}
+        {/* Exact Topographic Image */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 w-full h-full transition-all duration-500"
+          style={{
+            backgroundImage: "url('/topo-background.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            filter: isDark
+              ? undefined
+              : "invert(1) hue-rotate(180deg) brightness(0.96) contrast(1.08)",
+            opacity: isDark ? opacityValue : opacityValue * 0.75,
+          }}
+        />
+
+        {/* Optional Cyber Aqua Tint Overlay */}
+        {tintMode === "cyber" && (
+          <div
+            className="absolute inset-0 w-full h-full mix-blend-screen pointer-events-none transition-opacity duration-500"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0, 245, 212, 0.9) 0%, rgba(0, 187, 249, 0.9) 40%, rgba(0, 119, 182, 0.9) 75%, rgba(58, 134, 255, 0.9) 100%)",
+              opacity: isDark ? 0.85 : 0.45,
+            }}
+          />
+        )}
+
+        {/* Optional RGB Keyboard Spectrum Tint Overlay */}
+        {tintMode === "rgb" && (
+          <div
+            className="absolute inset-0 w-full h-full mix-blend-screen pointer-events-none transition-opacity duration-500"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255, 69, 0, 0.85) 0%, rgba(255, 179, 0, 0.85) 25%, rgba(0, 230, 118, 0.85) 50%, rgba(0, 229, 255, 0.85) 75%, rgba(217, 70, 239, 0.85) 100%)",
+              opacity: isDark ? 0.85 : 0.45,
+            }}
+          />
+        )}
+
+        {/* Soft Vignette Overlay: Keeps central text and cards 100% sharp and readable */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-all duration-500"
           style={{
             background: isDark
-              ? "radial-gradient(ellipse 65% 55% at 50% 48%, rgba(6, 6, 8, 0.55) 0%, rgba(6, 6, 8, 0.92) 100%)"
-              : "radial-gradient(ellipse 65% 55% at 50% 48%, rgba(248, 248, 246, 0.4) 0%, rgba(248, 248, 246, 0.88) 100%)",
+              ? "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(14, 18, 21, 0.45) 0%, rgba(14, 18, 21, 0.90) 100%)"
+              : "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(245, 245, 243, 0.35) 0%, rgba(245, 245, 243, 0.88) 100%)",
           }}
         />
       </div>
@@ -259,11 +98,11 @@ export default function TopographicBackground() {
           {!isControlsOpen ? (
             <button
               onClick={() => setIsControlsOpen(true)}
-              aria-label="Personalizar efeito Topo Cyber Aqua"
+              aria-label="Personalizar fundo topográfico"
               className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/15 dark:border-white/10 bg-white/80 dark:bg-black/75 backdrop-blur-xl shadow-lg hover:shadow-cyan-500/20 text-xs font-medium text-foreground transition-all duration-300 hover:scale-105 active:scale-95 group"
             >
               <span className="size-2 rounded-full bg-cyan-400" />
-              <span className="font-mono tracking-tight">Topo Cyber Aqua</span>
+              <span className="font-mono tracking-tight">Fundo Topo</span>
               <Sliders className="size-3.5 text-muted-foreground group-hover:text-cyan-400 transition-colors" />
             </button>
           ) : (
@@ -273,7 +112,7 @@ export default function TopographicBackground() {
                 <div className="flex items-center gap-2">
                   <span className="size-2.5 rounded-full bg-cyan-400" />
                   <span className="font-semibold text-foreground tracking-tight">
-                    Relevo Topográfico
+                    Fundo Topográfico
                   </span>
                 </div>
                 <button
@@ -287,17 +126,28 @@ export default function TopographicBackground() {
 
               {/* Controls */}
               <div className="mt-3.5 space-y-3">
-                {/* Palette */}
+                {/* Tonalidade */}
                 <div>
                   <label className="text-[11px] text-muted-foreground font-medium mb-1.5 block">
-                    Paleta de Cores
+                    Tonalidade das Linhas
                   </label>
                   <div className="grid grid-cols-3 gap-1.5">
                     <button
-                      onClick={() => setColorPalette("cyber")}
+                      onClick={() => setTintMode("original")}
                       className={cn(
                         "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                        colorPalette === "cyber"
+                        tintMode === "original"
+                          ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
+                          : "border-border/40 hover:bg-muted text-muted-foreground",
+                      )}
+                    >
+                      Original P&B
+                    </button>
+                    <button
+                      onClick={() => setTintMode("cyber")}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
+                        tintMode === "cyber"
                           ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
                           : "border-border/40 hover:bg-muted text-muted-foreground",
                       )}
@@ -305,47 +155,36 @@ export default function TopographicBackground() {
                       Cyber Aqua
                     </button>
                     <button
-                      onClick={() => setColorPalette("rgb")}
+                      onClick={() => setTintMode("rgb")}
                       className={cn(
                         "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                        colorPalette === "rgb"
+                        tintMode === "rgb"
                           ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
                           : "border-border/40 hover:bg-muted text-muted-foreground",
                       )}
                     >
                       RGB Teclado
                     </button>
-                    <button
-                      onClick={() => setColorPalette("sunset")}
-                      className={cn(
-                        "px-2 py-1.5 rounded-lg border text-[11px] font-medium transition-all text-center",
-                        colorPalette === "sunset"
-                          ? "border-cyan-500/80 bg-cyan-500/10 text-cyan-400 font-semibold"
-                          : "border-border/40 hover:bg-muted text-muted-foreground",
-                      )}
-                    >
-                      Sunset
-                    </button>
                   </div>
                 </div>
 
-                {/* Glow Level */}
+                {/* Opacidade */}
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] text-muted-foreground font-medium flex items-center gap-1.5">
-                    <Sparkles className="size-3.5" /> Brilho
+                    <Sparkles className="size-3.5" /> Opacidade
                   </span>
                   <div className="flex items-center gap-1">
                     {[
-                      { id: "none" as const, label: "Zero" },
-                      { id: "minimal" as const, label: "Mínimo" },
                       { id: "subtle" as const, label: "Sutil" },
+                      { id: "balanced" as const, label: "Normal" },
+                      { id: "full" as const, label: "100%" },
                     ].map((lvl) => (
                       <button
                         key={lvl.id}
-                        onClick={() => setGlowLevel(lvl.id)}
+                        onClick={() => setOpacityLevel(lvl.id)}
                         className={cn(
                           "px-2 py-1 rounded-md text-[10px] font-medium transition-all border",
-                          glowLevel === lvl.id
+                          opacityLevel === lvl.id
                             ? "border-cyan-500/70 bg-cyan-500/20 text-cyan-400 font-semibold"
                             : "border-border/40 text-muted-foreground hover:bg-muted",
                         )}
@@ -359,7 +198,7 @@ export default function TopographicBackground() {
 
               {/* Status info */}
               <p className="mt-3 pt-2 text-[10px] text-muted-foreground/75 border-t border-border/40 text-center">
-                ✨ Linhas vetoriais nítidas em alta definição e estáticas
+                ✨ Fundo topográfico de alta resolução em escala total
               </p>
             </div>
           )}
