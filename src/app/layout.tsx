@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 
 import { AppProviders } from "@/components/AppProviders";
+import Background from "@/components/Background";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import TopographicBackground from "@/components/TopographicBackground";
 import { SITE } from "@/constants";
 
 import "./globals.css";
@@ -132,7 +132,7 @@ export default function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <AppProviders initialLang="pt">
-            <TopographicBackground />
+            <Background />
             {children}
           </AppProviders>
         </ThemeProvider>
