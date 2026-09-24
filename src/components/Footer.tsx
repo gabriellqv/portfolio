@@ -38,8 +38,8 @@ export default function Footer() {
   return (
     <footer className="w-full flex items-center px-4 lg:px-16 min-h-[5rem] py-6 bg-transparent relative z-20">
       <div className="w-full max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
-        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase select-none">
-          &copy; {new Date().getFullYear()} {SITE.name}
+        <div className="text-muted-foreground text-xs font-semibold tracking-wider select-none">
+          &copy; {new Date().getFullYear()} {SITE.githubUsername}
         </div>
 
         <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
