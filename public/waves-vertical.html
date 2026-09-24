@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waves Vertical Simplex-Noise | Fundo Vivo Interativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060608;
+      --card-bg: #0e1117;
+      --card-border: #1b212c;
+      --text: #f0f3f6;
+      --text-muted: #8b949e;
+      --accent: #ff6c22;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      user-select: none;
+    }
+
+    /* Fullscreen Canvas */
+    #wave-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 1;
+    }
+
+    /* Top Floating Bar */
+    .top-bar {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .top-bar > * {
+      pointer-events: auto;
+    }
+
+    .badge-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      background: rgba(14, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .badge-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-top {
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(14, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-top:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-top.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255, 108, 34, 0.4);
+    }
+
+    /* Floating Controls Panel (Bottom Right) */
+    .controls-panel {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 320px;
+      max-height: calc(100vh - 5rem);
+      overflow-y: auto;
+      background: rgba(14, 17, 23, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 1.25rem;
+      z-index: 20;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    .controls-panel.collapsed {
+      transform: translateY(calc(100% + 2rem));
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .controls-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1rem;
+    }
+
+    .controls-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .btn-close-controls {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.2rem;
+      border-radius: 6px;
+      transition: color 0.2s;
+    }
+
+    .btn-close-controls:hover {
+      color: #fff;
+    }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .control-label span:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent);
+      transition: transform 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    /* Preset Buttons Grid */
+    .presets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-preset {
+      padding: 0.45rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-preset:hover, .btn-preset.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-preset.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(255, 108, 34, 0.15);
+    }
+
+    .btn-toggle-controls {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 15;
+    }
+
+    /* Portfolio Mockup Overlay */
+    .mockup-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .mockup-overlay.hidden {
+      opacity: 0;
+      transform: scale(0.98);
+      pointer-events: none;
+    }
+
+    .mockup-hero {
+      text-align: center;
+      max-width: 820px;
+    }
+
+    .mockup-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .mockup-title {
+      font-size: 4.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+      color: #fff;
+      text-shadow: 0 8px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .mockup-subtitle {
+      font-size: 2rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .mockup-subtitle span {
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .mockup-desc {
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0 auto 2.25rem;
+      max-width: 640px;
+      line-height: 1.6;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+    }
+
+    .mockup-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .mockup-btn-pri {
+      background: #fff;
+      color: #000;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.2s ease;
+    }
+
+    .mockup-btn-sec {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(14px);
+      padding: 0.85rem 1.8rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .mockup-badges {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Interactive Canvas -->
+  <canvas id="wave-canvas"></canvas>
+
+  <!-- Top Floating Bar -->
+  <div class="top-bar">
+    <div class="badge-title">
+      <div class="badge-dot" id="header-dot"></div>
+      <span class="badge-text">WAVES COMPONENT (SIMPLEX-NOISE) • 60 FPS</span>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn-top active" id="btn-toggle-mockup">
+        👁️ Alternar Portfólio
+      </button>
+      <button class="btn-top" id="btn-toggle-panel">
+        ⚙️ Configurar Efeito
+      </button>
+    </div>
+  </div>
+
+  <!-- Portfolio Mockup Overlay -->
+  <div class="mockup-overlay" id="mockup">
+    <div class="mockup-hero">
+      <div class="mockup-tag">🚀 DISPONÍVEL PARA CONTRATAÇÃO</div>
+      <h1 class="mockup-title">Gabriel Queiroz</h1>
+      <div class="mockup-subtitle">Desenvolvedor <span>Full Stack</span></div>
+      <p class="mockup-desc">
+        Desenvolvedor Full Stack especializado em React, Next.js, Vue.js, NestJS e Laravel. Criando experiências digitais fluidas com altíssimo padrão visual e de performance.
+      </p>
+      <div class="mockup-actions">
+        <div class="mockup-btn-pri">Ver Projetos →</div>
+        <div class="mockup-btn-sec">Baixar CV</div>
+      </div>
+      <div class="mockup-badges">
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">Tailwind</span>
+        <span class="tech-pill">Simplex Noise Waves</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Controls Panel -->
+  <div class="controls-panel" id="controls">
+    <div class="controls-header">
+      <div class="controls-title">⚙️ Ajustes de Ondulação</div>
+      <button class="btn-close-controls" id="btn-close-panel">✕</button>
+    </div>
+
+    <!-- Presets -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Paleta de Cores</span>
+      </div>
+      <div class="presets-grid">
+        <button class="btn-preset active" data-preset="orange">Laranja Neon</button>
+        <button class="btn-preset" data-preset="cyber">Cyber Aqua</button>
+        <button class="btn-preset" data-preset="mono">OLED Branco</button>
+        <button class="btn-preset" data-preset="tokyo">Tokyo Magenta</button>
+        <button class="btn-preset" data-preset="emerald">Esmeralda</button>
+        <button class="btn-preset" data-preset="rgb">RGB Spectrum</button>
+      </div>
+    </div>
+
+    <!-- Line Count -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Densidade (Linhas Verticais)</span>
+        <span id="val-lines">95</span>
+      </div>
+      <input type="range" id="param-lines" min="40" max="160" value="95" step="1">
+    </div>
+
+    <!-- Amplitude -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Amplitude da Onda (px)</span>
+        <span id="val-amp">45px</span>
+      </div>
+      <input type="range" id="param-amp" min="10" max="110" value="45" step="1">
+    </div>
+
+    <!-- Frequency -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Frequência / Ondulação</span>
+        <span id="val-freq">2.4</span>
+      </div>
+      <input type="range" id="param-freq" min="0.8" max="5.0" value="2.4" step="0.1">
+    </div>
+
+    <!-- Speed -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Velocidade do Fluxo</span>
+        <span id="val-speed">0.9x</span>
+      </div>
+      <input type="range" id="param-speed" min="0.1" max="2.5" value="0.9" step="0.1">
+    </div>
+
+    <!-- Mouse Force -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Reatividade ao Cursor</span>
+        <span id="val-mouse">75px</span>
+      </div>
+      <input type="range" id="param-mouse" min="0" max="160" value="75" step="5">
+    </div>
+
+    <!-- Line Width / Glow -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Espessura & Brilho Glow</span>
+        <span id="val-glow">Médio</span>
+      </div>
+      <input type="range" id="param-glow" min="1" max="3" value="2" step="1">
+    </div>
+
+    <!-- 3D Perspective Tilt -->
+    <div class="control-group">
+      <div class="control-label">
+        <span>Inclinação Perspectiva 3D</span>
+        <span id="val-tilt">0°</span>
+      </div>
+      <input type="range" id="param-tilt" min="-30" max="30" value="0" step="2">
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 2D SIMPLEX NOISE ALGORITHM (High-Speed Creative Coding Standard)
+    // =========================================================================
+    const F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
+    const G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
+
+    const p = new Uint8Array(256);
+    for (let i = 0; i < 256; i++) p[i] = Math.floor(Math.random() * 256);
+    const perm = new Uint8Array(512);
+    const permMod12 = new Uint8Array(512);
+    for (let i = 0; i < 512; i++) {
+      perm[i] = p[i & 255];
+      permMod12[i] = (perm[i] % 12);
+    }
+
+    const grad3 = new Float32Array([
+      1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0,
+      1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1,
+      0, 1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1
+    ]);
+
+    function simplex2D(xin, yin) {
+      let n0 = 0, n1 = 0, n2 = 0;
+      const s = (xin + yin) * F2;
+      const i = Math.floor(xin + s);
+      const j = Math.floor(yin + s);
+      const t = (i + j) * G2;
+      const X0 = i - t;
+      const Y0 = j - t;
+      const x0 = xin - X0;
+      const y0 = yin - Y0;
+
+      let i1, j1;
+      if (x0 > y0) { i1 = 1; j1 = 0; }
+      else { i1 = 0; j1 = 1; }
+
+      const x1 = x0 - i1 + G2;
+      const y1 = y0 - j1 + G2;
+      const x2 = x0 - 1.0 + 2.0 * G2;
+      const y2 = y0 - 1.0 + 2.0 * G2;
+
+      const ii = i & 255;
+      const jj = j & 255;
+
+      let t0 = 0.5 - x0 * x0 - y0 * y0;
+      if (t0 > 0) {
+        const gi0 = permMod12[ii + perm[jj]] * 3;
+        t0 *= t0;
+        n0 = t0 * t0 * (grad3[gi0] * x0 + grad3[gi0 + 1] * y0);
+      }
+
+      let t1 = 0.5 - x1 * x1 - y1 * y1;
+      if (t1 > 0) {
+        const gi1 = permMod12[ii + i1 + perm[jj + j1]] * 3;
+        t1 *= t1;
+        n1 = t1 * t1 * (grad3[gi1] * x1 + grad3[gi1 + 1] * y1);
+      }
+
+      let t2 = 0.5 - x2 * x2 - y2 * y2;
+      if (t2 > 0) {
+        const gi2 = permMod12[ii + 1 + perm[jj + 1]] * 3;
+        t2 *= t2;
+        n2 = t2 * t2 * (grad3[gi2] * x2 + grad3[gi2 + 1] * y2);
+      }
+
+      return 70.0 * (n0 + n1 + n2);
+    }
+
+    // =========================================================================
+    // COLOR PRESETS & CONFIGURATION
+    // =========================================================================
+    const PRESETS = {
+      orange: {
+        name: 'Laranja Neon',
+        accent: '#ff6c22',
+        bg: '#060608',
+        lineStart: '#ff4500',
+        lineMid: '#ff7a29',
+        lineEnd: '#ffa347',
+        glowColor: 'rgba(255, 108, 34, 0.45)',
+        dotColor: 'rgba(255, 122, 41, 0.12)'
+      },
+      cyber: {
+        name: 'Cyber Aqua',
+        accent: '#00f5d4',
+        bg: '#04080e',
+        lineStart: '#0077b6',
+        lineMid: '#00bbf9',
+        lineEnd: '#00f5d4',
+        glowColor: 'rgba(0, 245, 212, 0.45)',
+        dotColor: 'rgba(0, 245, 212, 0.12)'
+      },
+      mono: {
+        name: 'OLED Branco',
+        accent: '#ffffff',
+        bg: '#000000',
+        lineStart: '#3f3f46',
+        lineMid: '#d4d4d8',
+        lineEnd: '#ffffff',
+        glowColor: 'rgba(255, 255, 255, 0.35)',
+        dotColor: 'rgba(255, 255, 255, 0.08)'
+      },
+      tokyo: {
+        name: 'Tokyo Magenta',
+        accent: '#f72585',
+        bg: '#08030a',
+        lineStart: '#7209b7',
+        lineMid: '#f72585',
+        lineEnd: '#ffbe0b',
+        glowColor: 'rgba(247, 37, 133, 0.5)',
+        dotColor: 'rgba(247, 37, 133, 0.12)'
+      },
+      emerald: {
+        name: 'Esmeralda Bio',
+        accent: '#10b981',
+        bg: '#020b06',
+        lineStart: '#064e3b',
+        lineMid: '#10b981',
+        lineEnd: '#4ade80',
+        glowColor: 'rgba(16, 185, 129, 0.45)',
+        dotColor: 'rgba(16, 185, 129, 0.12)'
+      },
+      rgb: {
+        name: 'RGB Spectrum',
+        accent: '#a855f7',
+        bg: '#050409',
+        isRGB: true,
+        glowColor: 'rgba(168, 85, 247, 0.4)',
+        dotColor: 'rgba(168, 85, 247, 0.1)'
+      }
+    };
+
+    // State
+    const state = {
+      preset: 'orange',
+      lineCount: 95,
+      amplitude: 45,
+      frequency: 2.4,
+      speed: 0.9,
+      mouseForce: 75,
+      glowLevel: 2,
+      tilt: 0,
+      time: 0,
+      mouse: { x: -1000, y: -1000, targetX: -1000, targetY: -1000, active: 0 }
+    };
+
+    // =========================================================================
+    // CANVAS RENDERER (VERTICAL LINES SIMPLEX NOISE)
+    // =========================================================================
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('mousemove', (e) => {
+      state.mouse.targetX = e.clientX;
+      state.mouse.targetY = e.clientY;
+      state.mouse.active = 1.0;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      state.mouse.active = 0.0;
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      if (touch) {
+        state.mouse.targetX = touch.clientX;
+        state.mouse.targetY = touch.clientY;
+        state.mouse.active = 1.0;
+      }
+    }, { passive: true });
+
+    let lastTime = performance.now();
+
+    function render(now) {
+      const delta = (now - lastTime) / 1000;
+      lastTime = now;
+      state.time += delta * state.speed;
+
+      // Mouse interpolation
+      const m = state.mouse;
+      m.x += (m.targetX - m.x) * 0.12;
+      m.y += (m.targetY - m.y) * 0.12;
+
+      const pConfig = PRESETS[state.preset];
+
+      // 1. Clear background
+      ctx.fillStyle = pConfig.bg;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Ambient Horizontal Slit/Dot Grid
+      const dotSpacing = 36;
+      ctx.fillStyle = pConfig.dotColor;
+      const cols = Math.ceil(width / dotSpacing) + 1;
+      const rows = Math.ceil(height / dotSpacing) + 1;
+      for (let r = 0; r < rows; r++) {
+        const py = r * dotSpacing;
+        for (let c = 0; c < cols; c++) {
+          const px = c * dotSpacing;
+          if (m.active > 0.05) {
+            const d = Math.hypot(px - m.x, py - m.y);
+            if (d < 180) {
+              const boost = (1 - d / 180);
+              ctx.fillStyle = pConfig.accent;
+              ctx.beginPath();
+              ctx.arc(px, py, 0.9 + boost * 0.8, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.fillStyle = pConfig.dotColor;
+              continue;
+            }
+          }
+          ctx.beginPath();
+          ctx.arc(px, py, 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // 3. Render Vertical Wave Lines
+      const numLines = state.lineCount;
+      const pointsPerLine = 90; // Y subdivisions
+      const lineSpacing = width / (numLines - 1);
+      const stepY = height / (pointsPerLine - 1);
+
+      // Glow setting
+      const glowBlur = state.glowLevel === 1 ? 0 : state.glowLevel === 2 ? 4.5 : 9;
+      ctx.shadowBlur = glowBlur;
+      ctx.shadowColor = pConfig.glowColor;
+
+      const t = state.time;
+      const freq = state.frequency * 0.0016;
+      const amp = state.amplitude;
+      const mouseRadius = 220;
+      const mouseForce = state.mouseForce;
+      const tiltRad = (state.tilt * Math.PI) / 180;
+      const tiltFactor = Math.tan(tiltRad);
+
+      for (let l = 0; l < numLines; l++) {
+        const baseX = l * lineSpacing;
+        const normL = l / (numLines - 1);
+
+        // Line color styling
+        if (pConfig.isRGB) {
+          const hue = (normL * 300 + t * 40) % 360;
+          ctx.strokeStyle = `hsla(${hue}, 95%, 65%, 0.7)`;
+          ctx.shadowColor = `hsla(${hue}, 95%, 60%, 0.4)`;
+        } else {
+          // Vertical linear gradient along line
+          const grad = ctx.createLinearGradient(0, 0, 0, height);
+          grad.addColorStop(0.0, 'rgba(0,0,0,0.1)');
+          grad.addColorStop(0.15, pConfig.lineStart);
+          grad.addColorStop(0.5, pConfig.lineMid);
+          grad.addColorStop(0.85, pConfig.lineEnd);
+          grad.addColorStop(1.0, 'rgba(0,0,0,0.1)');
+          ctx.strokeStyle = grad;
+        }
+
+        // Hierarchy: every 4th or 5th line is a master line (slightly thicker)
+        const isMaster = (l % 4 === 0);
+        ctx.lineWidth = isMaster ? 1.75 : 1.05;
+
+        ctx.beginPath();
+
+        for (let pIdx = 0; pIdx < pointsPerLine; pIdx++) {
+          const baseY = pIdx * stepY;
+          const normY = pIdx / (pointsPerLine - 1);
+
+          // Simplex Noise 2D harmonic wave
+          const nx = baseX * freq;
+          const ny = baseY * freq;
+          const n1 = simplex2D(nx + t * 0.4, ny + t * 0.25);
+          const n2 = simplex2D(nx * 2.1 - t * 0.3, ny * 1.8 + t * 0.35) * 0.45;
+          const n3 = simplex2D(nx * 4.0 + t * 0.5, ny * 3.5 - t * 0.4) * 0.2;
+
+          // Envelope: wave is subtle near top/bottom and maximum in center
+          const envelope = Math.sin(normY * Math.PI);
+          let deflectX = (n1 + n2 + n3) * amp * envelope;
+
+          // 3D Perspective Tilt
+          const tiltOffset = (baseY - height * 0.5) * tiltFactor;
+          deflectX += tiltOffset;
+
+          // Interactive Mouse Physics
+          if (m.active > 0.05) {
+            const currentX = baseX + deflectX;
+            const currentY = baseY;
+            const dx = currentX - m.x;
+            const dy = currentY - m.y;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < mouseRadius) {
+              const force = Math.exp(-Math.pow(dist / (mouseRadius * 0.5), 2));
+              const ripple = Math.sin(dist * 0.06 - t * 8.0) * 14;
+              const repel = (dx / (dist + 1)) * mouseForce;
+              deflectX += (repel + ripple) * force;
+            }
+          }
+
+          const renderX = baseX + deflectX;
+          const renderY = baseY;
+
+          if (pIdx === 0) {
+            ctx.moveTo(renderX, renderY);
+          } else {
+            ctx.lineTo(renderX, renderY);
+          }
+        }
+
+        ctx.stroke();
+      }
+
+      ctx.shadowBlur = 0;
+
+      // 4. Soft Vignette to protect hero typography
+      const vignette = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.48,
+        Math.min(width, height) * 0.25,
+        width * 0.5,
+        height * 0.48,
+        Math.max(width, height) * 0.72
+      );
+      vignette.addColorStop(0.0, 'rgba(6, 6, 8, 0.45)');
+      vignette.addColorStop(0.65, 'rgba(6, 6, 8, 0.75)');
+      vignette.addColorStop(1.0, 'rgba(6, 6, 8, 0.95)');
+
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, width, height);
+
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+
+    // =========================================================================
+    // UI INTERACTION & EVENT LISTENERS
+    // =========================================================================
+    const mockupEl = document.getElementById('mockup');
+    const controlsEl = document.getElementById('controls');
+    const btnToggleMockup = document.getElementById('btn-toggle-mockup');
+    const btnTogglePanel = document.getElementById('btn-toggle-panel');
+    const btnClosePanel = document.getElementById('btn-close-panel');
+    const headerDot = document.getElementById('header-dot');
+
+    btnToggleMockup.addEventListener('click', () => {
+      mockupEl.classList.toggle('hidden');
+      btnToggleMockup.classList.toggle('active');
+    });
+
+    btnTogglePanel.addEventListener('click', () => {
+      controlsEl.classList.toggle('collapsed');
+      btnTogglePanel.classList.toggle('active');
+    });
+
+    btnClosePanel.addEventListener('click', () => {
+      controlsEl.classList.add('collapsed');
+      btnTogglePanel.classList.remove('active');
+    });
+
+    // Preset Switching
+    document.querySelectorAll('.btn-preset').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.preset = btn.dataset.preset;
+        const p = PRESETS[state.preset];
+        document.documentElement.style.setProperty('--accent', p.accent);
+        headerDot.style.background = p.accent;
+        headerDot.style.boxShadow = `0 0 10px ${p.accent}`;
+      });
+    });
+
+    // Slider Controls Binding
+    function bindSlider(id, prop, labelId, suffix = '', multiplier = 1) {
+      const slider = document.getElementById(id);
+      const label = document.getElementById(labelId);
+      slider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value);
+        state[prop] = val * multiplier;
+        label.textContent = val + suffix;
+      });
+    }
+
+    bindSlider('param-lines', 'lineCount', 'val-lines', '');
+    bindSlider('param-amp', 'amplitude', 'val-amp', 'px');
+    bindSlider('param-freq', 'frequency', 'val-freq', '');
+    bindSlider('param-speed', 'speed', 'val-speed', 'x');
+    bindSlider('param-mouse', 'mouseForce', 'val-mouse', 'px');
+    bindSlider('param-tilt', 'tilt', 'val-tilt', '°');
+
+    document.getElementById('param-glow').addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      state.glowLevel = val;
+      document.getElementById('val-glow').textContent = val === 1 ? 'Mínimo' : val === 2 ? 'Médio' : 'Vívido';
+    });
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'p' || e.key === 'P') btnTogglePanel.click();
+      if (e.key === 'm' || e.key === 'M') btnToggleMockup.click();
+    });
+  </script>
+</body>
+</html>
