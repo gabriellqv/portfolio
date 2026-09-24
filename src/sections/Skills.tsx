@@ -36,7 +36,7 @@ function SkillCategoryCard({
     <div
       ref={ref}
       className={cn(
-        "flex flex-col p-8 card-base reveal-fade-up",
+        "flex flex-col p-6 sm:p-8 card-base reveal-fade-up",
         isLast && "md:col-span-2",
       )}
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
@@ -51,12 +51,10 @@ function SkillCategoryCard({
       </div>
 
       <div
-        className={cn(
-          "grid gap-3",
-          isLast
-            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
-            : "grid-cols-1 sm:grid-cols-2",
-        )}
+        className="grid gap-2.5"
+        style={{
+          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+        }}
       >
         {category.skills.map((skill, skillIdx) => {
           const Icon = skill.icon;
@@ -66,7 +64,7 @@ function SkillCategoryCard({
             <div
               key={skill.name}
               className={cn(
-                "flex items-center gap-2 px-3 py-2.5 rounded-xl border transition-all hover:scale-105 reveal-scale-in",
+                "flex items-center gap-2 px-3 py-2 rounded-xl border transition-all hover:scale-105 reveal-scale-in",
                 isWhite &&
                   "border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10",
               )}
@@ -83,11 +81,13 @@ function SkillCategoryCard({
               }
             >
               <Icon
-                size={18}
+                size={16}
                 {...(isWhite ? {} : { style: { color: skill.hex } })}
                 className={cn("shrink-0", isWhite && "text-neutral-900 dark:text-white")}
               />
-              <span className="text-sm font-medium text-foreground">{skill.name}</span>
+              <span className="text-xs sm:text-sm font-medium text-foreground whitespace-nowrap">
+                {skill.name}
+              </span>
             </div>
           );
         })}
