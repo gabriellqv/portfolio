@@ -18,17 +18,49 @@ const en: Dictionary = {
   },
   about: {
     title: "About Me",
-    whoIAm: "Who I am",
-    whoIAmP1:
-      "I'm a Full Stack Developer focused on building scalable applications and modern interfaces. My journey in technology is driven by a constant pursuit of excellence and solving complex structural problems.",
-    whoIAmP2:
-      "I'm passionate about transforming robust business rules into fluid end-user experiences (as seen in FlowERP, StockSnap, and HydroTrack). I work end-to-end using React, Next.js, Node.js, and Laravel, always prioritizing clean code, solid architecture (SOLID/Clean Code), and performance.",
-    myJourney: "My Journey",
-    myJourneyP1:
-      "My path is marked by a solid foundation of discipline and resilience, built during my time in military service. This unique experience taught me crucial skills: adaptability under pressure, analytical thinking, and structured teamwork.",
-    myJourneyP2Start:
-      "Today, as a software engineer, I bring that same maturity and pragmatic focus to the development ecosystem. I apply this systemic vision from conception and architecture planning through to ",
-    myJourneyP2End: " and maintenance of high-impact applications.",
+    subtitle:
+      "Bachelor's in Computer Science from UNINOVE and post-graduate candidate in Software Engineering at PUC Minas. Full Stack Developer building end-to-end web applications focused on clean code, solid architecture, and high performance.",
+    cards: [
+      {
+        id: "frontend",
+        title: "Frontend Engineering",
+        description:
+          "Development of modern, responsive, and high-performance web applications. Focused on component-based architecture, hybrid rendering (SSR/SSG), scalable design systems, and predictable state management.",
+        skills: [
+          "React & Next.js (App Router)",
+          "TypeScript & Strict Typing",
+          "Tailwind CSS & Design Systems",
+          "Zustand, Pinia & Global State",
+          "Zod & React Hook Form",
+        ],
+      },
+      {
+        id: "backend",
+        title: "Backend Engineering",
+        description:
+          "Building modular, secure, and high-availability REST APIs. Expertise in Service Layer, RBAC access control, JWT/Sanctum auth, ACID transactions with pessimistic locking, and distributed caching.",
+        skills: [
+          "Node.js, NestJS & Express",
+          "Laravel & Service Layer",
+          "PostgreSQL, MySQL & Redis",
+          "Prisma ORM & Eloquent ORM",
+          "ACID Transactions & Pessimistic Locks",
+        ],
+      },
+      {
+        id: "devops",
+        title: "Quality & DevOps",
+        description:
+          "Rigorous software engineering practices and system reliability. Automated test suites covering critical business logic, environment containerization, and continuous deployment automation.",
+        skills: [
+          "Testing with Jest, Vitest, Pest & Supertest",
+          "Docker & Docker Compose",
+          "CI/CD with GitHub Actions",
+          "SOLID Principles & Clean Architecture",
+          "Swagger & OpenAPI Documentation",
+        ],
+      },
+    ],
   },
   projects: {
     title: "Featured Projects",

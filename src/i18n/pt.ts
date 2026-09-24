@@ -18,17 +18,49 @@ const pt: Dictionary = {
   },
   about: {
     title: "Sobre Mim",
-    whoIAm: "Quem eu sou",
-    whoIAmP1:
-      "Sou um desenvolvedor Full Stack com foco em criar aplicações escaláveis e interfaces modernas. Minha jornada na tecnologia é impulsionada pela busca constante por excelência e resolução de problemas estruturais complexos.",
-    whoIAmP2:
-      "Sou apaixonado por transformar regras de negócio robustas em experiências fluídas para o usuário final (como no FlowERP, StockSnap e HydroTrack). Trabalho de ponta a ponta utilizando React, Next.js, Node.js e Laravel, sempre priorizando código limpo, arquitetura sólida (SOLID/Clean Code) e performance.",
-    myJourney: "Minha Jornada",
-    myJourneyP1:
-      "Minha trajetória é marcada por uma fundação sólida de disciplina e resiliência, construída durante meu período de serviço militar. Essa experiência singular me ensinou habilidades cruciais: adaptabilidade sob pressão, pensamento analítico e trabalho em equipe estruturado.",
-    myJourneyP2Start:
-      "Hoje, como engenheiro de software, trago essa mesma maturidade e foco pragmático para o ecossistema de desenvolvimento. Aplico essa visão sistêmica desde a concepção e planejamento da arquitetura até o ",
-    myJourneyP2End: " e a manutenção de aplicações de alto impacto.",
+    subtitle:
+      "Bacharel em Ciência da Computação pela UNINOVE e pós-graduando em Engenharia de Software pela PUC Minas. Atuo como Desenvolvedor Full Stack construindo aplicações web de ponta a ponta com foco em código limpo, arquitetura sólida e alta performance.",
+    cards: [
+      {
+        id: "frontend",
+        title: "Engenharia Frontend",
+        description:
+          "Desenvolvimento de aplicações web modernas, responsivas e de alta performance. Foco em arquitetura baseada em componentes, renderização híbrida (SSR/SSG), design systems escaláveis e gestão de estado previsível.",
+        skills: [
+          "React & Next.js (App Router)",
+          "TypeScript & Tipagem Estrita",
+          "Tailwind CSS & Design Systems",
+          "Zustand, Pinia & Estado Global",
+          "Zod & React Hook Form",
+        ],
+      },
+      {
+        id: "backend",
+        title: "Engenharia Backend",
+        description:
+          "Construção de APIs REST modulares, seguras e de alta disponibilidade. Domínio de Service Layer, controle de acesso RBAC, autenticação JWT/Sanctum, transações ACID com lock pessimista e cache distribuído.",
+        skills: [
+          "Node.js, NestJS & Express",
+          "Laravel & Service Layer",
+          "PostgreSQL, MySQL & Redis",
+          "Prisma ORM & Eloquent ORM",
+          "Transações ACID & Locks Pessimistas",
+        ],
+      },
+      {
+        id: "devops",
+        title: "Qualidade & DevOps",
+        description:
+          "Práticas rigorosas de engenharia de software e confiabilidade de sistemas. Criação de suítes de testes automatizados para regras críticas, conteinerização de ambientes e automação de deploys contínuos.",
+        skills: [
+          "Testes com Jest, Vitest, Pest & Supertest",
+          "Docker & Docker Compose",
+          "CI/CD com GitHub Actions",
+          "Princípios SOLID & Clean Architecture",
+          "Documentação Swagger & OpenAPI",
+        ],
+      },
+    ],
   },
   projects: {
     title: "Projetos em Destaque",

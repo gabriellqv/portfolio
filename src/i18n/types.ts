@@ -18,13 +18,13 @@ export interface Dictionary {
   };
   about: {
     title: string;
-    whoIAm: string;
-    whoIAmP1: string;
-    whoIAmP2: string;
-    myJourney: string;
-    myJourneyP1: string;
-    myJourneyP2Start: string;
-    myJourneyP2End: string;
+    subtitle: string;
+    cards: Array<{
+      id: string;
+      title: string;
+      description: string;
+      skills: string[];
+    }>;
   };
   projects: {
     title: string;
