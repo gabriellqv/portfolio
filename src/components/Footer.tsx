@@ -1,55 +1,60 @@
 "use client";
 
 import { SITE } from "@/constants";
+import { useDictionary } from "@/i18n";
 
 /**
- * Exact footer from laschisabella/laschisa:
- * - Left: Copyright & Intentionality tagline in text-zinc-400 text-xs font-bold tracking-wide lg:tracking-widest
- * - Right: Action links in exact laschisa accent color #8A6D95 (linkedin, mail, github, source code)
+ * Minimalist footer consistent with the project's design system:
+ * - Completely logo-free: clean two-column layout (copyright on left, links on right)
+ * - Semantic theme colors: text-muted-foreground transitioning to text-foreground/white on hover
+ * - Seamless transparent overlay directly across the waves background
  */
 export default function Footer() {
+  const { dict } = useDictionary();
+
+  const footerLinks = [
+    {
+      label: "LINKEDIN",
+      href: `https://www.linkedin.com/in/${SITE.linkedinUsername}`,
+      isExternal: true,
+    },
+    {
+      label: "MAIL",
+      href: `mailto:${SITE.email}`,
+      isExternal: false,
+    },
+    {
+      label: "GITHUB",
+      href: `https://github.com/${SITE.githubUsername}`,
+      isExternal: true,
+    },
+    {
+      label: dict.footer.sourceCode ?? "SOURCE CODE",
+      href: SITE.repoUrl,
+      isExternal: true,
+    },
+  ];
+
   return (
-    <footer className="w-full flex items-center px-3 lg:px-20 min-h-[8vh] mb-4 lg:mb-0 py-6">
-      <div className="lg:max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-4 lg:gap-0">
-        <div className="text-zinc-400 text-xs font-bold tracking-wide lg:tracking-widest select-none">
-          &copy; {new Date().getFullYear()} {SITE.brandDomain} &bull; BUILD WITH
-          INTENTIONALITY
+    <footer className="w-full flex items-center px-4 lg:px-16 min-h-[5rem] py-6 bg-transparent relative z-20">
+      <div className="w-full max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
+        <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase select-none">
+          &copy; {new Date().getFullYear()} {SITE.name} &bull;{" "}
+          {dict.footer.builtWith ?? "BUILD WITH INTENTIONALITY"}
         </div>
 
-        <div className="flex items-center z-50 flex-wrap justify-center">
-          <a
-            href={`https://linkedin.com/in/${SITE.linkedinUsername}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
-          >
-            linkedin
-          </a>
-
-          <a
-            href={`mailto:${SITE.email}`}
-            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
-          >
-            mail
-          </a>
-
-          <a
-            href={`https://github.com/${SITE.githubUsername}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
-          >
-            github
-          </a>
-
-          <a
-            href={SITE.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3.5 py-2 uppercase tracking-wide text-[#8A6D95] hover:text-[#a88bb3] text-xs font-bold transition-colors duration-150"
-          >
-            source code
-          </a>
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
+          {footerLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.isExternal ? "_blank" : undefined}
+              rel={link.isExternal ? "noopener noreferrer" : undefined}
+              className="px-3 py-1.5 uppercase tracking-wider text-muted-foreground hover:text-foreground dark:hover:text-white text-xs font-semibold transition-colors duration-200"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
