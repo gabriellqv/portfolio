@@ -1,8 +1,9 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 
 import {
+  AlertCircle,
   ArrowUpRight,
   CheckCircle2,
   Loader2,
@@ -21,6 +22,12 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
 /**
  * Contact section component.
  * Renders an interactive contact form and social media links.
@@ -35,9 +42,57 @@ export default function Contact() {
     email: "",
     message: "",
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  const clearError = (field: keyof FormErrors) => {
+    setErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
+
+  const validate = () => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = dict.contact.errors.nameRequired;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = dict.contact.errors.emailRequired;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = dict.contact.errors.emailInvalid;
+      }
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = dict.contact.errors.messageRequired;
+    }
+
+    setErrors(newErrors);
+
+    if (newErrors.name) {
+      nameRef.current?.focus();
+    } else if (newErrors.email) {
+      emailRef.current?.focus();
+    } else if (newErrors.message) {
+      messageRef.current?.focus();
+    }
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!validate()) return;
+
     setFormState("sending");
 
     const subject = encodeURIComponent(`${dict.contact.subjectPrefix}${formData.name}`);
@@ -49,6 +104,7 @@ export default function Contact() {
       window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
       setFormState("sent");
       setFormData({ name: "", email: "", message: "" });
+      setErrors({});
 
       setTimeout(() => setFormState("idle"), 4000);
     }, 600);
@@ -133,9 +189,9 @@ export default function Contact() {
             {dict.contact.sendMessageDesc}
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="contact-name"
                   className="text-sm font-medium text-foreground"
@@ -143,25 +199,49 @@ export default function Contact() {
                   {dict.contact.name}
                 </label>
                 <div className="relative flex items-center">
-                  <User className="absolute left-3.5 size-4 text-muted-foreground pointer-events-none" />
+                  <User
+                    className={cn(
+                      "absolute left-3.5 size-4 pointer-events-none transition-colors",
+                      errors.name
+                        ? "text-red-500/80 dark:text-red-400"
+                        : "text-muted-foreground",
+                    )}
+                  />
                   <input
+                    ref={nameRef}
                     id="contact-name"
                     type="text"
-                    required
                     placeholder={dict.contact.namePlaceholder}
                     value={formData.name}
-                    onChange={(e) =>
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? "contact-name-error" : undefined}
+                    onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
                         name: e.target.value,
-                      }))
-                    }
-                    className="form-input pl-10"
+                      }));
+                      if (errors.name) clearError("name");
+                    }}
+                    className={cn(
+                      "form-input pl-10 transition-colors",
+                      errors.name &&
+                        "border-red-500/70 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500/60 dark:focus:ring-red-500/20",
+                    )}
                   />
                 </div>
+                {errors.name && (
+                  <div
+                    id="contact-name-error"
+                    role="alert"
+                    className="flex items-center gap-1.5 text-xs text-red-500 dark:text-red-400 animate-in fade-in duration-200"
+                  >
+                    <AlertCircle className="size-3.5 flex-shrink-0" />
+                    <span>{errors.name}</span>
+                  </div>
+                )}
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="contact-email"
                   className="text-sm font-medium text-foreground"
@@ -169,26 +249,50 @@ export default function Contact() {
                   {dict.contact.email}
                 </label>
                 <div className="relative flex items-center">
-                  <Mail className="absolute left-3.5 size-4 text-muted-foreground pointer-events-none" />
+                  <Mail
+                    className={cn(
+                      "absolute left-3.5 size-4 pointer-events-none transition-colors",
+                      errors.email
+                        ? "text-red-500/80 dark:text-red-400"
+                        : "text-muted-foreground",
+                    )}
+                  />
                   <input
+                    ref={emailRef}
                     id="contact-email"
                     type="email"
-                    required
                     placeholder={dict.contact.emailPlaceholder}
                     value={formData.email}
-                    onChange={(e) =>
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? "contact-email-error" : undefined}
+                    onChange={(e) => {
                       setFormData((prev) => ({
                         ...prev,
                         email: e.target.value,
-                      }))
-                    }
-                    className="form-input pl-10"
+                      }));
+                      if (errors.email) clearError("email");
+                    }}
+                    className={cn(
+                      "form-input pl-10 transition-colors",
+                      errors.email &&
+                        "border-red-500/70 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500/60 dark:focus:ring-red-500/20",
+                    )}
                   />
                 </div>
+                {errors.email && (
+                  <div
+                    id="contact-email-error"
+                    role="alert"
+                    className="flex items-center gap-1.5 text-xs text-red-500 dark:text-red-400 animate-in fade-in duration-200"
+                  >
+                    <AlertCircle className="size-3.5 flex-shrink-0" />
+                    <span>{errors.email}</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="contact-message"
                 className="text-sm font-medium text-foreground"
@@ -196,22 +300,46 @@ export default function Contact() {
                 {dict.contact.message}
               </label>
               <div className="relative flex items-start">
-                <Text className="absolute left-3.5 top-3.5 size-4 text-muted-foreground pointer-events-none" />
+                <Text
+                  className={cn(
+                    "absolute left-3.5 top-3.5 size-4 pointer-events-none transition-colors",
+                    errors.message
+                      ? "text-red-500/80 dark:text-red-400"
+                      : "text-muted-foreground",
+                  )}
+                />
                 <textarea
+                  ref={messageRef}
                   id="contact-message"
-                  required
                   rows={7}
                   placeholder={dict.contact.messagePlaceholder}
                   value={formData.message}
-                  onChange={(e) =>
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
+                  onChange={(e) => {
                     setFormData((prev) => ({
                       ...prev,
                       message: e.target.value,
-                    }))
-                  }
-                  className="form-input pl-10 resize-none"
+                    }));
+                    if (errors.message) clearError("message");
+                  }}
+                  className={cn(
+                    "form-input pl-10 resize-none transition-colors",
+                    errors.message &&
+                      "border-red-500/70 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500/60 dark:focus:ring-red-500/20",
+                  )}
                 />
               </div>
+              {errors.message && (
+                <div
+                  id="contact-message-error"
+                  role="alert"
+                  className="flex items-center gap-1.5 text-xs text-red-500 dark:text-red-400 animate-in fade-in duration-200"
+                >
+                  <AlertCircle className="size-3.5 flex-shrink-0" />
+                  <span>{errors.message}</span>
+                </div>
+              )}
             </div>
 
             <Button

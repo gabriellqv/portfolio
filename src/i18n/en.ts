@@ -141,6 +141,12 @@ const en: Dictionary = {
     subjectPrefix: "Contact via Portfolio - ",
     bodyNameLabel: "Name: ",
     bodyEmailLabel: "Email: ",
+    errors: {
+      nameRequired: "Please fill out this field.",
+      emailRequired: "Please fill out this field.",
+      emailInvalid: "Please enter a valid email address.",
+      messageRequired: "Please fill out this field.",
+    },
   },
   footer: {
     rights: "All rights reserved.",

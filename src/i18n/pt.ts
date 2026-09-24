@@ -141,6 +141,12 @@ const pt: Dictionary = {
     subjectPrefix: "Contato via Portfolio - ",
     bodyNameLabel: "Nome: ",
     bodyEmailLabel: "E-mail: ",
+    errors: {
+      nameRequired: "Preencha este campo.",
+      emailRequired: "Preencha este campo.",
+      emailInvalid: "Insira um endereço de e-mail válido.",
+      messageRequired: "Preencha este campo.",
+    },
   },
   footer: {
     rights: "Todos os direitos reservados.",

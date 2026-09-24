@@ -76,6 +76,12 @@ export interface Dictionary {
     subjectPrefix: string;
     bodyNameLabel: string;
     bodyEmailLabel: string;
+    errors: {
+      nameRequired: string;
+      emailRequired: string;
+      emailInvalid: string;
+      messageRequired: string;
+    };
   };
   footer: {
     rights: string;
