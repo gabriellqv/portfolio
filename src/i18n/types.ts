@@ -19,6 +19,14 @@ export interface Dictionary {
   about: {
     title: string;
     subtitle: string;
+    eyebrow: string;
+    headline: string;
+    bioP1: string;
+    bioP2: string;
+    stats: Array<{
+      value: string;
+      label: string;
+    }>;
     cards: Array<{
       id: string;
       title: string;

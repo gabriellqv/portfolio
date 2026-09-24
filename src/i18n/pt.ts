@@ -19,7 +19,18 @@ const pt: Dictionary = {
   about: {
     title: "Sobre Mim",
     subtitle:
-      "Bacharel em Ciência da Computação pela UNINOVE e pós-graduando em Engenharia de Software pela PUC Minas. Atuo como Desenvolvedor Full Stack construindo aplicações web de ponta a ponta com foco em código limpo, arquitetura sólida e alta performance.",
+      "Formação sólida em Ciência da Computação e Engenharia de Software aplicada ao desenvolvimento web de ponta a ponta.",
+    eyebrow: "ALÉM DO CÓDIGO",
+    headline: "Fluxos complexos mais claros, eficientes e escaláveis.",
+    bioP1:
+      "Minha formação em Ciência da Computação (UNINOVE) e especialização em Engenharia de Software (PUC Minas) moldaram a forma como enxergo software: não apenas como interfaces ou código isolado, mas como sistemas integrados capazes de traduzir processos complexos de negócio em ferramentas intuitivas, seguras e eficientes.",
+    bioP2:
+      "Atuo de ponta a ponta com foco no ecossistema Node.js (NestJS), TypeScript, React/Next.js e Laravel. Trabalho onde arquitetura técnica rigorosa (SOLID, Clean Code, transações ACID com lock pessimista) e experiência do usuário precisam coexistir em perfeita sintonia.",
+    stats: [
+      { value: "3+", label: "Anos de Experiência" },
+      { value: "3", label: "Sistemas em Produção" },
+      { value: "116+", label: "Testes Automatizados" },
+    ],
     cards: [
       {
         id: "frontend",

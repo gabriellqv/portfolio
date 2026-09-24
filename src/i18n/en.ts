@@ -19,7 +19,18 @@ const en: Dictionary = {
   about: {
     title: "About Me",
     subtitle:
-      "Bachelor's in Computer Science from UNINOVE and post-graduate candidate in Software Engineering at PUC Minas. Full Stack Developer building end-to-end web applications focused on clean code, solid architecture, and high performance.",
+      "Solid background in Computer Science and Software Engineering applied to end-to-end web development.",
+    eyebrow: "BEYOND THE CODE",
+    headline: "Making complex workflows clearer, efficient, and scalable.",
+    bioP1:
+      "My degree in Computer Science (UNINOVE) and post-graduate studies in Software Engineering (PUC Minas) have shaped the way I view software: not merely as isolated code or UI screens, but as integrated systems that turn complex business processes into intuitive, secure, and efficient tools.",
+    bioP2:
+      "I work end-to-end focusing on the Node.js (NestJS), TypeScript, React/Next.js, and Laravel ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
+    stats: [
+      { value: "3+", label: "Years of Experience" },
+      { value: "3", label: "Production Systems" },
+      { value: "116+", label: "Automated Tests" },
+    ],
     cards: [
       {
         id: "frontend",

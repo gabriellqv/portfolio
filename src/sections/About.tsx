@@ -15,19 +15,65 @@ const ICONS_BY_ID: Record<string, React.ComponentType<{ className?: string }>> =
 
 /**
  * About section component.
- * Displays curriculum-based engineering domains and core competencies
- * using luxury glass cards with project theme styling and circular chevron highlights.
+ * Features:
+ * 1. Narrative presentation card ("Além do Código") with curriculum bio and verified metrics,
+ *    without the lateral photo, using luxury glassmorphic card styling.
+ * 2. Tri-column engineering competence cards with circular chevron indicators.
  */
 export default function About() {
   const { dict } = useDictionary();
-  const ref = useScrollReveal<HTMLDivElement>();
+  const narrativeRef = useScrollReveal<HTMLDivElement>();
+  const cardsRef = useScrollReveal<HTMLDivElement>();
 
   return (
-    <section id="about" className="section-wrapper">
+    <section id="about" className="section-wrapper space-y-10 lg:space-y-12">
       <SectionHeader title={dict.about.title} subtitle={dict.about.subtitle} />
 
+      {/* Narrative Card ("Além do Código") without lateral photo */}
       <div
-        ref={ref}
+        ref={narrativeRef}
+        className="group relative card-base p-8 sm:p-10 lg:p-12 reveal-fade-up overflow-hidden"
+        style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
+      >
+        {/* Subtle top light highlight rim */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 dark:via-white/15 to-transparent pointer-events-none" />
+
+        <div className="flex flex-col space-y-6 max-w-4xl">
+          {/* Eyebrow */}
+          <span className="text-xs sm:text-sm font-bold tracking-widest uppercase text-muted-foreground/90 select-none">
+            {dict.about.eyebrow}
+          </span>
+
+          {/* Headline */}
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
+            {dict.about.headline}
+          </h3>
+
+          {/* Narrative paragraphs */}
+          <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed font-normal">
+            <p>{dict.about.bioP1}</p>
+            <p>{dict.about.bioP2}</p>
+          </div>
+
+          {/* Stats Row */}
+          <div className="pt-8 mt-2 border-t border-border/40 flex flex-wrap items-center gap-8 sm:gap-12 md:gap-16">
+            {dict.about.stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground">
+                  {stat.value}
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-muted-foreground uppercase mt-1">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Engineering Domain Cards */}
+      <div
+        ref={cardsRef}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
       >
         {dict.about.cards.map((card, index) => {
@@ -42,7 +88,9 @@ export default function About() {
                 "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/20 dark:before:via-white/15 before:to-transparent",
                 isLastOnTablet && "md:col-span-2 lg:col-span-1",
               )}
-              style={{ "--reveal-delay": `${index * 150}ms` } as React.CSSProperties}
+              style={
+                { "--reveal-delay": `${(index + 1) * 120}ms` } as React.CSSProperties
+              }
             >
               <div>
                 {/* Icon Squircle */}
@@ -51,9 +99,9 @@ export default function About() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3">
+                <h4 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground mb-3">
                   {card.title}
-                </h3>
+                </h4>
 
                 {/* Description */}
                 <p className="text-sm text-muted-foreground leading-relaxed mb-6 font-normal">
