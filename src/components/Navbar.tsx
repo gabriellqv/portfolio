@@ -21,6 +21,19 @@ const Navbar = () => {
   const mounted = useMounted();
   const { dict, lang, setLang } = useDictionary();
 
+  const [langRot, setLangRot] = useState(0);
+  const [themeRot, setThemeRot] = useState(0);
+
+  const handleLangToggle = () => {
+    setLangRot((prev) => prev + 360);
+    setLang(lang === "pt" ? "en" : "pt");
+  };
+
+  const handleThemeToggle = () => {
+    setThemeRot((prev) => prev + 360);
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
   const navItems = [
     { id: "home", label: dict.nav.home },
     { id: "about", label: dict.nav.about },
@@ -103,27 +116,71 @@ const Navbar = () => {
 
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
-              onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider"
+              onClick={handleLangToggle}
+              className="group/lang flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Languages className="size-3.5" />
-              <span>{lang.toUpperCase()}</span>
+              <span
+                className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/lang:scale-110"
+                style={{ transform: `rotate(${langRot}deg)` }}
+              >
+                <Languages className="size-3.5" />
+              </span>
+              <span className="relative h-4 w-5 overflow-hidden inline-flex items-center justify-center">
+                <span
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
+                    lang === "pt"
+                      ? "translate-y-0 opacity-100"
+                      : "-translate-y-3 opacity-0 pointer-events-none",
+                  )}
+                >
+                  PT
+                </span>
+                <span
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
+                    lang === "en"
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-3 opacity-0 pointer-events-none",
+                  )}
+                >
+                  EN
+                </span>
+              </span>
             </button>
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
+              onClick={handleThemeToggle}
+              className="group/theme relative p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
               aria-label={dict.a11y.toggleTheme}
             >
-              {mounted ? (
-                theme === "dark" ? (
-                  <Sun className="size-4" />
+              <div
+                className="relative size-4 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/theme:scale-110"
+                style={{ transform: `rotate(${themeRot}deg)` }}
+              >
+                {mounted ? (
+                  <>
+                    <Sun
+                      className={cn(
+                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                        theme === "dark"
+                          ? "scale-100 rotate-0 opacity-100 text-amber-300"
+                          : "scale-0 -rotate-90 opacity-0",
+                      )}
+                    />
+                    <Moon
+                      className={cn(
+                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                        theme === "dark"
+                          ? "scale-0 rotate-90 opacity-0"
+                          : "scale-100 rotate-0 opacity-100 text-neutral-800 dark:text-neutral-200",
+                      )}
+                    />
+                  </>
                 ) : (
-                  <Moon className="size-4" />
-                )
-              ) : (
-                <div className="size-4" />
-              )}
+                  <div className="size-4" />
+                )}
+              </div>
             </button>
           </div>
         </div>
@@ -131,27 +188,71 @@ const Navbar = () => {
         <div className="flex items-center gap-1 md:hidden z-10">
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
-              onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground text-xs font-semibold tracking-wider"
+              onClick={handleLangToggle}
+              className="group/lang flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground text-xs font-semibold tracking-wider select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Languages className="size-3.5" />
-              <span>{lang.toUpperCase()}</span>
+              <span
+                className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/lang:scale-110"
+                style={{ transform: `rotate(${langRot}deg)` }}
+              >
+                <Languages className="size-3.5" />
+              </span>
+              <span className="relative h-4 w-5 overflow-hidden inline-flex items-center justify-center">
+                <span
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
+                    lang === "pt"
+                      ? "translate-y-0 opacity-100"
+                      : "-translate-y-3 opacity-0 pointer-events-none",
+                  )}
+                >
+                  PT
+                </span>
+                <span
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
+                    lang === "en"
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-3 opacity-0 pointer-events-none",
+                  )}
+                >
+                  EN
+                </span>
+              </span>
             </button>
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              onClick={handleThemeToggle}
+              className="group/theme relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground"
               aria-label={dict.a11y.toggleTheme}
             >
-              {mounted ? (
-                theme === "dark" ? (
-                  <Sun className="size-5" />
+              <div
+                className="relative size-4 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/theme:scale-110"
+                style={{ transform: `rotate(${themeRot}deg)` }}
+              >
+                {mounted ? (
+                  <>
+                    <Sun
+                      className={cn(
+                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                        theme === "dark"
+                          ? "scale-100 rotate-0 opacity-100 text-amber-300"
+                          : "scale-0 -rotate-90 opacity-0",
+                      )}
+                    />
+                    <Moon
+                      className={cn(
+                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                        theme === "dark"
+                          ? "scale-0 rotate-90 opacity-0"
+                          : "scale-100 rotate-0 opacity-100 text-neutral-800 dark:text-neutral-200",
+                      )}
+                    />
+                  </>
                 ) : (
-                  <Moon className="size-5" />
-                )
-              ) : (
-                <div className="size-5" />
-              )}
+                  <div className="size-4" />
+                )}
+              </div>
             </button>
           </div>
 
