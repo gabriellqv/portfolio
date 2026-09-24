@@ -6,8 +6,7 @@
 export const SITE = {
   name: "Gabriel Queiroz",
   title: "Desenvolvedor Full Stack",
-  tagline:
-    "Desenvolvedor Full Stack especializado em React, Next.js, Vue.js, NestJS e Laravel",
+  tagline: "Especializado em React, Next.js, Vue.js, NestJS e Laravel",
   description:
     "Desenvolvedor Full Stack — React, Next.js, NestJS, Laravel. Portfolio profissional com projetos em destaque.",
   location: "São Paulo, Brasil",

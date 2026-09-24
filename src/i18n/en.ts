@@ -12,8 +12,7 @@ const en: Dictionary = {
   hero: {
     roleMuted: "",
     roleAccent: "Full Stack Developer",
-    tagline:
-      "Full Stack Developer specialized in React, Next.js, Vue.js, NestJS, and Laravel",
+    tagline: "Specialized in React, Next.js, Vue.js, NestJS, and Laravel",
     viewProjects: "View Projects",
     downloadCV: "Download CV",
   },
