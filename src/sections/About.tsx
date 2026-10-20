@@ -96,8 +96,8 @@ export default function About() {
             >
               <div>
                 {/* Icon Squircle */}
-                <div className="size-12 rounded-2xl bg-neutral-100 dark:bg-white/[0.05] border border-border/70 flex items-center justify-center mb-6 text-foreground group-hover:scale-105 transition-transform duration-300 shadow-xs">
-                  <Icon className="size-6 text-foreground/80 dark:text-zinc-200" />
+                <div className="size-12 rounded-2xl bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] flex items-center justify-center mb-6 text-foreground group-hover:scale-105 transition-transform duration-300 shadow-xs">
+                  <Icon className="size-6 text-foreground/80 dark:text-[#f3f4f6]" />
                 </div>
 
                 {/* Title */}
@@ -112,14 +112,14 @@ export default function About() {
               </div>
 
               {/* Skills list with circular chevron icons */}
-              <div className="pt-5 border-t border-border/30 mt-auto">
+              <div className="pt-5 border-t border-border/30 dark:border-[#2c2e33]/60 mt-auto">
                 <ul className="space-y-3">
                   {card.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="flex items-center gap-2.5 text-xs sm:text-sm text-foreground/85 dark:text-zinc-300 font-medium"
+                      className="flex items-center gap-2.5 text-xs sm:text-sm text-foreground/85 dark:text-[#f3f4f6] font-medium"
                     >
-                      <span className="size-4.5 rounded-full border border-neutral-400/50 dark:border-zinc-700/80 flex items-center justify-center flex-shrink-0 text-muted-foreground group-hover:border-zinc-400 dark:group-hover:border-zinc-500 transition-colors">
+                      <span className="size-4.5 rounded-full border border-neutral-400/50 dark:border-[#2c2e33] flex items-center justify-center flex-shrink-0 text-muted-foreground group-hover:border-zinc-400 dark:group-hover:border-[#47484c] transition-colors">
                         <ChevronRight className="size-2.5 text-muted-foreground" />
                       </span>
                       <span>{skill}</span>

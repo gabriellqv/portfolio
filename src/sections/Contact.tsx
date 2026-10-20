@@ -121,7 +121,7 @@ export default function Contact() {
             style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-100 dark:bg-white/5 border border-border/70">
+              <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33]">
                 <MapPin className="size-5 text-muted-foreground" />
               </div>
               <div>
@@ -157,11 +157,11 @@ export default function Contact() {
                     rel="noreferrer"
                     aria-label={translatedLabel}
                     className={cn(
-                      "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors",
+                      "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-[#141619] transition-colors",
                       "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     )}
                   >
-                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-100 dark:bg-white/5 border border-border/70 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
+                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] group-hover/link:border-neutral-400/50 dark:group-hover/link:border-[#47484c] transition-colors">
                       <Icon className="size-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">

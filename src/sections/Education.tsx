@@ -19,8 +19,8 @@ export default function Education() {
       <SectionHeader title={dict.education.title} subtitle={dict.education.subtitle} />
 
       <div ref={ref} className="relative pl-8 md:pl-12">
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-black/20 dark:bg-border/40" />
-        <div className="absolute -left-1 top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-neutral-500 bg-background reveal-dot-pulse" />
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-black/20 dark:bg-[#2c2e33]" />
+        <div className="absolute -left-1 top-10 w-2.5 h-2.5 rounded-full border border-neutral-800 dark:border-[#47484c] bg-background reveal-dot-pulse" />
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12">
           <div
@@ -40,7 +40,7 @@ export default function Education() {
             <div className="flex flex-col p-8 card-base">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                 <div className="flex gap-4 items-center">
-                  <div className="p-3 bg-background rounded-xl border border-border/50 shrink-0 flex items-center justify-center w-20 h-20">
+                  <div className="p-3 bg-neutral-100 dark:bg-[#141619] rounded-xl border border-border/70 dark:border-[#2c2e33] shrink-0 flex items-center justify-center w-20 h-20">
                     <Image
                       src="/uninove.webp"
                       alt={dict.education.universityLogoAlt}
@@ -59,7 +59,7 @@ export default function Education() {
                   </div>
                 </div>
 
-                <div className="shrink-0 px-3 py-1 rounded-full border border-border/30 bg-white dark:bg-muted/20 text-xs font-semibold text-foreground tracking-wider uppercase">
+                <div className="shrink-0 px-3 py-1 rounded-full border border-border/50 dark:border-[#2c2e33] bg-white dark:bg-[#141619] text-xs font-semibold text-foreground tracking-wider uppercase">
                   {dict.education.completed}
                 </div>
               </div>
@@ -72,7 +72,7 @@ export default function Education() {
                 {dict.education.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-4 py-1.5 rounded-full border border-border/20 bg-white dark:bg-muted/10 text-xs font-medium text-muted-foreground hover:bg-neutral-50 dark:hover:bg-muted/20 transition-colors"
+                    className="px-4 py-1.5 rounded-full border border-border/40 dark:border-[#2c2e33] bg-white dark:bg-[#141619] text-xs font-medium text-muted-foreground hover:bg-neutral-50 dark:hover:bg-[#141619] dark:hover:border-[#47484c] transition-colors"
                   >
                     {tag}
                   </span>

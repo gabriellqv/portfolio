@@ -41,8 +41,8 @@ function SkillCategoryCard({
       )}
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
-        <div className="flex items-center justify-center size-10 bg-neutral-100 dark:bg-white/5 rounded-xl border border-border/70">
+      <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40 dark:border-[#2c2e33]/60">
+        <div className="flex items-center justify-center size-10 bg-neutral-100 dark:bg-[#141619] rounded-xl border border-border/70 dark:border-[#2c2e33]">
           <category.icon className="size-5 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold text-foreground">
@@ -66,7 +66,7 @@ function SkillCategoryCard({
               className={cn(
                 "flex items-center gap-2 px-3 py-2 rounded-xl border transition-all hover:scale-105 reveal-scale-in",
                 isWhite &&
-                  "border-neutral-200 bg-neutral-100 text-foreground dark:border-white/20 dark:bg-white/10 dark:text-white",
+                  "border-neutral-200 bg-neutral-100 text-foreground dark:border-[#2c2e33] dark:bg-[#141619] dark:text-[#f3f4f6]",
               )}
               style={
                 {

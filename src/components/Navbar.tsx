@@ -85,8 +85,8 @@ const Navbar = () => {
         className={cn(
           "relative flex items-center justify-between transition-all duration-150",
           isMobileMenuOpen
-            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-white/10 rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-white/10"
-            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-white/10 bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
+            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-[#2c2e33] rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-[#2c2e33]"
+            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-[#2c2e33] bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
         )}
       >
         <Link
@@ -124,7 +124,7 @@ const Navbar = () => {
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
               onClick={handleLangToggle}
-              className="group/lang flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider select-none"
+              className="group/lang flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
               <span
@@ -158,7 +158,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={handleThemeToggle}
-              className="group/theme relative p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
+              className="group/theme relative p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] focus-visible:ring-2 focus-visible:ring-accent/40"
               aria-label={dict.a11y.toggleTheme}
             >
               <div
@@ -196,7 +196,7 @@ const Navbar = () => {
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
               onClick={handleLangToggle}
-              className="group/lang flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground text-xs font-semibold tracking-wider select-none"
+              className="group/lang flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] text-xs font-semibold tracking-wider select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
               <span
@@ -230,7 +230,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={handleThemeToggle}
-              className="group/theme relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground"
+              className="group/theme relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6]"
               aria-label={dict.a11y.toggleTheme}
             >
               <div
@@ -274,7 +274,7 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-8 pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-white/5 shadow-2xl">
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-8 pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-[#2c2e33] shadow-2xl">
             <div className="flex flex-col gap-8">
               {navItems.map((item) => (
                 <Link

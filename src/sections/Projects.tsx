@@ -46,7 +46,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
       {/* Mockup photo container (Desktop + Mobile in frame) */}
-      <div className="w-full lg:w-1/2 rounded-2xl bg-neutral-100/80 dark:bg-neutral-900/60 border border-border/60 p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+      <div className="w-full lg:w-1/2 rounded-2xl bg-neutral-100/80 dark:bg-[#141619] border border-border/60 dark:border-[#2c2e33] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -118,7 +118,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
                 className={cn(
                   "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all hover:scale-105",
                   isWhite &&
-                    "border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10 text-foreground",
+                    "border-neutral-300 bg-neutral-200/50 dark:border-[#2c2e33] dark:bg-[#141619] text-foreground",
                   !isWhite && "text-foreground",
                 )}
                 style={
@@ -179,7 +179,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           )}
 
           {!project.github && (
-            <span className="text-xs text-muted-foreground flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-white/5 border border-border/70 select-none">
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] select-none">
               <Lock className="size-3 text-muted-foreground/70 shrink-0" />
               <span>{dict.projects.privateRepoNotice}</span>
             </span>
@@ -219,7 +219,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
       {/* Mockup photo container (Desktop + Mobile in frame) */}
-      <div className="w-full bg-neutral-100/80 dark:bg-neutral-900/60 border-b border-border/60 p-5 sm:p-6 flex items-center justify-center overflow-hidden">
+      <div className="w-full bg-neutral-100/80 dark:bg-[#141619] border-b border-border/60 dark:border-[#2c2e33] p-5 sm:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -284,7 +284,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 className={cn(
                   "inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-medium transition-all hover:scale-105",
                   isWhite &&
-                    "border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10 text-foreground",
+                    "border-neutral-300 bg-neutral-200/50 dark:border-[#2c2e33] dark:bg-[#141619] text-foreground",
                   !isWhite && "text-foreground",
                 )}
                 style={

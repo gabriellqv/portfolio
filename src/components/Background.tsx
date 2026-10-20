@@ -16,10 +16,10 @@ export default function Background() {
     >
       {/* Soft atmospheric radial gradient at the top (hero section) */}
       <div
-        className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] opacity-35 dark:opacity-25 pointer-events-none blur-3xl"
+        className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] pointer-events-none blur-3xl"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 20%, rgba(56, 189, 248, 0.16), rgba(99, 102, 241, 0.1), transparent 70%)",
+            "radial-gradient(ellipse 60% 50% at 50% 20%, var(--glow-color), transparent 70%)",
         }}
       />
 
