@@ -97,22 +97,29 @@ const Navbar = () => {
           Gabriellqv
         </Link>
 
-        <div className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
-          {navItems.map((item) => (
-            <Link
-              key={item.id}
-              href={`#${item.id}`}
-              className={cn(
-                "px-3 py-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-accent/40",
-                activeSection === item.id
-                  ? "bg-black/5 dark:bg-white/10 text-foreground"
-                  : "hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground",
-              )}
-              aria-current={activeSection === item.id ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div
+          id="desktop-nav"
+          className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium"
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <Link
+                key={item.id}
+                href={`#${item.id}`}
+                data-nav-link
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "relative px-3.5 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 rounded-full",
+                  isActive
+                    ? "text-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <span data-nav-label>{item.label}</span>
+              </Link>
+            );
+          })}
 
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button

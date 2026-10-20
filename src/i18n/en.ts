@@ -80,6 +80,15 @@ const en: Dictionary = {
       "A selection of my most complete applications. Focus on scalable architecture, clean code, and solving complex business problems.",
     viewProject: "View Project",
     repository: "Repository",
+    professionalTitle: "Professional & Client Projects",
+    professionalSubtitle:
+      "Production systems, commercial architecture, and tailored solutions built for businesses and clients.",
+    personalTitle: "Personal & Open Source Projects",
+    personalSubtitle:
+      "Independent applications, technical exploration, and open-source contributions.",
+    badgeProfessional: "Freelance / Client",
+    badgePersonal: "Personal Project",
+    privateRepoNotice: "Client private repository",
   },
   skills: {
     title: "Technical Skills",
@@ -192,20 +201,53 @@ const en: Dictionary = {
     jobTitle: "Full Stack Developer",
   },
   projectItems: {
-    HydroTrack: {
+    "Rafael Nutre": {
+      subtitle: "Clinical & Sports Nutrition • High-Conversion Landing Page",
       description:
-        "Application focused on water resource management. Combines Vue.js reactivity with Leaflet for geolocated monitoring, supported by a high-performance ecosystem.",
-      status: "Completed",
+        "High-conversion landing page developed for a sports and clinical nutritionist. Built with Astro and TailwindCSS, advanced technical SEO with JSON-LD/Schema, complete automated test suite with Vitest, and global edge deployment on Cloudflare Pages.",
+      status: "In Production",
+      highlights: [
+        "Ultra-fast architecture with Astro and TailwindCSS",
+        "Advanced technical SEO with JSON-LD & structured schemas",
+        "Automated testing suite with Vitest (47 tests)",
+        "Global edge deployment on Cloudflare Pages",
+      ],
     },
     FlowERP: {
+      subtitle: "Enterprise Resource Planning & Analytics Dashboard",
       description:
         "Complete Enterprise Resource Planning (ERP) system for managing sales, customers, and products. Highly interactive interface with admin dashboards and dynamic management reports. Architecture with strong focus on automated testing and solid business rules.",
       status: "In Production",
+      highlights: [
+        "Full management of sales, customers, orders, and products",
+        "Dynamic analytical dashboards and managerial reporting",
+        "Robust Laravel backend with Service Layer & ACID rules",
+        "Reactive Vue 3 frontend with Pinia and TailwindCSS",
+      ],
     },
     StockSnap: {
+      subtitle: "Real-Time Inventory & Supply Chain Platform",
       description:
         "Real-time inventory management platform. Built using SOLID principles, focusing on optimized RESTful communication, secure JWT authentication, and strong permission control (RBAC).",
       status: "Version 2.0",
+      highlights: [
+        "Real-time inventory tracking and stock level alerts",
+        "Secure JWT authentication with granular RBAC permissions",
+        "Modular RESTful API built in NestJS following SOLID",
+        "Relational data modeling with Prisma ORM and PostgreSQL",
+      ],
+    },
+    HydroTrack: {
+      subtitle: "Geospatial Water Telemetry & IoT Monitoring",
+      description:
+        "Application focused on water resource management. Combines Vue.js reactivity with Leaflet for geolocated monitoring, supported by a high-performance ecosystem.",
+      status: "Completed",
+      highlights: [
+        "Geospatial sensor telemetry monitoring with Leaflet",
+        "Real-time tracking of reservoir levels and water flow",
+        "Modular Vue 3 frontend with Pinia global state management",
+        "High-performance backend architecture with Laravel",
+      ],
     },
   },
 };

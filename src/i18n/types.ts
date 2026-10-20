@@ -39,6 +39,13 @@ export interface Dictionary {
     subtitle: string;
     viewProject: string;
     repository: string;
+    professionalTitle: string;
+    professionalSubtitle: string;
+    personalTitle: string;
+    personalSubtitle: string;
+    badgeProfessional: string;
+    badgePersonal: string;
+    privateRepoNotice: string;
   };
   skills: {
     title: string;
@@ -117,8 +124,10 @@ export interface Dictionary {
   projectItems: Record<
     string,
     {
+      subtitle?: string;
       description: string;
       status: string;
+      highlights?: string[];
     }
   >;
 }

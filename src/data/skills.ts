@@ -1,5 +1,8 @@
 import { Code2, Database, LayoutTemplate, Server, Wrench } from "lucide-react";
 import {
+  SiAngular,
+  SiAstro,
+  SiCloudflare,
   SiCss,
   SiDocker,
   SiExpress,
@@ -8,6 +11,7 @@ import {
   SiGithubactions,
   SiGraphql,
   SiHtml5,
+  SiInsomnia,
   SiJavascript,
   SiJest,
   SiLaravel,
@@ -48,6 +52,7 @@ const allSkills: SkillItem[] = [
   { name: "React", icon: SiReact, hex: "#61DAFB" },
   { name: "Next.js", icon: SiNextdotjs, hex: "#FFFFFF" },
   { name: "Vue.js", icon: SiVuedotjs, hex: "#4FC08D" },
+  { name: "Angular", icon: SiAngular, hex: "#DD0031" },
   { name: "Tailwind", icon: SiTailwindcss, hex: "#06B6D4" },
   { name: "Vite", icon: SiVite, hex: "#646CFF" },
   { name: "Node.js", icon: SiNodedotjs, hex: "#339933" },
@@ -107,6 +112,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "React", icon: SiReact, hex: "#61DAFB" },
       { name: "Next.js", icon: SiNextdotjs, hex: "#FFFFFF" },
       { name: "Vue.js", icon: SiVuedotjs, hex: "#4FC08D" },
+      { name: "Angular", icon: SiAngular, hex: "#DD0031" },
       { name: "Pinia", icon: SiPinia, hex: "#FFE262" },
       { name: "Tailwind CSS", icon: SiTailwindcss, hex: "#06B6D4" },
       { name: "Vite", icon: SiVite, hex: "#646CFF" },
@@ -148,6 +154,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Zod", icon: SiZod, hex: "#3E67B1" },
       { name: "GraphQL", icon: SiGraphql, hex: "#E10098" },
       { name: "Postman", icon: SiPostman, hex: "#FF6C37" },
+      { name: "Insomnia", icon: SiInsomnia, hex: "#5849BE" },
       { name: "Figma", icon: SiFigma, hex: "#F24E1E" },
     ],
   },
@@ -184,6 +191,11 @@ const techLookup: Record<string, { icon: React.ComponentType<IconProps>; hex: st
     HTML: { icon: SiHtml5, hex: "#E34F26" },
     CSS: { icon: SiCss, hex: "#1572B6" },
     Vite: { icon: SiVite, hex: "#646CFF" },
+    Astro: { icon: SiAstro, hex: "#BC52EE" },
+    Cloudflare: { icon: SiCloudflare, hex: "#F38020" },
+    Vitest: { icon: SiVitest, hex: "#FCC72B" },
+    Angular: { icon: SiAngular, hex: "#DD0031" },
+    Insomnia: { icon: SiInsomnia, hex: "#5849BE" },
   };
 
 /**
