@@ -22,12 +22,12 @@ export default function SkillsCarousel() {
     <div
       role="marquee"
       aria-label="Technology skills"
-      className="w-full max-w-2xl mx-auto relative mt-8 mb-10 overflow-hidden py-4"
+      className="w-full max-w-2xl lg:max-w-3xl mx-auto relative mt-6 sm:mt-8 mb-8 sm:mb-10 overflow-hidden py-3 sm:py-4"
       style={{
         maskImage:
-          "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
         WebkitMaskImage:
-          "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
       }}
     >
       <div className="flex w-fit animate-marquee">
@@ -36,11 +36,11 @@ export default function SkillsCarousel() {
           return (
             <div
               key={`${skill.name}-${index}`}
-              className="group flex items-center gap-2 px-4 py-2 mx-2 text-muted-foreground whitespace-nowrap transition-all duration-300 cursor-default"
+              className="group flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 mx-1.5 sm:mx-2 text-muted-foreground whitespace-nowrap transition-all duration-300 cursor-default"
             >
               <Icon
-                size={18}
-                className={`shrink-0 transition-colors duration-300 ${skill.color}`}
+                size={16}
+                className={`shrink-0 sm:size-[18px] transition-colors duration-300 ${skill.color}`}
               />
               <span className="text-xs font-medium group-hover:text-foreground transition-colors duration-300">
                 {skill.name}

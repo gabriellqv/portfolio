@@ -23,7 +23,7 @@ export default function ScrollToTop() {
       onClick={scrollToTop}
       aria-label={dict.a11y.backToTop}
       className={cn(
-        "fixed bottom-6 right-6 z-50 flex items-center justify-center size-10 rounded-full bg-foreground text-background shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#2c2e33] dark:hover:bg-white focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background [.menu-open_&]:!hidden",
+        "fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 flex items-center justify-center size-9 sm:size-10 rounded-full bg-foreground text-background shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#2c2e33] dark:hover:bg-white focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background [.menu-open_&]:!hidden",
         isVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-10 pointer-events-none",

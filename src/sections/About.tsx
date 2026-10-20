@@ -33,39 +33,39 @@ export default function About() {
       {/* Narrative Card ("Além do Código") without lateral photo */}
       <div
         ref={narrativeRef}
-        className="group relative card-base p-8 sm:p-10 lg:p-12 reveal-fade-up overflow-hidden"
+        className="group relative card-base p-6 sm:p-8 md:p-10 lg:p-12 reveal-fade-up overflow-hidden"
         style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
       >
         {/* Subtle top light highlight rim */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 dark:via-white/15 to-transparent pointer-events-none" />
 
-        <div className="flex flex-col space-y-6 max-w-4xl">
+        <div className="flex flex-col space-y-4 sm:space-y-6 max-w-4xl">
           {/* Eyebrow */}
           <span className="text-xs sm:text-sm font-bold tracking-widest uppercase text-muted-foreground/90 select-none">
             {dict.about.eyebrow}
           </span>
 
           {/* Headline */}
-          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
             {dict.about.headline}
           </h3>
 
           {/* Narrative paragraphs */}
-          <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed font-normal">
+          <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed font-normal">
             <p>{dict.about.bioP1}</p>
             <p>{dict.about.bioP2}</p>
           </div>
 
           {/* Stats Row */}
-          <div className="pt-8 mt-2 border-t border-border/40 flex flex-wrap items-center gap-8 sm:gap-12 md:gap-16">
+          <div className="pt-6 sm:pt-8 mt-2 border-t border-border/40 flex flex-wrap items-center gap-6 sm:gap-10 md:gap-14 lg:gap-16">
             {dict.about.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col">
+              <div key={stat.label} className="flex flex-col min-w-[90px] sm:min-w-0">
                 <CountUp
                   value={stat.value}
                   duration={1600}
-                  className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground"
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground"
                 />
-                <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-muted-foreground uppercase mt-1">
+                <span className="text-[10px] sm:text-xs font-semibold tracking-wider sm:tracking-widest text-muted-foreground uppercase mt-1">
                   {stat.label}
                 </span>
               </div>
@@ -77,7 +77,7 @@ export default function About() {
       {/* Engineering Domain Cards */}
       <div
         ref={cardsRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 items-stretch"
       >
         {dict.about.cards.map((card, index) => {
           const Icon = ICONS_BY_ID[card.id] ?? Layout;
@@ -87,7 +87,7 @@ export default function About() {
             <div
               key={card.id}
               className={cn(
-                "group relative flex flex-col justify-between p-7 sm:p-8 lg:p-9 card-base reveal-fade-up overflow-hidden",
+                "group relative flex flex-col justify-between p-6 sm:p-7 md:p-8 lg:p-9 card-base reveal-fade-up overflow-hidden",
                 isLastOnTablet && "md:col-span-2 lg:col-span-1",
               )}
               style={

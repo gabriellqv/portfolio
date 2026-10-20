@@ -36,9 +36,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full flex items-center px-4 lg:px-16 min-h-[5rem] py-6 bg-transparent relative z-20">
-      <div className="w-full max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
-        <div className="text-muted-foreground text-xs font-semibold tracking-wider select-none">
+    <footer className="w-full flex items-center px-4 sm:px-6 md:px-8 min-h-[4.5rem] sm:min-h-[5rem] py-6 sm:py-8 bg-transparent relative z-20">
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
+        <div className="text-muted-foreground text-[11px] sm:text-xs font-semibold tracking-wider select-none text-center sm:text-left">
           &copy; {new Date().getFullYear()} {SITE.githubUsername}
         </div>
 
@@ -49,7 +49,7 @@ export default function Footer() {
               href={link.href}
               target={link.isExternal ? "_blank" : undefined}
               rel={link.isExternal ? "noopener noreferrer" : undefined}
-              className="px-3 py-1.5 uppercase tracking-wider text-muted-foreground hover:text-foreground dark:hover:text-white text-xs font-semibold transition-colors duration-200"
+              className="px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider text-muted-foreground hover:text-foreground dark:hover:text-white text-[11px] sm:text-xs font-semibold transition-colors duration-200"
             >
               {link.label}
             </a>

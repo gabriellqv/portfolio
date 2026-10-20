@@ -77,16 +77,16 @@ const Navbar = () => {
       className={cn(
         "fixed z-50 w-full inset-x-0 mx-auto transition-all duration-150 animate-navbar-drop",
         isMobileMenuOpen
-          ? "top-0 px-0 max-w-none h-screen md:h-auto md:top-6 md:px-4 md:max-w-5xl"
-          : "top-6 px-4 max-w-5xl",
+          ? "top-0 px-0 max-w-none h-screen md:h-auto md:top-6 md:px-4 md:max-w-5xl lg:max-w-6xl"
+          : "top-4 sm:top-6 px-3 sm:px-4 max-w-5xl lg:max-w-6xl",
       )}
     >
       <nav
         className={cn(
           "relative flex items-center justify-between transition-all duration-150",
           isMobileMenuOpen
-            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-[#2c2e33] rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-[#2c2e33]"
-            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-[#2c2e33] bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
+            ? "px-5 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-[#2c2e33] rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-[#2c2e33]"
+            : "px-4 py-3 sm:px-6 sm:py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-[#2c2e33] bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
         )}
       >
         <Link
@@ -274,22 +274,22 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-8 pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-[#2c2e33] shadow-2xl">
-            <div className="flex flex-col gap-8">
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-6 sm:px-8 pt-8 sm:pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-[#2c2e33] shadow-2xl">
+            <div className="flex flex-col gap-6 sm:gap-8">
               {navItems.map((item) => (
                 <Link
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "relative flex items-center text-4xl font-black tracking-tighter transition-colors duration-300",
+                    "relative flex items-center text-3xl sm:text-4xl font-black tracking-tighter transition-colors duration-300",
                     activeSection === item.id
                       ? "text-foreground"
                       : "text-neutral-400 dark:text-neutral-600 hover:text-foreground",
                   )}
                 >
                   {activeSection === item.id && (
-                    <span className="absolute -left-5 w-2 h-2 rounded-full bg-foreground" />
+                    <span className="absolute -left-4 sm:-left-5 w-2 h-2 rounded-full bg-foreground" />
                   )}
                   {item.label}
                 </Link>

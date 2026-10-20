@@ -252,7 +252,7 @@
  * to maintain a consistent elevation, border, radius, and hover effect.
  */
 @utility card-base {
-  @apply bg-card border-border/80 rounded-3xl border shadow-lg shadow-black/5 transition-all duration-300 hover:border-neutral-400 hover:shadow-xl dark:shadow-black/50 dark:hover:border-[#47484c];
+  @apply bg-card border-border/80 rounded-2xl border shadow-lg shadow-black/5 transition-all duration-300 hover:border-neutral-400 hover:shadow-xl sm:rounded-3xl dark:shadow-black/50 dark:hover:border-[#47484c];
 }
 
 .card-base {
@@ -270,11 +270,11 @@
 
 /**
  * Shared section wrapper applied to every page section.
- * Constrains width, centers content, and applies consistent vertical
- * padding so all sections share the same horizontal rhythm.
+ * Constrains width, centers content, and applies consistent responsive
+ * padding across low resolution phones (320px+) up to 4K displays.
  */
 @utility section-wrapper {
-  @apply mx-auto w-full max-w-5xl px-4 py-16 md:py-24;
+  @apply mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-24 lg:max-w-6xl;
 }
 
 /**
@@ -283,7 +283,7 @@
  * so changes propagate to all inputs at once.
  */
 @utility form-input {
-  @apply border-border/70 text-foreground w-full rounded-xl border bg-white px-4 py-3 text-sm transition-all placeholder:text-neutral-400 hover:border-black focus:border-black focus:ring-2 focus:ring-black/15 focus:outline-none dark:border-[#2c2e33] dark:bg-[#141619] dark:placeholder:text-[#9ca3af]/60 dark:hover:border-[#47484c] dark:focus:border-[#47484c] dark:focus:ring-[#47484c]/25;
+  @apply border-border/70 text-foreground w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm transition-all placeholder:text-neutral-400 hover:border-black focus:border-black focus:ring-2 focus:ring-black/15 focus:outline-none sm:px-4 sm:py-3 dark:border-[#2c2e33] dark:bg-[#141619] dark:placeholder:text-[#9ca3af]/60 dark:hover:border-[#47484c] dark:focus:border-[#47484c] dark:focus:ring-[#47484c]/25;
 }
 
 /* ================================================================

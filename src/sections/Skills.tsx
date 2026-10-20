@@ -36,26 +36,21 @@ function SkillCategoryCard({
     <div
       ref={ref}
       className={cn(
-        "flex flex-col p-6 sm:p-8 card-base reveal-fade-up",
+        "flex flex-col p-5 sm:p-7 md:p-8 card-base reveal-fade-up",
         isLast && "md:col-span-2",
       )}
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40 dark:border-[#2c2e33]/60">
-        <div className="flex items-center justify-center size-10 bg-neutral-100 dark:bg-[#141619] rounded-xl border border-border/70 dark:border-[#2c2e33]">
-          <category.icon className="size-5 text-muted-foreground" />
+      <div className="flex items-center gap-3 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-border/40 dark:border-[#2c2e33]/60">
+        <div className="flex items-center justify-center size-9 sm:size-10 bg-neutral-100 dark:bg-[#141619] rounded-xl border border-border/70 dark:border-[#2c2e33]">
+          <category.icon className="size-4.5 sm:size-5 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold text-foreground">
+        <h3 className="text-base sm:text-lg font-semibold text-foreground">
           {dict.skills.categoryTitles[category.title] ?? category.title}
         </h3>
       </div>
 
-      <div
-        className="grid gap-2.5"
-        style={{
-          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-        }}
-      >
+      <div className="grid gap-2 sm:gap-2.5 grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(130px,1fr))]">
         {category.skills.map((skill, skillIdx) => {
           const Icon = skill.icon;
           const isWhite = skill.hex === "#FFFFFF";
@@ -64,7 +59,7 @@ function SkillCategoryCard({
             <div
               key={skill.name}
               className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-xl border transition-all hover:scale-105 reveal-scale-in",
+                "flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border transition-all hover:scale-105 reveal-scale-in min-w-0",
                 isWhite &&
                   "border-neutral-200 bg-neutral-100 text-foreground dark:border-[#2c2e33] dark:bg-[#141619] dark:text-[#f3f4f6]",
               )}
@@ -85,7 +80,7 @@ function SkillCategoryCard({
                 {...(isWhite ? {} : { style: { color: skill.hex } })}
                 className={cn("shrink-0", isWhite && "text-neutral-900 dark:text-white")}
               />
-              <span className="text-xs sm:text-sm font-medium text-foreground whitespace-nowrap">
+              <span className="text-xs sm:text-sm font-medium text-foreground truncate">
                 {skill.name}
               </span>
             </div>

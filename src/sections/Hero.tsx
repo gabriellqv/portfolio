@@ -24,10 +24,10 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 pt-20 pb-10 overflow-hidden"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden"
     >
       <h1
-        className="hero-stagger text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-2 pb-1"
+        className="hero-stagger text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black tracking-tight mb-2 pb-1"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
         <span className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-700 dark:from-white dark:via-white/95 dark:to-white/60 bg-clip-text text-transparent">
@@ -36,7 +36,7 @@ export default function Hero() {
       </h1>
 
       <h2
-        className="hero-stagger text-lg sm:text-2xl md:text-3xl font-medium tracking-tight mb-4"
+        className="hero-stagger text-base sm:text-xl md:text-2xl lg:text-3xl font-medium tracking-tight mb-3 sm:mb-4"
         style={{ "--hero-delay": "150ms" } as React.CSSProperties}
       >
         <span className="text-muted-foreground font-normal">{dict.hero.roleMuted}</span>
@@ -44,7 +44,7 @@ export default function Hero() {
       </h2>
 
       <p
-        className="hero-stagger max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-normal"
+        className="hero-stagger max-w-2xl text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed font-normal px-2 sm:px-0"
         style={{ "--hero-delay": "300ms" } as React.CSSProperties}
       >
         {dict.hero.tagline}

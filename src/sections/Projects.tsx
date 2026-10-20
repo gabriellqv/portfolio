@@ -42,11 +42,11 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
   return (
     <div
       ref={ref}
-      className="reveal-fade-up flex flex-col lg:flex-row group card-base rounded-3xl overflow-hidden p-6 sm:p-8 lg:p-10 gap-8 lg:gap-12 items-center"
+      className="reveal-fade-up flex flex-col lg:flex-row group card-base rounded-2xl sm:rounded-3xl overflow-hidden p-5 sm:p-7 md:p-8 lg:p-10 gap-6 sm:gap-8 lg:gap-12 items-center"
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
       {/* Mockup photo container (Desktop + Mobile in frame) */}
-      <div className="w-full lg:w-1/2 rounded-2xl bg-neutral-100/80 dark:bg-[#141619] border border-border/60 dark:border-[#2c2e33] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+      <div className="w-full lg:w-1/2 rounded-xl sm:rounded-2xl bg-neutral-100/80 dark:bg-[#141619] border border-border/60 dark:border-[#2c2e33] p-2.5 sm:p-4 md:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -76,23 +76,23 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
         </div>
 
         <div>
-          <h4 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+          <h4 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
             {project.title}
           </h4>
           {item.subtitle && (
-            <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mt-1">
+            <p className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 mt-1">
               {item.subtitle}
             </p>
           )}
         </div>
 
-        <p className="text-muted-foreground leading-relaxed mt-4 text-sm sm:text-base">
+        <p className="text-muted-foreground leading-relaxed mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
           {item.description}
         </p>
 
         {/* Feature bullet points (laschisa tags style) */}
         {item.highlights && item.highlights.length > 0 && (
-          <ul className="flex flex-col gap-2 my-5">
+          <ul className="flex flex-col gap-1.5 sm:gap-2 my-4 sm:my-5">
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
@@ -106,7 +106,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
         )}
 
         {/* Tech stack badges */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
           {project.techs.map((tech) => {
             const meta = getTechMeta(tech);
             const Icon = meta.icon;
@@ -116,7 +116,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
               <span
                 key={tech}
                 className={cn(
-                  "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all hover:scale-105",
+                  "inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border text-xs font-medium transition-all hover:scale-105",
                   isWhite &&
                     "border-neutral-300 bg-neutral-200/50 dark:border-[#2c2e33] dark:bg-[#141619] text-foreground",
                   !isWhite && "text-foreground",
@@ -147,7 +147,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 mt-auto">
           {project.deploy !== "#" && (
             <Link
               href={project.deploy}
@@ -155,7 +155,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "primary", size: "sm" }),
-                "rounded-full",
+                "rounded-full w-full sm:w-auto",
               )}
             >
               <ExternalLink className="size-3.5 shrink-0" />
@@ -170,7 +170,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "secondary", size: "sm" }),
-                "rounded-full",
+                "rounded-full w-full sm:w-auto",
               )}
             >
               <SiGithub className="size-3.5 shrink-0" />
@@ -195,7 +195,15 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
  * Vertical card with desktop + mobile mockup on top,
  * followed by badges, description, highlights, tech badges, and action buttons.
  */
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  isLastOnTablet,
+}: {
+  project: Project;
+  index: number;
+  isLastOnTablet?: boolean;
+}) {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();
 
@@ -215,11 +223,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <div
       ref={ref}
-      className="reveal-fade-up flex flex-col group card-base rounded-3xl overflow-hidden"
+      className={cn(
+        "reveal-fade-up flex flex-col group card-base rounded-2xl sm:rounded-3xl overflow-hidden",
+        isLastOnTablet && "md:col-span-2 lg:col-span-1",
+      )}
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
       {/* Mockup photo container (Desktop + Mobile in frame) */}
-      <div className="w-full bg-neutral-100/80 dark:bg-[#141619] border-b border-border/60 dark:border-[#2c2e33] p-5 sm:p-6 flex items-center justify-center overflow-hidden">
+      <div className="w-full bg-neutral-100/80 dark:bg-[#141619] border-b border-border/60 dark:border-[#2c2e33] p-3 sm:p-5 md:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -230,7 +241,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         />
       </div>
 
-      <div className="p-6 sm:p-8 flex flex-col flex-1">
+      <div className="p-5 sm:p-7 md:p-8 flex flex-col flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30">
             <Code2 className="size-3 shrink-0" />
@@ -413,12 +424,13 @@ export default function Projects() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {personalProjects.map((project, index) => (
                 <ProjectCard
                   key={project.title}
                   project={project}
                   index={professionalProjects.length + index}
+                  isLastOnTablet={index === personalProjects.length - 1}
                 />
               ))}
             </div>

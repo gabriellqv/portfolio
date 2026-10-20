@@ -115,9 +115,9 @@ export default function Contact() {
       <SectionHeader title={dict.contact.title} subtitle={dict.contact.subtitle} />
 
       <div ref={ref} className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
-        <div className="lg:col-span-2 flex flex-col gap-6">
+        <div className="lg:col-span-2 flex flex-col gap-5 sm:gap-6">
           <div
-            className="card-base p-8 reveal-fade-up"
+            className="card-base p-5 sm:p-7 md:p-8 reveal-fade-up"
             style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
           >
             <div className="flex items-center gap-3 mb-4">
@@ -133,19 +133,19 @@ export default function Contact() {
                 </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {dict.contact.locationDesc}
             </p>
           </div>
 
           <div
-            className="flex-1 card-base p-8 reveal-fade-up"
+            className="flex-1 card-base p-5 sm:p-7 md:p-8 reveal-fade-up"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
-            <h3 className="text-base font-semibold text-foreground mb-5">
+            <h3 className="text-base font-semibold text-foreground mb-4 sm:mb-5">
               {dict.contact.findMe}
             </h3>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5 sm:gap-3">
               {socials.map(({ href, icon: Icon, label, handle }) => {
                 const translatedLabel = dict.socialLabels[label] ?? label;
 
@@ -157,7 +157,7 @@ export default function Contact() {
                     rel="noreferrer"
                     aria-label={translatedLabel}
                     className={cn(
-                      "group/link flex items-center gap-3.5 p-3 -mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-[#141619] transition-colors",
+                      "group/link flex items-center gap-3.5 p-2.5 sm:p-3 -mx-2.5 sm:-mx-3 rounded-xl hover:bg-neutral-100 dark:hover:bg-[#141619] transition-colors",
                       "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     )}
                   >
@@ -165,10 +165,12 @@ export default function Contact() {
                       <Icon className="size-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-xs sm:text-sm font-medium text-foreground">
                         {translatedLabel}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">{handle}</p>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground truncate">
+                        {handle}
+                      </p>
                     </div>
                     <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
                   </a>
@@ -179,18 +181,22 @@ export default function Contact() {
         </div>
 
         <div
-          className="lg:col-span-3 card-base p-8 lg:p-10 reveal-fade-up"
+          className="lg:col-span-3 card-base p-5 sm:p-7 md:p-8 lg:p-10 reveal-fade-up"
           style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
         >
-          <h3 className="text-xl font-semibold text-foreground mb-2">
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-1.5 sm:mb-2">
             {dict.contact.sendMessage}
           </h3>
-          <p className="text-sm text-muted-foreground mb-8">
+          <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8">
             {dict.contact.sendMessageDesc}
           </p>
 
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className="flex flex-col gap-4 sm:gap-5"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="contact-name"
