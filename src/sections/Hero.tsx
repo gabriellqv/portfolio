@@ -39,10 +39,8 @@ export default function Hero() {
         className="hero-stagger text-lg sm:text-2xl md:text-3xl font-medium tracking-tight mb-4"
         style={{ "--hero-delay": "150ms" } as React.CSSProperties}
       >
-        <span className="text-muted-foreground font-normal">{dict.hero.roleMuted} </span>
-        <span className="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-600 dark:from-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent font-bold">
-          {dict.hero.roleAccent}
-        </span>
+        <span className="text-muted-foreground font-normal">{dict.hero.roleMuted}</span>
+        <span className="text-foreground font-semibold">{dict.hero.roleAccent}</span>
       </h2>
 
       <p
