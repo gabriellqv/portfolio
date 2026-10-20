@@ -121,7 +121,7 @@ export default function Contact() {
             style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-200/80 dark:bg-white/5 border border-border/30">
+              <div className="flex items-center justify-center size-10 rounded-xl bg-neutral-100 dark:bg-white/5 border border-border/70">
                 <MapPin className="size-5 text-muted-foreground" />
               </div>
               <div>
@@ -161,7 +161,7 @@ export default function Contact() {
                       "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     )}
                   >
-                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-200/80 dark:bg-white/5 border border-border/30 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
+                    <div className="flex items-center justify-center size-9 rounded-lg bg-neutral-100 dark:bg-white/5 border border-border/70 group-hover/link:border-neutral-400/50 dark:group-hover/link:border-neutral-500/30 transition-colors">
                       <Icon className="size-4 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">

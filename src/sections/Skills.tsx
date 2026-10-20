@@ -29,8 +29,8 @@ function SkillCategoryCard({
   const ref = useScrollReveal<HTMLDivElement>("-100px");
 
   const isLight = mounted && resolvedTheme === "light";
-  const bgOpacity = isLight ? "25" : "15";
-  const borderOpacity = isLight ? "40" : "30";
+  const bgOpacity = isLight ? "15" : "15";
+  const borderOpacity = isLight ? "35" : "30";
 
   return (
     <div
@@ -42,7 +42,7 @@ function SkillCategoryCard({
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
       <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border/40">
-        <div className="flex items-center justify-center size-10 bg-neutral-200/80 dark:bg-white/5 rounded-xl border border-border/30">
+        <div className="flex items-center justify-center size-10 bg-neutral-100 dark:bg-white/5 rounded-xl border border-border/70">
           <category.icon className="size-5 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold text-foreground">
@@ -66,7 +66,7 @@ function SkillCategoryCard({
               className={cn(
                 "flex items-center gap-2 px-3 py-2 rounded-xl border transition-all hover:scale-105 reveal-scale-in",
                 isWhite &&
-                  "border-neutral-300 bg-neutral-200/50 dark:border-white/30 dark:bg-white/10",
+                  "border-neutral-200 bg-neutral-100 text-foreground dark:border-white/20 dark:bg-white/10 dark:text-white",
               )}
               style={
                 {

@@ -87,8 +87,7 @@ export default function About() {
             <div
               key={card.id}
               className={cn(
-                "group relative flex flex-col justify-between p-7 sm:p-8 lg:p-9 rounded-3xl border border-border/40 bg-card backdrop-blur-xl shadow-xl transition-all duration-300 hover:shadow-2xl hover:border-border/70 dark:hover:bg-white/[0.04] reveal-fade-up overflow-hidden",
-                "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/20 dark:before:via-white/15 before:to-transparent",
+                "group relative flex flex-col justify-between p-7 sm:p-8 lg:p-9 card-base reveal-fade-up overflow-hidden",
                 isLastOnTablet && "md:col-span-2 lg:col-span-1",
               )}
               style={
@@ -97,7 +96,7 @@ export default function About() {
             >
               <div>
                 {/* Icon Squircle */}
-                <div className="size-12 rounded-2xl bg-neutral-200/80 dark:bg-white/[0.05] border border-border/50 flex items-center justify-center mb-6 text-foreground group-hover:scale-105 transition-transform duration-300 shadow-sm">
+                <div className="size-12 rounded-2xl bg-neutral-100 dark:bg-white/[0.05] border border-border/70 flex items-center justify-center mb-6 text-foreground group-hover:scale-105 transition-transform duration-300 shadow-xs">
                   <Icon className="size-6 text-foreground/80 dark:text-zinc-200" />
                 </div>
 

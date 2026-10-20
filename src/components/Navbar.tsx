@@ -85,8 +85,8 @@ const Navbar = () => {
         className={cn(
           "relative flex items-center justify-between transition-all duration-150",
           isMobileMenuOpen
-            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-black/10 dark:border-white/10 rounded-none md:rounded-full md:border md:border-black/15 md:dark:border-white/10"
-            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-black/15 dark:border-white/10 bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
+            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-white/10 rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-white/10"
+            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-white/10 bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
         )}
       >
         <Link

@@ -22,9 +22,9 @@ export const buttonVariants = ({
 
   const variants = {
     primary:
-      "bg-foreground text-background hover:bg-neutral-200 shadow-[0_0_20px_rgba(255,255,255,0.18)] hover:shadow-[0_0_30px_rgba(255,255,255,0.28)] border border-white/20",
+      "bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 shadow-md shadow-black/10 dark:shadow-[0_0_20px_rgba(255,255,255,0.18)] dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.28)] border border-neutral-900 dark:border-white/20",
     secondary:
-      "border border-border/70 dark:border-white/15 bg-white dark:bg-white/[0.07] backdrop-blur-xl hover:bg-neutral-100 dark:hover:bg-white/[0.14] dark:hover:border-white/30 text-foreground hover:text-foreground shadow-sm",
+      "border border-border/80 dark:border-white/15 bg-white dark:bg-white/[0.07] backdrop-blur-xl hover:bg-neutral-100 dark:hover:bg-white/[0.14] dark:hover:border-white/30 text-foreground hover:text-foreground shadow-sm",
   };
 
   const sizes = {

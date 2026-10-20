@@ -30,7 +30,7 @@ export default function Hero() {
         className="hero-stagger text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-2 pb-1"
         style={{ "--hero-delay": "0ms" } as React.CSSProperties}
       >
-        <span className="bg-gradient-to-b from-white via-white/95 to-white/60 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-700 dark:from-white dark:via-white/95 dark:to-white/60 bg-clip-text text-transparent">
           {SITE.name}
         </span>
       </h1>
@@ -39,14 +39,14 @@ export default function Hero() {
         className="hero-stagger text-lg sm:text-2xl md:text-3xl font-medium tracking-tight mb-4"
         style={{ "--hero-delay": "150ms" } as React.CSSProperties}
       >
-        <span className="text-zinc-400 font-normal">{dict.hero.roleMuted} </span>
-        <span className="bg-gradient-to-r from-zinc-100 to-zinc-300 bg-clip-text text-transparent font-bold">
+        <span className="text-muted-foreground font-normal">{dict.hero.roleMuted} </span>
+        <span className="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-600 dark:from-zinc-100 dark:to-zinc-300 bg-clip-text text-transparent font-bold">
           {dict.hero.roleAccent}
         </span>
       </h2>
 
       <p
-        className="hero-stagger max-w-2xl text-sm sm:text-base md:text-lg text-zinc-400 leading-relaxed font-normal"
+        className="hero-stagger max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-normal"
         style={{ "--hero-delay": "300ms" } as React.CSSProperties}
       >
         {dict.hero.tagline}
@@ -67,7 +67,7 @@ export default function Hero() {
           href="#projects"
           className={cn(
             buttonVariants({ variant: "primary", size: "default" }),
-            "group rounded-full w-full sm:w-auto shadow-[0_0_25px_rgba(255,255,255,0.18)] hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all",
+            "group rounded-full w-full sm:w-auto shadow-lg shadow-black/15 dark:shadow-[0_0_25px_rgba(255,255,255,0.18)] hover:shadow-xl dark:hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all",
           )}
         >
           <span>{dict.hero.viewProjects}</span>

@@ -29,8 +29,8 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
   const { resolvedTheme } = useTheme();
   const mounted = useMounted();
   const isLight = mounted && resolvedTheme === "light";
-  const bgOpacity = isLight ? "25" : "15";
-  const borderOpacity = isLight ? "40" : "30";
+  const bgOpacity = isLight ? "15" : "15";
+  const borderOpacity = isLight ? "35" : "30";
 
   const item = dict.projectItems[project.title] ?? {
     subtitle: project.subtitle,
@@ -61,7 +61,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       {/* Project content and metadata */}
       <div className="w-full lg:w-1/2 flex flex-col">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/25">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30">
             <Briefcase className="size-3 shrink-0" />
             <span>{dict.projects.badgeProfessional}</span>
             {project.company && (
@@ -80,7 +80,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
             {project.title}
           </h4>
           {item.subtitle && (
-            <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 mt-1">
+            <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mt-1">
               {item.subtitle}
             </p>
           )}
@@ -179,7 +179,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           )}
 
           {!project.github && (
-            <span className="text-xs text-muted-foreground flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/40 border border-border/40 select-none">
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-white/5 border border-border/70 select-none">
               <Lock className="size-3 text-muted-foreground/70 shrink-0" />
               <span>{dict.projects.privateRepoNotice}</span>
             </span>
@@ -232,7 +232,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       <div className="p-6 sm:p-8 flex flex-col flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/25">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30">
             <Code2 className="size-3 shrink-0" />
             <span>{dict.projects.badgePersonal}</span>
           </span>
@@ -246,7 +246,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div>
           <h4 className="text-2xl font-bold text-foreground">{project.title}</h4>
           {item.subtitle && (
-            <p className="text-xs font-semibold text-blue-500 dark:text-blue-400 mt-1">
+            <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mt-1">
               {item.subtitle}
             </p>
           )}
