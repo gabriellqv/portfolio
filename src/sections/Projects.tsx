@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,26 +10,19 @@ import { buttonVariants } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
 import { projects } from "@/data/projects";
 import { getTechMeta } from "@/data/skills";
-import { useMounted } from "@/hooks/useMounted";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
 
 /**
- * Featured Project Card (laschisa.dev style).
- * Full-width horizontal showcase with desktop + mobile mockup photo on one side,
- * rich typography, category badge, highlights, and action buttons on the other.
+ * Featured Project Card.
+ * Full-width horizontal showcase with mockup preview on one side,
+ * structured typography, category badge, highlights, and action buttons on the other.
  */
 function FeaturedProjectCard({ project, index }: { project: Project; index: number }) {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();
-
-  const { resolvedTheme } = useTheme();
-  const mounted = useMounted();
-  const isLight = mounted && resolvedTheme === "light";
-  const bgOpacity = isLight ? "15" : "15";
-  const borderOpacity = isLight ? "35" : "30";
 
   const item = dict.projectItems[project.title] ?? {
     subtitle: project.subtitle,
@@ -45,7 +37,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       className="reveal-fade-up flex flex-col lg:flex-row group card-base rounded-2xl sm:rounded-3xl overflow-hidden p-5 sm:p-7 md:p-8 lg:p-10 gap-6 sm:gap-8 lg:gap-12 items-center"
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      {/* Mockup photo container (Desktop + Mobile in frame) */}
+      {/* Mockup photo container */}
       <div className="w-full lg:w-1/2 rounded-xl sm:rounded-2xl bg-neutral-100/80 dark:bg-[#141619] border border-border/60 dark:border-[#2c2e33] p-2.5 sm:p-4 md:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
@@ -54,7 +46,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           height={675}
           priority={true}
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="w-full h-auto object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
         />
       </div>
 
@@ -110,34 +102,16 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           {project.techs.map((tech) => {
             const meta = getTechMeta(tech);
             const Icon = meta.icon;
-            const isWhite = meta.hex === "#FFFFFF";
 
             return (
               <span
                 key={tech}
-                className={cn(
-                  "inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border text-xs font-medium transition-all hover:scale-105",
-                  isWhite &&
-                    "border-neutral-300 bg-neutral-200/50 dark:border-[#2c2e33] dark:bg-[#141619] text-foreground",
-                  !isWhite && "text-foreground",
-                )}
-                style={
-                  isWhite
-                    ? {}
-                    : {
-                        backgroundColor: `${meta.hex}${bgOpacity}`,
-                        borderColor: `${meta.hex}${borderOpacity}`,
-                      }
-                }
+                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-xs font-medium text-foreground"
               >
                 {Icon && (
                   <Icon
                     size={14}
-                    {...(isWhite ? {} : { style: { color: meta.hex } })}
-                    className={cn(
-                      "shrink-0",
-                      isWhite && "text-neutral-900 dark:text-white",
-                    )}
+                    className="shrink-0 text-foreground/80 dark:text-[#f3f4f6]"
                   />
                 )}
                 <span>{tech}</span>
@@ -207,12 +181,6 @@ function ProjectCard({
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();
 
-  const { resolvedTheme } = useTheme();
-  const mounted = useMounted();
-  const isLight = mounted && resolvedTheme === "light";
-  const bgOpacity = isLight ? "25" : "15";
-  const borderOpacity = isLight ? "40" : "30";
-
   const item = dict.projectItems[project.title] ?? {
     subtitle: project.subtitle,
     description: project.description,
@@ -229,7 +197,7 @@ function ProjectCard({
       )}
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      {/* Mockup photo container (Desktop + Mobile in frame) */}
+      {/* Mockup photo container */}
       <div className="w-full bg-neutral-100/80 dark:bg-[#141619] border-b border-border/60 dark:border-[#2c2e33] p-3 sm:p-5 md:p-6 flex items-center justify-center overflow-hidden">
         <Image
           src={project.image}
@@ -237,7 +205,7 @@ function ProjectCard({
           width={1200}
           height={675}
           sizes="(max-width: 1024px) 100vw, 33vw"
-          className="w-full h-auto object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
         />
       </div>
 
@@ -267,7 +235,7 @@ function ProjectCard({
           {item.description}
         </p>
 
-        {/* Feature bullet points (laschisa tags style) */}
+        {/* Feature bullet points */}
         {item.highlights && item.highlights.length > 0 && (
           <ul className="flex flex-col gap-1.5 my-4">
             {item.highlights.map((highlight) => (
@@ -287,34 +255,16 @@ function ProjectCard({
           {project.techs.map((tech) => {
             const meta = getTechMeta(tech);
             const Icon = meta.icon;
-            const isWhite = meta.hex === "#FFFFFF";
 
             return (
               <span
                 key={tech}
-                className={cn(
-                  "inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-medium transition-all hover:scale-105",
-                  isWhite &&
-                    "border-neutral-300 bg-neutral-200/50 dark:border-[#2c2e33] dark:bg-[#141619] text-foreground",
-                  !isWhite && "text-foreground",
-                )}
-                style={
-                  isWhite
-                    ? {}
-                    : {
-                        backgroundColor: `${meta.hex}${bgOpacity}`,
-                        borderColor: `${meta.hex}${borderOpacity}`,
-                      }
-                }
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-xs font-medium text-foreground"
               >
                 {Icon && (
                   <Icon
                     size={12}
-                    {...(isWhite ? {} : { style: { color: meta.hex } })}
-                    className={cn(
-                      "shrink-0",
-                      isWhite && "text-neutral-900 dark:text-white",
-                    )}
+                    className="shrink-0 text-foreground/80 dark:text-[#f3f4f6]"
                   />
                 )}
                 <span>{tech}</span>

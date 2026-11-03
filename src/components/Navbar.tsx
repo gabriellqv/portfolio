@@ -21,16 +21,11 @@ const Navbar = () => {
   const mounted = useMounted();
   const { dict, lang, setLang } = useDictionary();
 
-  const [langRot, setLangRot] = useState(0);
-  const [themeRot, setThemeRot] = useState(0);
-
   const handleLangToggle = () => {
-    setLangRot((prev) => prev + 360);
     setLang(lang === "pt" ? "en" : "pt");
   };
 
   const handleThemeToggle = () => {
-    setThemeRot((prev) => prev + 360);
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
@@ -43,7 +38,7 @@ const Navbar = () => {
     { id: "contact", label: dict.nav.contact },
   ] as const;
 
-  // Prevent background scrolling to ensure focus remains trapped within the mobile drawer
+  // Prevent background scrolling when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -73,26 +68,12 @@ const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header
-      className={cn(
-        "fixed z-50 w-full inset-x-0 mx-auto transition-all duration-150 animate-navbar-drop",
-        isMobileMenuOpen
-          ? "top-0 px-0 max-w-none h-screen md:h-auto md:top-6 md:px-4 md:max-w-5xl lg:max-w-6xl"
-          : "top-4 sm:top-6 px-3 sm:px-4 max-w-5xl lg:max-w-6xl",
-      )}
-    >
-      <nav
-        className={cn(
-          "relative flex items-center justify-between transition-all duration-150",
-          isMobileMenuOpen
-            ? "px-5 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-border/80 dark:border-[#2c2e33] rounded-none md:rounded-full md:border md:border-border/80 md:dark:border-[#2c2e33]"
-            : "px-4 py-3 sm:px-6 sm:py-3.5 md:py-4 md:px-8 rounded-full border border-border/80 dark:border-[#2c2e33] bg-white/95 dark:bg-background/80 backdrop-blur-2xl shadow-sm shadow-black/5",
-        )}
-      >
+    <header className="fixed top-0 inset-x-0 z-50 w-full bg-background/90 backdrop-blur-md border-b border-border/70 dark:border-[#2c2e33]">
+      <nav className="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link
           href="#home"
           onClick={() => setIsMobileMenuOpen(false)}
-          className="text-sm font-semibold tracking-wide text-foreground z-10"
+          className="text-base font-bold tracking-tight text-foreground z-10"
         >
           Gabriellqv
         </Link>
@@ -110,7 +91,7 @@ const Navbar = () => {
                 data-nav-link
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "relative px-3.5 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 rounded-full",
+                  "relative px-3 py-1.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-accent/40",
                   isActive
                     ? "text-foreground font-semibold"
                     : "text-muted-foreground hover:text-foreground",
@@ -121,73 +102,30 @@ const Navbar = () => {
             );
           })}
 
-          <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
+          <div
+            className={cn(
+              "flex items-center gap-2 ml-4 pl-4 border-l border-border/60 dark:border-[#2c2e33]",
+              !mounted && "opacity-0",
+            )}
+          >
             <button
               onClick={handleLangToggle}
-              className="group/lang flex items-center gap-1.5 px-2.5 py-1 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] focus-visible:ring-2 focus-visible:ring-accent/40 text-xs font-semibold tracking-wider select-none"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <span
-                className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/lang:scale-110"
-                style={{ transform: `rotate(${langRot}deg)` }}
-              >
-                <Languages className="size-3.5" />
-              </span>
-              <span className="relative h-4 w-5 overflow-hidden inline-flex items-center justify-center">
-                <span
-                  className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
-                    lang === "pt"
-                      ? "translate-y-0 opacity-100"
-                      : "-translate-y-3 opacity-0 pointer-events-none",
-                  )}
-                >
-                  PT
-                </span>
-                <span
-                  className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
-                    lang === "en"
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-3 opacity-0 pointer-events-none",
-                  )}
-                >
-                  EN
-                </span>
-              </span>
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
               onClick={handleThemeToggle}
-              className="group/theme relative p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] focus-visible:ring-2 focus-visible:ring-accent/40"
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors focus-visible:ring-2 focus-visible:ring-accent/40"
               aria-label={dict.a11y.toggleTheme}
             >
-              <div
-                className="relative size-4 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/theme:scale-110"
-                style={{ transform: `rotate(${themeRot}deg)` }}
-              >
-                {mounted ? (
-                  <>
-                    <Sun
-                      className={cn(
-                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                        theme === "dark"
-                          ? "scale-100 rotate-0 opacity-100"
-                          : "scale-0 -rotate-90 opacity-0",
-                      )}
-                    />
-                    <Moon
-                      className={cn(
-                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                        theme === "dark"
-                          ? "scale-0 rotate-90 opacity-0"
-                          : "scale-100 rotate-0 opacity-100",
-                      )}
-                    />
-                  </>
-                ) : (
-                  <div className="size-4" />
-                )}
-              </div>
+              {mounted && theme === "dark" ? (
+                <Sun className="size-4" />
+              ) : (
+                <Moon className="size-4" />
+              )}
             </button>
           </div>
         </div>
@@ -196,70 +134,22 @@ const Navbar = () => {
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
               onClick={handleLangToggle}
-              className="group/lang flex items-center gap-1.5 px-2 py-1 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6] text-xs font-semibold tracking-wider select-none"
+              className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <span
-                className="inline-flex transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/lang:scale-110"
-                style={{ transform: `rotate(${langRot}deg)` }}
-              >
-                <Languages className="size-3.5" />
-              </span>
-              <span className="relative h-4 w-5 overflow-hidden inline-flex items-center justify-center">
-                <span
-                  className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
-                    lang === "pt"
-                      ? "translate-y-0 opacity-100"
-                      : "-translate-y-3 opacity-0 pointer-events-none",
-                  )}
-                >
-                  PT
-                </span>
-                <span
-                  className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out font-bold",
-                    lang === "en"
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-3 opacity-0 pointer-events-none",
-                  )}
-                >
-                  EN
-                </span>
-              </span>
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
               onClick={handleThemeToggle}
-              className="group/theme relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-[#1e2023] active:scale-95 transition-all duration-200 text-muted-foreground hover:text-foreground dark:hover:text-[#f3f4f6]"
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors"
               aria-label={dict.a11y.toggleTheme}
             >
-              <div
-                className="relative size-4 transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/theme:scale-110"
-                style={{ transform: `rotate(${themeRot}deg)` }}
-              >
-                {mounted ? (
-                  <>
-                    <Sun
-                      className={cn(
-                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                        theme === "dark"
-                          ? "scale-100 rotate-0 opacity-100"
-                          : "scale-0 -rotate-90 opacity-0",
-                      )}
-                    />
-                    <Moon
-                      className={cn(
-                        "size-4 absolute inset-0 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-                        theme === "dark"
-                          ? "scale-0 rotate-90 opacity-0"
-                          : "scale-100 rotate-0 opacity-100",
-                      )}
-                    />
-                  </>
-                ) : (
-                  <div className="size-4" />
-                )}
-              </div>
+              {mounted && theme === "dark" ? (
+                <Sun className="size-4" />
+              ) : (
+                <Moon className="size-4" />
+              )}
             </button>
           </div>
 
@@ -274,23 +164,20 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-6 sm:px-8 pt-8 sm:pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-[#2c2e33] shadow-2xl">
-            <div className="flex flex-col gap-6 sm:gap-8">
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-64px)] bg-background flex flex-col px-6 sm:px-8 pt-8 pb-8 md:hidden overflow-y-auto border-t border-border/60">
+            <div className="flex flex-col gap-6">
               {navItems.map((item) => (
                 <Link
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "relative flex items-center text-3xl sm:text-4xl font-black tracking-tighter transition-colors duration-300",
+                    "text-2xl font-bold tracking-tight transition-colors",
                     activeSection === item.id
                       ? "text-foreground"
-                      : "text-neutral-400 dark:text-neutral-600 hover:text-foreground",
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {activeSection === item.id && (
-                    <span className="absolute -left-4 sm:-left-5 w-2 h-2 rounded-full bg-foreground" />
-                  )}
                   {item.label}
                 </Link>
               ))}

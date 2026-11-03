@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight, Download } from "lucide-react";
 
 import { buttonVariants } from "@/components/Button";
-import SkillsCarousel from "@/components/SkillsCarousel";
 import { SITE } from "@/constants";
 import { useHeroFadeOut } from "@/hooks/useHeroFadeOut";
 import { useDictionary } from "@/i18n";
@@ -13,8 +12,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Hero section component.
- * Acts as the primary above-the-fold content, featuring a prominent value proposition,
- * primary call-to-action buttons, and a scroll-triggered fade-out effect.
+ * Direct, confident above-the-fold presentation with solid typography,
+ * clear value proposition, and primary call-to-action buttons.
  */
 export default function Hero() {
   const { dict, lang } = useDictionary();
@@ -24,52 +23,31 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden"
+      className="relative min-h-[90svh] w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20 overflow-hidden"
     >
-      <h1
-        className="hero-stagger text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black tracking-tight mb-2 pb-1"
-        style={{ "--hero-delay": "0ms" } as React.CSSProperties}
-      >
-        <span className="bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-700 dark:from-white dark:via-white/95 dark:to-white/60 bg-clip-text text-transparent">
-          {SITE.name}
-        </span>
+      <h1 className="hero-stagger text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight mb-3 text-foreground">
+        {SITE.name}
       </h1>
 
-      <h2
-        className="hero-stagger text-base sm:text-xl md:text-2xl lg:text-3xl font-medium tracking-tight mb-3 sm:mb-4"
-        style={{ "--hero-delay": "150ms" } as React.CSSProperties}
-      >
+      <h2 className="hero-stagger text-base sm:text-xl md:text-2xl lg:text-3xl font-medium tracking-tight mb-4 sm:mb-5">
         <span className="text-muted-foreground font-normal">{dict.hero.roleMuted}</span>
         <span className="text-foreground font-semibold">{dict.hero.roleAccent}</span>
       </h2>
 
-      <p
-        className="hero-stagger max-w-2xl text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed font-normal px-2 sm:px-0"
-        style={{ "--hero-delay": "300ms" } as React.CSSProperties}
-      >
+      <p className="hero-stagger max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-normal px-2 sm:px-0 mb-8 sm:mb-10">
         {dict.hero.tagline}
       </p>
 
-      <div
-        className="hero-stagger"
-        style={{ "--hero-delay": "450ms" } as React.CSSProperties}
-      >
-        <SkillsCarousel />
-      </div>
-
-      <div
-        className="hero-stagger flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mt-2 w-full max-w-xs sm:max-w-none mx-auto"
-        style={{ "--hero-delay": "600ms" } as React.CSSProperties}
-      >
+      <div className="hero-stagger flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-none mx-auto">
         <Link
           href="#projects"
           className={cn(
             buttonVariants({ variant: "primary", size: "default" }),
-            "group rounded-full w-full sm:w-auto shadow-lg shadow-black/15 dark:shadow-[0_0_25px_rgba(255,255,255,0.18)] hover:shadow-xl dark:hover:shadow-[0_0_35px_rgba(255,255,255,0.3)] transition-all",
+            "group w-full sm:w-auto font-medium",
           )}
         >
           <span>{dict.hero.viewProjects}</span>
-          <ArrowRight className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+          <ArrowRight className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
         </Link>
         <a
           href={`/${lang === "en" ? "Gabriel_Queiroz_Full_Stack_Developer.pdf" : SITE.cvFilename}`}
@@ -77,10 +55,10 @@ export default function Hero() {
           rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: "secondary", size: "default" }),
-            "group rounded-full w-full sm:w-auto font-medium transition-all",
+            "group w-full sm:w-auto font-medium",
           )}
         >
-          <Download className="size-4 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5" />
+          <Download className="size-4 shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5" />
           <span>{dict.hero.downloadCV}</span>
         </a>
       </div>

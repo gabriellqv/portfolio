@@ -10,7 +10,7 @@ export interface ButtonVariantsProps {
 
 /**
  * Shared styling function for buttons and links acting as buttons.
- * Eliminates ~120 character long class strings duplicated across the codebase.
+ * Clean, tactile, and grounded button styles without neon glows.
  */
 export const buttonVariants = ({
   variant = "primary",
@@ -18,18 +18,18 @@ export const buttonVariants = ({
   className,
 }: ButtonVariantsProps = {}) => {
   const base =
-    "inline-flex justify-center items-center gap-2 font-semibold transition-all hover:scale-[1.02] active:scale-95 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap";
+    "inline-flex justify-center items-center gap-2 font-medium transition-colors duration-150 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap rounded-lg";
 
   const variants = {
     primary:
-      "bg-[#141619] dark:bg-[#f3f4f6] text-[#fafaf9] dark:text-[#141619] hover:bg-[#2c2e33] dark:hover:bg-white shadow-md shadow-black/10 dark:shadow-[0_0_20px_rgba(243,244,246,0.15)] dark:hover:shadow-[0_0_28px_rgba(243,244,246,0.25)] border border-[#141619] dark:border-transparent",
+      "bg-[#141619] dark:bg-[#f3f4f6] text-[#fafaf9] dark:text-[#141619] hover:bg-[#2c2e33] dark:hover:bg-white border border-[#141619] dark:border-transparent shadow-xs",
     secondary:
-      "border border-border/80 dark:border-[#2c2e33] bg-white dark:bg-[#1e2023]/70 backdrop-blur-xl hover:bg-neutral-100 dark:hover:bg-[#1e2023] dark:hover:border-[#47484c] text-foreground hover:text-foreground shadow-sm",
+      "border border-border/80 dark:border-[#2c2e33] bg-white dark:bg-[#1e2023] hover:bg-neutral-100 dark:hover:bg-[#1e2023]/80 dark:hover:border-[#47484c] text-foreground shadow-xs",
   };
 
   const sizes = {
-    default: "px-6 py-3 sm:py-2.5 text-sm",
-    sm: "px-4 py-2 text-sm",
+    default: "px-5 py-2.5 text-sm",
+    sm: "px-3.5 py-1.5 text-sm",
   };
 
   return cn(base, variants[variant], sizes[size], className);
@@ -43,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={cn("rounded-full", buttonVariants({ variant, size, className }))}
+        className={buttonVariants({ variant, size, className })}
         {...props}
       />
     );
