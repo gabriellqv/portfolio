@@ -1,14 +1,11 @@
 "use client";
 
 import { SITE } from "@/constants";
-import { useDictionary } from "@/i18n";
 
 /**
  * Minimalist footer with natural typography and clean layout.
  */
 export default function Footer() {
-  const { dict } = useDictionary();
-
   const footerLinks = [
     {
       label: "LinkedIn",
@@ -23,11 +20,6 @@ export default function Footer() {
     {
       label: "GitHub",
       href: `https://github.com/${SITE.githubUsername}`,
-      isExternal: true,
-    },
-    {
-      label: dict.footer.sourceCode ?? "Source Code",
-      href: SITE.repoUrl,
       isExternal: true,
     },
   ];
