@@ -13,23 +13,66 @@ const en: Dictionary = {
     roleMuted: "",
     roleAccent: "Full Stack Developer",
     tagline:
-      "Full Stack Developer specialized in React, Next.js, Vue.js, NestJS, and Laravel",
+      "Focused on TypeScript, Node.js, and PHP. Hands-on experience building REST APIs (NestJS, Express, Laravel) and web interfaces (Next.js, React, Vue.js, Angular)",
     viewProjects: "View Projects",
     downloadCV: "Download CV",
   },
   about: {
     title: "About Me",
-    whoIAm: "Who I am",
-    whoIAmP1:
-      "I'm a Full Stack Developer focused on building scalable applications and modern interfaces. My journey in technology is driven by a constant pursuit of excellence and solving complex structural problems.",
-    whoIAmP2:
-      "I'm passionate about transforming robust business rules into fluid end-user experiences (as seen in FlowERP, StockSnap, and HydroTrack). I work end-to-end using React, Next.js, Node.js, and Laravel, always prioritizing clean code, solid architecture (SOLID/Clean Code), and performance.",
-    myJourney: "My Journey",
-    myJourneyP1:
-      "My path is marked by a solid foundation of discipline and resilience, built during my time in military service. This unique experience taught me crucial skills: adaptability under pressure, analytical thinking, and structured teamwork.",
-    myJourneyP2Start:
-      "Today, as a software engineer, I bring that same maturity and pragmatic focus to the development ecosystem. I apply this systemic vision from conception and architecture planning through to ",
-    myJourneyP2End: " and maintenance of high-impact applications.",
+    subtitle:
+      "Solid background in Computer Science applied to end-to-end web development.",
+    eyebrow: "BEYOND THE CODE",
+    headline: "Making complex workflows clearer, efficient, and scalable.",
+    bioP1:
+      "My degree in Computer Science (UNINOVE) has shaped the way I view software: not merely as isolated code or UI screens, but as integrated systems that turn complex business processes into intuitive, secure, and efficient tools.",
+    bioP2:
+      "I work end-to-end focusing on the TypeScript, Node.js (NestJS, Express), PHP (Laravel), and modern web interfaces (Next.js, React, Vue.js, Angular) ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
+    stats: [
+      { value: "4", label: "Live Full Stack Applications" },
+      { value: "116+", label: "Critical Business Rule Tests" },
+      { value: "5", label: "Years in Computer Science" },
+    ],
+    cards: [
+      {
+        id: "frontend",
+        title: "Frontend Engineering",
+        description:
+          "Development of modern, responsive, and high-performance web applications. Focused on component-based architecture, hybrid rendering (SSR/SSG), scalable design systems, and predictable state management.",
+        skills: [
+          "React & Next.js (App Router)",
+          "TypeScript & Strict Typing",
+          "Vue.js & Angular",
+          "Tailwind CSS & Design Systems",
+          "Zustand, Pinia & Zod",
+        ],
+      },
+      {
+        id: "backend",
+        title: "Backend Engineering",
+        description:
+          "Building modular, secure, and high-availability REST APIs. Expertise in Service Layer, RBAC access control, JWT/Sanctum auth, ACID transactions with pessimistic locking, and distributed caching.",
+        skills: [
+          "Node.js, NestJS & Express",
+          "Laravel & Service Layer",
+          "PostgreSQL, MySQL & Redis",
+          "Prisma ORM & Eloquent ORM",
+          "ACID Transactions & Pessimistic Locks",
+        ],
+      },
+      {
+        id: "devops",
+        title: "Quality & DevOps",
+        description:
+          "Rigorous software engineering practices and system reliability. Automated test suites covering critical business logic, environment containerization, and continuous deployment automation.",
+        skills: [
+          "Testing (Jest, Vitest, Pest, Playwright)",
+          "Docker & Docker Compose",
+          "CI/CD with GitHub Actions",
+          "SOLID Principles & Clean Architecture",
+          "Swagger & OpenAPI Documentation",
+        ],
+      },
+    ],
   },
   projects: {
     title: "Featured Projects",
@@ -37,6 +80,15 @@ const en: Dictionary = {
       "A selection of my most complete applications. Focus on scalable architecture, clean code, and solving complex business problems.",
     viewProject: "View Project",
     repository: "Repository",
+    professionalTitle: "Professional & Client Projects",
+    professionalSubtitle:
+      "Production systems, commercial architecture, and tailored solutions built for businesses and clients.",
+    personalTitle: "Personal & Open Source Projects",
+    personalSubtitle:
+      "Independent applications, technical exploration, and open-source contributions.",
+    badgeProfessional: "Freelance / Client",
+    badgePersonal: "Personal Project",
+    privateRepoNotice: "Client private repository",
   },
   skills: {
     title: "Technical Skills",
@@ -98,9 +150,17 @@ const en: Dictionary = {
     subjectPrefix: "Contact via Portfolio - ",
     bodyNameLabel: "Name: ",
     bodyEmailLabel: "Email: ",
+    errors: {
+      nameRequired: "Please fill out this field.",
+      emailRequired: "Please fill out this field.",
+      emailInvalid: "Please enter a valid email address.",
+      messageRequired: "Please fill out this field.",
+    },
   },
   footer: {
     rights: "All rights reserved.",
+    builtWith: "BUILD WITH INTENTIONALITY",
+    sourceCode: "SOURCE CODE",
   },
   errors: {
     somethingWrong: "Something went wrong",
@@ -141,20 +201,53 @@ const en: Dictionary = {
     jobTitle: "Full Stack Developer",
   },
   projectItems: {
-    HydroTrack: {
+    "Rafael Nutre": {
+      subtitle: "Clinical & Sports Nutrition • High-Conversion Landing Page",
       description:
-        "Application focused on water resource management. Combines Vue.js reactivity with Leaflet for geolocated monitoring, supported by a high-performance ecosystem.",
-      status: "Completed",
+        "High-conversion landing page developed for a sports and clinical nutritionist. Built with Astro and TailwindCSS, advanced technical SEO with JSON-LD/Schema, complete automated test suite with Vitest, and global edge deployment on Cloudflare Pages.",
+      status: "In Production",
+      highlights: [
+        "Ultra-fast architecture with Astro and TailwindCSS",
+        "Advanced technical SEO with JSON-LD & structured schemas",
+        "Automated testing suite with Vitest (47 tests)",
+        "Global edge deployment on Cloudflare Pages",
+      ],
     },
     FlowERP: {
+      subtitle: "Enterprise Resource Planning & Analytics Dashboard",
       description:
         "Complete Enterprise Resource Planning (ERP) system for managing sales, customers, and products. Highly interactive interface with admin dashboards and dynamic management reports. Architecture with strong focus on automated testing and solid business rules.",
       status: "In Production",
+      highlights: [
+        "Full management of sales, customers, orders, and products",
+        "Dynamic analytical dashboards and managerial reporting",
+        "Robust Laravel backend with Service Layer & ACID rules",
+        "Reactive Vue 3 frontend with Pinia and TailwindCSS",
+      ],
     },
     StockSnap: {
+      subtitle: "Real-Time Inventory & Supply Chain Platform",
       description:
         "Real-time inventory management platform. Built using SOLID principles, focusing on optimized RESTful communication, secure JWT authentication, and strong permission control (RBAC).",
       status: "Version 2.0",
+      highlights: [
+        "Real-time inventory tracking and stock level alerts",
+        "Secure JWT authentication with granular RBAC permissions",
+        "Modular RESTful API built in NestJS following SOLID",
+        "Relational data modeling with Prisma ORM and PostgreSQL",
+      ],
+    },
+    HydroTrack: {
+      subtitle: "Geospatial Water Telemetry & IoT Monitoring",
+      description:
+        "Application focused on water resource management. Combines Vue.js reactivity with Leaflet for geolocated monitoring, supported by a high-performance ecosystem.",
+      status: "Completed",
+      highlights: [
+        "Geospatial sensor telemetry monitoring with Leaflet",
+        "Real-time tracking of reservoir levels and water flow",
+        "Modular Vue 3 frontend with Pinia global state management",
+        "High-performance backend architecture with Laravel",
+      ],
     },
   },
 };

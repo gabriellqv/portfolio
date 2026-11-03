@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 
 import { AppProviders } from "@/components/AppProviders";
+import Background from "@/components/Background";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE } from "@/constants";
 
@@ -122,7 +123,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
+      className={`dark ${inter.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
     >
       <body className="bg-background text-foreground font-sans overflow-x-clip w-full">
         <script
@@ -130,7 +131,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <AppProviders initialLang="pt">{children}</AppProviders>
+          <AppProviders initialLang="pt">
+            <Background />
+            {children}
+          </AppProviders>
         </ThemeProvider>
       </body>
     </html>

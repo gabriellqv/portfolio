@@ -7,15 +7,17 @@ export const SITE = {
   name: "Gabriel Queiroz",
   title: "Desenvolvedor Full Stack",
   tagline:
-    "Desenvolvedor Full Stack especializado em React, Next.js, Vue.js, NestJS e Laravel",
+    "Foco em TypeScript, Node.js e PHP. Experiência prática em APIs REST (NestJS, Express, Laravel) e interfaces web (Next.js, React, Vue.js, Angular)",
   description:
-    "Desenvolvedor Full Stack — React, Next.js, NestJS, Laravel. Portfolio profissional com projetos em destaque.",
+    "Desenvolvedor Full Stack com foco em TypeScript, Node.js e PHP. Experiência prática em APIs REST (NestJS, Express, Laravel) e interfaces web (Next.js, React, Vue.js, Angular).",
   location: "São Paulo, Brasil",
   email: "gabriellqv@gmail.com",
   githubUsername: "gabriellqv",
   linkedinUsername: "gabriellqv",
   cvFilename: "CV_Gabriel_Queiroz_Desenvolvedor_Full_Stack.pdf",
   siteUrl: "https://gabriellqv.vercel.app",
+  repoUrl: "https://github.com/gabriellqv/portfolio",
+  brandDomain: "GABRIELLQV.DEV",
 } as const;
 
 /**
