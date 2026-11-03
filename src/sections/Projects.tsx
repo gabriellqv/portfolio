@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Briefcase, ChevronRightCircle, Code2, ExternalLink, Lock } from "lucide-react";
+import { Briefcase, Code2, ExternalLink, Lock } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
 import { buttonVariants } from "@/components/Button";
@@ -53,15 +53,17 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
       {/* Project content and metadata */}
       <div className="w-full lg:w-1/2 flex flex-col">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30">
-            <Briefcase className="size-3 shrink-0" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-foreground">
+            <Briefcase className="size-3 shrink-0 text-foreground" />
             <span>{dict.projects.badgeProfessional}</span>
             {project.company && (
-              <span className="opacity-75 font-normal">({project.company})</span>
+              <span className="text-muted-foreground font-normal">
+                ({project.company})
+              </span>
             )}
           </span>
           {item.status && (
-            <span className="text-xs px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground border border-border/40 font-medium">
+            <span className="text-xs px-2.5 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40 font-medium">
               {item.status}
             </span>
           )}
@@ -72,7 +74,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
             {project.title}
           </h4>
           {item.subtitle && (
-            <p className="text-xs sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 mt-1">
+            <p className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">
               {item.subtitle}
             </p>
           )}
@@ -82,15 +84,15 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           {item.description}
         </p>
 
-        {/* Feature bullet points (laschisa tags style) */}
+        {/* Feature bullet points */}
         {item.highlights && item.highlights.length > 0 && (
           <ul className="flex flex-col gap-1.5 sm:gap-2 my-4 sm:my-5">
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="text-xs sm:text-sm text-foreground/85 flex items-center gap-2"
+                className="text-xs sm:text-sm text-foreground/85 flex items-center gap-2.5"
               >
-                <ChevronRightCircle className="size-3.5 text-emerald-500 shrink-0" />
+                <span className="size-1.5 rounded-full bg-foreground/40 shrink-0" />
                 <span>{highlight}</span>
               </li>
             ))}
@@ -211,12 +213,12 @@ function ProjectCard({
 
       <div className="p-5 sm:p-7 md:p-8 flex flex-col flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30">
-            <Code2 className="size-3 shrink-0" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-foreground">
+            <Code2 className="size-3 shrink-0 text-foreground" />
             <span>{dict.projects.badgePersonal}</span>
           </span>
           {item.status && (
-            <span className="text-xs px-2.5 py-1 rounded-full bg-muted/60 text-muted-foreground border border-border/40 font-medium">
+            <span className="text-xs px-2.5 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40 font-medium">
               {item.status}
             </span>
           )}
@@ -225,7 +227,7 @@ function ProjectCard({
         <div>
           <h4 className="text-2xl font-bold text-foreground">{project.title}</h4>
           {item.subtitle && (
-            <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mt-1">
+            <p className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">
               {item.subtitle}
             </p>
           )}
@@ -241,9 +243,9 @@ function ProjectCard({
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="text-xs text-foreground/85 flex items-center gap-2"
+                className="text-xs text-foreground/85 flex items-center gap-2.5"
               >
-                <ChevronRightCircle className="size-3 text-blue-500 shrink-0" />
+                <span className="size-1.5 rounded-full bg-foreground/40 shrink-0" />
                 <span>{highlight}</span>
               </li>
             ))}
@@ -332,7 +334,7 @@ export default function Projects() {
         {professionalProjects.length > 0 && (
           <div className="space-y-8">
             <div className="flex items-center gap-3 pb-3 border-b border-border/40">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <div className="size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] flex items-center justify-center text-foreground shrink-0">
                 <Briefcase className="size-5" />
               </div>
               <div>
@@ -361,7 +363,7 @@ export default function Projects() {
         {personalProjects.length > 0 && (
           <div className="space-y-8">
             <div className="flex items-center gap-3 pb-3 border-b border-border/40">
-              <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+              <div className="size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] flex items-center justify-center text-foreground shrink-0">
                 <Code2 className="size-5" />
               </div>
               <div>
