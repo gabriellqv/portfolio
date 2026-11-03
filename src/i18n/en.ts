@@ -28,9 +28,9 @@ const en: Dictionary = {
     bioP2:
       "I work end-to-end focusing on the TypeScript, Node.js (NestJS, Express), PHP (Laravel), and modern web interfaces (Next.js, React, Vue.js, Angular) ecosystem — where rigorous technical architecture (SOLID, Clean Code, ACID transactions with pessimistic locking) and user experience must operate in perfect harmony.",
     stats: [
-      { value: "5", label: "Full Stack Systems" },
-      { value: "3", label: "Production Deploys" },
-      { value: "178+", label: "Automated Tests" },
+      { value: "4", label: "Live Full Stack Applications" },
+      { value: "116+", label: "Critical Business Rule Tests" },
+      { value: "5", label: "Years in Computer Science" },
     ],
     cards: [
       {

@@ -28,9 +28,9 @@ const pt: Dictionary = {
     bioP2:
       "Atuo de ponta a ponta com foco no ecossistema TypeScript, Node.js (NestJS, Express), PHP (Laravel) e interfaces modernas (Next.js, React, Vue.js, Angular). Trabalho onde arquitetura técnica rigorosa (SOLID, Clean Code, transações ACID com lock pessimista) e experiência do usuário precisam coexistir em perfeita sintonia.",
     stats: [
-      { value: "5", label: "Sistemas Full Stack" },
-      { value: "3", label: "Deploys em Produção" },
-      { value: "178+", label: "Testes Automatizados" },
+      { value: "4", label: "Aplicações Full Stack no Ar" },
+      { value: "116+", label: "Testes em Regras Críticas" },
+      { value: "5", label: "Anos de Base em Computação" },
     ],
     cards: [
       {

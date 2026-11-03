@@ -2,6 +2,7 @@
 
 import { Layout, Server, ShieldCheck } from "lucide-react";
 
+import CountUp from "@/components/CountUp";
 import SectionHeader from "@/components/SectionHeader";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
@@ -47,9 +48,11 @@ export default function About() {
           <div className="pt-6 sm:pt-8 mt-2 border-t border-border/40 flex flex-wrap items-center gap-8 sm:gap-12 md:gap-16">
             {dict.about.stats.map((stat) => (
               <div key={stat.label} className="flex flex-col min-w-[100px] sm:min-w-0">
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground">
-                  {stat.value}
-                </span>
+                <CountUp
+                  value={stat.value}
+                  duration={1100}
+                  className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground"
+                />
                 <span className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">
                   {stat.label}
                 </span>
