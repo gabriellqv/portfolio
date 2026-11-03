@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const activeSection = useActiveSection(SECTION_IDS, isMobileMenuOpen);
 
   const { theme, setTheme } = useTheme();
@@ -37,6 +38,25 @@ const Navbar = () => {
     { id: "education", label: dict.nav.education },
     { id: "contact", label: dict.nav.contact },
   ] as const;
+
+  // Track scroll position to toggle the bottom border only when scrolled
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Prevent background scrolling when mobile menu is open
   useEffect(() => {
@@ -68,7 +88,14 @@ const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 w-full bg-background/90 backdrop-blur-md border-b border-border/70 dark:border-[#2c2e33]">
+    <header
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 w-full bg-background/90 backdrop-blur-md transition-colors duration-200 border-b",
+        isScrolled || isMobileMenuOpen
+          ? "border-border/70 dark:border-[#2c2e33]"
+          : "border-transparent",
+      )}
+    >
       <nav className="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link
           href="#home"
