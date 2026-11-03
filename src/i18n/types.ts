@@ -18,19 +18,34 @@ export interface Dictionary {
   };
   about: {
     title: string;
-    whoIAm: string;
-    whoIAmP1: string;
-    whoIAmP2: string;
-    myJourney: string;
-    myJourneyP1: string;
-    myJourneyP2Start: string;
-    myJourneyP2End: string;
+    subtitle: string;
+    eyebrow: string;
+    headline: string;
+    bioP1: string;
+    bioP2: string;
+    stats: Array<{
+      value: string;
+      label: string;
+    }>;
+    cards: Array<{
+      id: string;
+      title: string;
+      description: string;
+      skills: string[];
+    }>;
   };
   projects: {
     title: string;
     subtitle: string;
     viewProject: string;
     repository: string;
+    professionalTitle: string;
+    professionalSubtitle: string;
+    personalTitle: string;
+    personalSubtitle: string;
+    badgeProfessional: string;
+    badgePersonal: string;
+    privateRepoNotice: string;
   };
   skills: {
     title: string;
@@ -68,9 +83,17 @@ export interface Dictionary {
     subjectPrefix: string;
     bodyNameLabel: string;
     bodyEmailLabel: string;
+    errors: {
+      nameRequired: string;
+      emailRequired: string;
+      emailInvalid: string;
+      messageRequired: string;
+    };
   };
   footer: {
     rights: string;
+    builtWith: string;
+    sourceCode: string;
   };
   errors: {
     somethingWrong: string;
@@ -101,8 +124,10 @@ export interface Dictionary {
   projectItems: Record<
     string,
     {
+      subtitle?: string;
       description: string;
       status: string;
+      highlights?: string[];
     }
   >;
 }

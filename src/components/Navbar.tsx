@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-import { Globe, Menu, Moon, Sun, X } from "lucide-react";
+import { Languages, Menu, Moon, Sun, X } from "lucide-react";
 
 import { SECTION_IDS } from "@/constants";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -15,11 +15,20 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const activeSection = useActiveSection(SECTION_IDS, isMobileMenuOpen);
 
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
   const { dict, lang, setLang } = useDictionary();
+
+  const handleLangToggle = () => {
+    setLang(lang === "pt" ? "en" : "pt");
+  };
+
+  const handleThemeToggle = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const navItems = [
     { id: "home", label: dict.nav.home },
@@ -30,7 +39,26 @@ const Navbar = () => {
     { id: "contact", label: dict.nav.contact },
   ] as const;
 
-  // Prevent background scrolling to ensure focus remains trapped within the mobile drawer
+  // Track scroll position to toggle the bottom border only when scrolled
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Prevent background scrolling when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -62,66 +90,68 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed z-50 w-full inset-x-0 mx-auto transition-all duration-150 animate-navbar-drop",
-        isMobileMenuOpen
-          ? "top-0 px-0 max-w-none h-screen md:h-auto md:top-6 md:px-4 md:max-w-5xl"
-          : "top-6 px-4 max-w-5xl",
+        "fixed top-0 inset-x-0 z-50 w-full bg-background/90 backdrop-blur-md transition-colors duration-200 border-b",
+        isScrolled || isMobileMenuOpen
+          ? "border-border/70 dark:border-[#2c2e33]"
+          : "border-transparent",
       )}
     >
-      <nav
-        className={cn(
-          "relative flex items-center justify-between transition-all duration-150",
-          isMobileMenuOpen
-            ? "px-6 py-4 md:py-4 md:px-8 bg-white dark:bg-background border-b border-black/10 dark:border-white/10 rounded-none md:rounded-full md:border md:border-black/15 md:dark:border-white/10"
-            : "px-6 py-3.5 md:py-4 md:px-8 rounded-full border border-black/15 dark:border-white/10 bg-white/90 dark:bg-background/70 backdrop-blur-2xl saturate-200",
-        )}
-      >
+      <nav className="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link
           href="#home"
           onClick={() => setIsMobileMenuOpen(false)}
-          className="text-sm font-semibold tracking-wide text-foreground z-10"
+          className="text-base font-bold tracking-tight text-foreground z-10"
         >
           Gabriellqv
         </Link>
 
-        <div className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
-          {navItems.map((item) => (
-            <Link
-              key={item.id}
-              href={`#${item.id}`}
-              className={cn(
-                "px-3 py-1.5 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-accent/40",
-                activeSection === item.id
-                  ? "bg-black/5 dark:bg-white/10 text-foreground"
-                  : "hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground",
-              )}
-              aria-current={activeSection === item.id ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div
+          id="desktop-nav"
+          className="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium"
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <Link
+                key={item.id}
+                href={`#${item.id}`}
+                data-nav-link
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "relative px-3 py-1.5 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-accent/40",
+                  isActive
+                    ? "text-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <span data-nav-label>{item.label}</span>
+              </Link>
+            );
+          })}
 
-          <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
+          <div
+            className={cn(
+              "flex items-center gap-2 ml-4 pl-4 border-l border-border/60 dark:border-[#2c2e33]",
+              !mounted && "opacity-0",
+            )}
+          >
             <button
-              onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
+              onClick={handleLangToggle}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 select-none"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Globe className="size-4" />
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent/40"
+              onClick={handleThemeToggle}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors focus-visible:ring-2 focus-visible:ring-accent/40"
               aria-label={dict.a11y.toggleTheme}
             >
-              {mounted ? (
-                theme === "dark" ? (
-                  <Sun className="size-4" />
-                ) : (
-                  <Moon className="size-4" />
-                )
+              {mounted && theme === "dark" ? (
+                <Sun className="size-4" />
               ) : (
-                <div className="size-4" />
+                <Moon className="size-4" />
               )}
             </button>
           </div>
@@ -130,25 +160,22 @@ const Navbar = () => {
         <div className="flex items-center gap-1 md:hidden z-10">
           <div className={cn("flex items-center gap-1", !mounted && "opacity-0")}>
             <button
-              onClick={() => setLang(lang === "pt" ? "en" : "pt")}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              onClick={handleLangToggle}
+              className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors"
               aria-label={lang === "pt" ? dict.a11y.switchLangEn : dict.a11y.switchLangPt}
             >
-              <Globe className="size-5" />
+              <Languages className="size-3.5" />
+              <span>{lang.toUpperCase()}</span>
             </button>
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-muted-foreground hover:text-foreground"
+              onClick={handleThemeToggle}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-[#1e2023] transition-colors"
               aria-label={dict.a11y.toggleTheme}
             >
-              {mounted ? (
-                theme === "dark" ? (
-                  <Sun className="size-5" />
-                ) : (
-                  <Moon className="size-5" />
-                )
+              {mounted && theme === "dark" ? (
+                <Sun className="size-4" />
               ) : (
-                <div className="size-5" />
+                <Moon className="size-4" />
               )}
             </button>
           </div>
@@ -164,23 +191,20 @@ const Navbar = () => {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 h-[calc(100vh-60px)] bg-white dark:bg-background flex flex-col px-8 pt-12 pb-8 md:hidden overflow-y-auto animate-menu-slide border-t border-black/5 dark:border-white/5 shadow-2xl">
-            <div className="flex flex-col gap-8">
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-64px)] bg-background flex flex-col px-6 sm:px-8 pt-8 pb-8 md:hidden overflow-y-auto border-t border-border/60">
+            <div className="flex flex-col gap-6">
               {navItems.map((item) => (
                 <Link
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={cn(
-                    "relative flex items-center text-4xl font-black tracking-tighter transition-colors duration-300",
+                    "text-2xl font-bold tracking-tight transition-colors",
                     activeSection === item.id
                       ? "text-foreground"
-                      : "text-neutral-400 dark:text-neutral-600 hover:text-foreground",
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {activeSection === item.id && (
-                    <span className="absolute -left-5 w-2 h-2 rounded-full bg-foreground" />
-                  )}
                   {item.label}
                 </Link>
               ))}

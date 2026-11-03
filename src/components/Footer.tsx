@@ -1,50 +1,50 @@
 "use client";
 
 import { SITE } from "@/constants";
-import { socials } from "@/data/socials";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { useDictionary } from "@/i18n";
 
-const Footer = () => {
-  const { dict } = useDictionary();
-  const ref = useScrollReveal<HTMLElement>();
+/**
+ * Minimalist footer with natural typography and clean layout.
+ */
+export default function Footer() {
+  const footerLinks = [
+    {
+      label: "LinkedIn",
+      href: `https://www.linkedin.com/in/${SITE.linkedinUsername}`,
+      isExternal: true,
+    },
+    {
+      label: "Email",
+      href: `mailto:${SITE.email}`,
+      isExternal: false,
+    },
+    {
+      label: "GitHub",
+      href: `https://github.com/${SITE.githubUsername}`,
+      isExternal: true,
+    },
+  ];
 
   return (
-    <footer
-      ref={ref}
-      className="mt-auto w-full py-12 border-t border-border/40 bg-background reveal-fade-up"
-    >
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 px-4 md:flex-row">
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            {SITE.name}
-          </span>
-          <span className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} {dict.footer.rights}
-          </span>
+    <footer className="w-full flex items-center px-4 sm:px-6 md:px-8 min-h-[4.5rem] sm:min-h-[5rem] py-6 sm:py-8 bg-transparent relative z-20">
+      <div className="w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
+        <div className="text-muted-foreground text-xs sm:text-sm select-none text-center sm:text-left">
+          &copy; {new Date().getFullYear()} {SITE.name}
         </div>
 
-        <div className="flex items-center gap-2">
-          {socials.map(({ href, icon: Icon, label }) => {
-            const translatedLabel = dict.socialLabels[label] ?? label;
-
-            return (
-              <a
-                key={label}
-                href={href}
-                target={href.startsWith("mailto") ? undefined : "_blank"}
-                rel="noreferrer"
-                aria-label={translatedLabel}
-                className="flex items-center justify-center size-10 rounded-full border border-border/30 bg-neutral-200/80 dark:bg-white/5 text-muted-foreground transition-all hover:bg-neutral-300/80 hover:text-foreground dark:hover:bg-white/[0.08] hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <Icon className="size-[1.1rem]" />
-              </a>
-            );
-          })}
+        <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
+          {footerLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.isExternal ? "_blank" : undefined}
+              rel={link.isExternal ? "noopener noreferrer" : undefined}
+              className="text-xs sm:text-sm text-muted-foreground hover:text-foreground font-medium transition-colors duration-150"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

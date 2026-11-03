@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import SkipToContent from "@/components/SkipToContent";
@@ -10,7 +11,6 @@ const Contact = dynamic(() => import("@/sections/Contact"));
 const Education = dynamic(() => import("@/sections/Education"));
 const Projects = dynamic(() => import("@/sections/Projects"));
 const Skills = dynamic(() => import("@/sections/Skills"));
-const Footer = dynamic(() => import("@/components/Footer"));
 
 /**
  * Primary landing page of the application.
@@ -23,7 +23,7 @@ export default function Home() {
       <SkipToContent />
       <main
         id="main-content"
-        className="min-h-screen flex flex-col items-center w-full overflow-x-clip"
+        className="relative z-10 min-h-[100svh] flex flex-col items-center w-full overflow-x-clip"
       >
         <Navbar />
         <Hero />

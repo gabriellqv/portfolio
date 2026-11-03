@@ -47,8 +47,14 @@ export interface SocialLink {
   handle?: string;
 }
 
+export type ProjectCategory = "professional" | "personal";
+
 /**
  * A portfolio project entry shown in the projects section.
+ * @property category - Distinguishes between professional client work and personal open-source projects.
+ * @property company - Optional client or company name.
+ * @property role - Optional developer role for client work.
+ * @property github - Optional link to source code; omitted for private client code.
  * @property deploy - Set to "#" when the project has no public deployment yet.
  *                    The link component gracefully handles this placeholder value.
  * @property image - Empty string means no screenshot available; a placeholder
@@ -56,9 +62,14 @@ export interface SocialLink {
  */
 export interface Project {
   title: string;
+  subtitle?: string;
   description: string;
   techs: string[];
-  github: string;
+  highlights?: string[];
+  category: ProjectCategory;
+  company?: string;
+  role?: string;
+  github?: string;
   deploy: string;
   image: string;
   status: string;
