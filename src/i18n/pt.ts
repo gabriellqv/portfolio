@@ -86,8 +86,13 @@ const pt: Dictionary = {
     personalTitle: "Projetos Pessoais & Open Source",
     personalSubtitle:
       "Aplicações autorais, experimentação técnica e projetos de código aberto.",
+    landingPagesTitle: "Sites & Landing Pages",
+    landingPagesSubtitle:
+      "Sites institucionais e landing pages publicados para negócios locais e profissionais liberais.",
     badgeProfessional: "Freelance / Cliente",
     badgePersonal: "Projeto Pessoal",
+    badgeClientSite: "Site publicado",
+    badgeTemplateSite: "Template publicado",
     privateRepoNotice: "Código privado do cliente",
   },
   skills: {
@@ -248,6 +253,28 @@ const pt: Dictionary = {
         "Frontend modular em Vue 3 com estado global via Pinia",
         "Arquitetura backend de alta performance em Laravel",
       ],
+    },
+  },
+  siteItems: {
+    "Ana Paula Praes": {
+      niche: "Salão de beleza e noivas",
+      description:
+        "Site editorial com galeria de trabalhos, seção de noivas, avaliações reais do Google e agendamento direto pelo WhatsApp.",
+    },
+    "Dr. Gustavo Andrade": {
+      niche: "Advocacia criminal",
+      description:
+        "Site one-page com áreas de atuação, processo de atendimento, dúvidas frequentes e contato direto pelo WhatsApp.",
+    },
+    "Dane Maia": {
+      niche: "Psicóloga",
+      description:
+        "Landing page acolhedora com abordagem, atendimento presencial e online, provas de confiança e contato qualificado.",
+    },
+    "Vértice Arquitetura": {
+      niche: "Arquitetura e interiores",
+      description:
+        "Template editorial com portfólio de projetos, processo de trabalho e chamada direta para novos clientes.",
     },
   },
 };

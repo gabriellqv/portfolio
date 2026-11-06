@@ -86,8 +86,13 @@ const en: Dictionary = {
     personalTitle: "Personal & Open Source Projects",
     personalSubtitle:
       "Independent applications, technical exploration, and open-source contributions.",
+    landingPagesTitle: "Sites & Landing Pages",
+    landingPagesSubtitle:
+      "Institutional sites and landing pages published for local businesses and independent professionals.",
     badgeProfessional: "Freelance / Client",
     badgePersonal: "Personal Project",
+    badgeClientSite: "Published site",
+    badgeTemplateSite: "Published template",
     privateRepoNotice: "Client private repository",
   },
   skills: {
@@ -248,6 +253,28 @@ const en: Dictionary = {
         "Modular Vue 3 frontend with Pinia global state management",
         "High-performance backend architecture with Laravel",
       ],
+    },
+  },
+  siteItems: {
+    "Ana Paula Praes": {
+      niche: "Hair salon & bridal studio",
+      description:
+        "Editorial website with a work gallery, bridal section, real Google reviews, and direct WhatsApp booking.",
+    },
+    "Dr. Gustavo Andrade": {
+      niche: "Criminal law",
+      description:
+        "One-page website with practice areas, consultation process, FAQs, and direct WhatsApp contact.",
+    },
+    "Dane Maia": {
+      niche: "Psychologist",
+      description:
+        "Welcoming landing page with approach, in-person and online sessions, trust signals, and qualified contact.",
+    },
+    "Vértice Arquitetura": {
+      niche: "Architecture & interiors",
+      description:
+        "Editorial template with a project portfolio, design process, and a direct call to new clients.",
     },
   },
 };
