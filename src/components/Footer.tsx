@@ -25,7 +25,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full flex items-center px-4 sm:px-6 md:px-8 min-h-[4.5rem] sm:min-h-[5rem] py-6 sm:py-8 bg-transparent relative z-20">
+    <footer className="w-full flex items-center px-4 sm:px-6 md:px-8 min-h-[4.5rem] sm:min-h-[5rem] py-8 sm:py-10 bg-transparent border-t border-border/70 relative z-20">
       <div className="w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col-reverse sm:flex-row items-center justify-between gap-4 sm:gap-0">
         <div className="text-muted-foreground text-xs sm:text-sm select-none text-center sm:text-left">
           &copy; {new Date().getFullYear()} {SITE.name}

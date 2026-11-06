@@ -74,3 +74,19 @@ export interface Project {
   image: string;
   status: string;
 }
+
+/**
+ * A published landing page or institutional site showcased in the Projects section.
+ * @property kind - Distinguishes client work from published GS7Tech templates.
+ * @property location - Client city/state, rendered as supporting metadata.
+ * @property url - Live site opened in a new tab.
+ * @property image - Hero screenshot used as the card preview.
+ */
+export interface LandingSite {
+  title: string;
+  location: string;
+  url: string;
+  image: string;
+  kind: "client" | "template";
+  techs: string[];
+}
