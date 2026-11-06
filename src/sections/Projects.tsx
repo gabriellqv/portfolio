@@ -3,22 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Briefcase, Code2, ExternalLink, Lock } from "lucide-react";
+import { ExternalLink, Lock } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
 import { buttonVariants } from "@/components/Button";
 import SectionHeader from "@/components/SectionHeader";
 import { projects } from "@/data/projects";
-import { getTechMeta } from "@/data/skills";
+import { landingSites } from "@/data/sites";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDictionary } from "@/i18n";
 import { cn } from "@/lib/utils";
-import type { Project } from "@/types";
+import type { LandingSite, Project } from "@/types";
 
 /**
- * Featured Project Card.
- * Full-width horizontal showcase with mockup preview on one side,
- * structured typography, category badge, highlights, and action buttons on the other.
+ * Featured Professional Project.
+ * Architectural case-study layout: visual preview on one side,
+ * structured technical narrative, highlights, and direct actions on the other.
  */
 function FeaturedProjectCard({ project, index }: { project: Project; index: number }) {
   const { dict } = useDictionary();
@@ -34,11 +34,11 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
   return (
     <div
       ref={ref}
-      className="reveal-fade-up flex flex-col lg:flex-row group card-base rounded-2xl sm:rounded-3xl overflow-hidden p-5 sm:p-7 md:p-8 lg:p-10 gap-6 sm:gap-8 lg:gap-12 items-center"
+      className="reveal-fade-up flex flex-col lg:flex-row gap-8 lg:gap-12 items-center pt-8 first:pt-0"
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      {/* Mockup photo container */}
-      <div className="w-full lg:w-1/2 rounded-xl sm:rounded-2xl bg-neutral-100/80 dark:bg-[#141619] border border-border/60 dark:border-[#2c2e33] p-2.5 sm:p-4 md:p-6 flex items-center justify-center overflow-hidden">
+      {/* Mockup Preview */}
+      <div className="w-full lg:w-1/2 rounded-lg overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
@@ -46,31 +46,28 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           height={675}
           priority={true}
           sizes="(max-width: 1024px) 100vw, 50vw"
-          className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          className="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
         />
       </div>
 
-      {/* Project content and metadata */}
+      {/* Project Details */}
       <div className="w-full lg:w-1/2 flex flex-col">
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-foreground">
-            <Briefcase className="size-3 shrink-0 text-foreground" />
-            <span>{dict.projects.badgeProfessional}</span>
-            {project.company && (
-              <span className="text-muted-foreground font-normal">
-                ({project.company})
-              </span>
-            )}
+        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-muted-foreground mb-3">
+          <span>
+            {project.company
+              ? `${dict.projects.badgeProfessional} — ${project.company}`
+              : dict.projects.badgeProfessional}
           </span>
           {item.status && (
-            <span className="text-xs px-2.5 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40 font-medium">
-              {item.status}
-            </span>
+            <>
+              <span>·</span>
+              <span className="text-foreground">{item.status}</span>
+            </>
           )}
         </div>
 
         <div>
-          <h4 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
+          <h4 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight">
             {project.title}
           </h4>
           {item.subtitle && (
@@ -80,50 +77,39 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           )}
         </div>
 
-        <p className="text-muted-foreground leading-relaxed mt-3 sm:mt-4 text-xs sm:text-sm md:text-base">
+        <p className="text-muted-foreground leading-relaxed mt-4 text-sm sm:text-base font-normal">
           {item.description}
         </p>
 
-        {/* Feature bullet points */}
+        {/* Feature Highlights */}
         {item.highlights && item.highlights.length > 0 && (
-          <ul className="flex flex-col gap-1.5 sm:gap-2 my-4 sm:my-5">
+          <ul className="flex flex-col gap-2 my-5 border-l-2 border-border/80 pl-4">
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="text-xs sm:text-sm text-foreground/85 flex items-center gap-2.5"
+                className="text-xs sm:text-sm text-foreground/85 font-medium"
               >
-                <span className="size-1.5 rounded-full bg-foreground/40 shrink-0" />
-                <span>{highlight}</span>
+                {highlight}
               </li>
             ))}
           </ul>
         )}
 
-        {/* Tech stack badges */}
-        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
-          {project.techs.map((tech) => {
-            const meta = getTechMeta(tech);
-            const Icon = meta.icon;
-
-            return (
-              <span
-                key={tech}
-                className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-xs font-medium text-foreground"
-              >
-                {Icon && (
-                  <Icon
-                    size={14}
-                    className="shrink-0 text-foreground/80 dark:text-[#f3f4f6]"
-                  />
-                )}
-                <span>{tech}</span>
-              </span>
-            );
-          })}
+        {/* Tech Stack */}
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-muted-foreground my-4">
+          <span className="font-semibold text-foreground uppercase tracking-wider text-[11px]">
+            Stack:
+          </span>
+          {project.techs.map((tech, i) => (
+            <span key={tech} className="text-foreground/90 font-medium">
+              {tech}
+              {i < project.techs.length - 1 ? " ·" : ""}
+            </span>
+          ))}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 mt-auto">
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-border/40">
           {project.deploy !== "#" && (
             <Link
               href={project.deploy}
@@ -131,7 +117,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "primary", size: "sm" }),
-                "rounded-full w-full sm:w-auto",
+                "rounded-md",
               )}
             >
               <ExternalLink className="size-3.5 shrink-0" />
@@ -146,7 +132,7 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "secondary", size: "sm" }),
-                "rounded-full w-full sm:w-auto",
+                "rounded-md",
               )}
             >
               <SiGithub className="size-3.5 shrink-0" />
@@ -155,8 +141,8 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
           )}
 
           {!project.github && (
-            <span className="text-xs text-muted-foreground flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] select-none">
-              <Lock className="size-3 text-muted-foreground/70 shrink-0" />
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5 py-1 select-none">
+              <Lock className="size-3 text-muted-foreground shrink-0" />
               <span>{dict.projects.privateRepoNotice}</span>
             </span>
           )}
@@ -167,19 +153,10 @@ function FeaturedProjectCard({ project, index }: { project: Project; index: numb
 }
 
 /**
- * Secondary Project Card (laschisa.dev DefaultCard style).
- * Vertical card with desktop + mobile mockup on top,
- * followed by badges, description, highlights, tech badges, and action buttons.
+ * Personal & Open Source Project.
+ * Open column presentation without nested boxes or bubble cards.
  */
-function ProjectCard({
-  project,
-  index,
-  isLastOnTablet,
-}: {
-  project: Project;
-  index: number;
-  isLastOnTablet?: boolean;
-}) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { dict } = useDictionary();
   const ref = useScrollReveal<HTMLDivElement>();
 
@@ -193,102 +170,77 @@ function ProjectCard({
   return (
     <div
       ref={ref}
-      className={cn(
-        "reveal-fade-up flex flex-col group card-base rounded-2xl sm:rounded-3xl overflow-hidden",
-        isLastOnTablet && "md:col-span-2 lg:col-span-1",
-      )}
+      className="reveal-fade-up flex flex-col pt-6 border-t border-border/60"
       style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
     >
-      {/* Mockup photo container */}
-      <div className="w-full bg-neutral-100/80 dark:bg-[#141619] border-b border-border/60 dark:border-[#2c2e33] p-3 sm:p-5 md:p-6 flex items-center justify-center overflow-hidden">
+      {/* Mockup Preview */}
+      <div className="w-full rounded-lg overflow-hidden mb-4">
         <Image
           src={project.image}
           alt={project.title}
           width={1200}
           height={675}
           sizes="(max-width: 1024px) 100vw, 33vw"
-          className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          className="w-full h-auto object-contain transition-transform duration-300 hover:scale-[1.01]"
         />
       </div>
 
-      <div className="p-5 sm:p-7 md:p-8 flex flex-col flex-1">
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-foreground">
-            <Code2 className="size-3 shrink-0 text-foreground" />
-            <span>{dict.projects.badgePersonal}</span>
-          </span>
+      <div className="flex flex-col flex-1">
+        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-muted-foreground mb-2">
+          <span>{dict.projects.badgePersonal}</span>
           {item.status && (
-            <span className="text-xs px-2.5 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40 font-medium">
-              {item.status}
-            </span>
+            <>
+              <span>·</span>
+              <span className="text-foreground">{item.status}</span>
+            </>
           )}
         </div>
 
-        <div>
-          <h4 className="text-2xl font-bold text-foreground">{project.title}</h4>
-          {item.subtitle && (
-            <p className="text-xs sm:text-sm font-medium text-muted-foreground mt-1">
-              {item.subtitle}
-            </p>
-          )}
-        </div>
+        <h4 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+          {project.title}
+        </h4>
+        {item.subtitle && (
+          <p className="text-xs sm:text-sm font-medium text-muted-foreground mt-0.5">
+            {item.subtitle}
+          </p>
+        )}
 
-        <p className="text-muted-foreground text-sm leading-relaxed mt-3 flex-1">
+        <p className="text-muted-foreground text-sm leading-relaxed mt-3 mb-4 font-normal">
           {item.description}
         </p>
 
-        {/* Feature bullet points */}
+        {/* Feature Highlights */}
         {item.highlights && item.highlights.length > 0 && (
-          <ul className="flex flex-col gap-1.5 my-4">
+          <ul className="flex flex-col gap-1.5 my-3 border-l border-border/70 pl-3">
             {item.highlights.map((highlight) => (
-              <li
-                key={highlight}
-                className="text-xs text-foreground/85 flex items-center gap-2.5"
-              >
-                <span className="size-1.5 rounded-full bg-foreground/40 shrink-0" />
-                <span>{highlight}</span>
+              <li key={highlight} className="text-xs text-foreground/85 font-medium">
+                {highlight}
               </li>
             ))}
           </ul>
         )}
 
-        {/* Tech stack badges */}
-        <div className="flex flex-wrap gap-1.5 mb-6">
-          {project.techs.map((tech) => {
-            const meta = getTechMeta(tech);
-            const Icon = meta.icon;
-
-            return (
-              <span
-                key={tech}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-border/60 dark:border-[#2c2e33] bg-neutral-100/60 dark:bg-[#141619] text-xs font-medium text-foreground"
-              >
-                {Icon && (
-                  <Icon
-                    size={12}
-                    className="shrink-0 text-foreground/80 dark:text-[#f3f4f6]"
-                  />
-                )}
-                <span>{tech}</span>
-              </span>
-            );
-          })}
+        {/* Tech Stack */}
+        <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground mb-5 mt-auto pt-2">
+          {project.techs.map((tech, i) => (
+            <span key={tech} className="text-foreground/90 font-medium">
+              {tech}
+              {i < project.techs.length - 1 ? " ·" : ""}
+            </span>
+          ))}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mt-auto">
+        {/* Action Buttons */}
+        <div className="flex items-center gap-4 pt-3 border-t border-border/40">
           {project.deploy !== "#" && (
             <Link
               href={project.deploy}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ variant: "primary", size: "sm" }),
-                "rounded-full flex-1 justify-center",
-              )}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:underline"
             >
-              <ExternalLink className="size-3.5 shrink-0" />
               <span>{dict.projects.viewProject}</span>
+              <ExternalLink className="size-3" />
             </Link>
           )}
 
@@ -297,12 +249,9 @@ function ProjectCard({
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "sm" }),
-                "rounded-full flex-1 justify-center",
-              )}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground hover:underline"
             >
-              <SiGithub className="size-3.5 shrink-0" />
+              <SiGithub className="size-3" />
               <span>{dict.projects.repository}</span>
             </Link>
           )}
@@ -313,9 +262,84 @@ function ProjectCard({
 }
 
 /**
+ * Published Site / Landing Page.
+ * Compact grid card: hero preview, niche context, stack and direct link.
+ */
+function LandingSiteCard({ site, index }: { site: LandingSite; index: number }) {
+  const { dict } = useDictionary();
+  const ref = useScrollReveal<HTMLAnchorElement>();
+
+  const item = dict.siteItems[site.title] ?? { niche: "", description: "" };
+
+  return (
+    <Link
+      ref={ref}
+      href={site.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${dict.projects.viewProject}: ${site.title}`}
+      className="reveal-fade-up group flex flex-col pt-6 border-t border-border/60"
+      style={{ "--reveal-delay": `${index * 100}ms` } as React.CSSProperties}
+    >
+      {/* Hero Preview */}
+      <div className="w-full rounded-lg overflow-hidden mb-4">
+        <Image
+          src={site.image}
+          alt={site.title}
+          width={1440}
+          height={900}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="w-full aspect-[16/10] object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+        />
+      </div>
+
+      <div className="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-muted-foreground mb-2">
+        <span>
+          {site.kind === "template"
+            ? dict.projects.badgeTemplateSite
+            : dict.projects.badgeClientSite}
+        </span>
+        <span>·</span>
+        <span className="text-foreground/80 normal-case tracking-normal font-medium">
+          {site.location}
+        </span>
+      </div>
+
+      <h4 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+        {site.title}
+      </h4>
+      {item.niche && (
+        <p className="text-xs sm:text-sm font-medium text-muted-foreground mt-0.5">
+          {item.niche}
+        </p>
+      )}
+
+      <p className="text-muted-foreground text-sm leading-relaxed mt-3 mb-4 font-normal">
+        {item.description}
+      </p>
+
+      {/* Tech Stack */}
+      <div className="flex flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground mb-4 mt-auto pt-2">
+        {site.techs.map((tech, i) => (
+          <span key={tech} className="text-foreground/90 font-medium">
+            {tech}
+            {i < site.techs.length - 1 ? " ·" : ""}
+          </span>
+        ))}
+      </div>
+
+      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground group-hover:underline pt-3 border-t border-border/40">
+        <span>{dict.projects.viewProject}</span>
+        <ExternalLink className="size-3" />
+      </span>
+    </Link>
+  );
+}
+
+/**
  * Projects section component.
- * Displays portfolio projects divided into Professional/Client work and Personal projects,
- * presented through desktop + mobile device mockups based on laschisa.dev.
+ * Displays portfolio projects divided into Professional/Client work, published
+ * landing pages, and Personal projects, using an open case-study presentation.
  */
 export default function Projects() {
   const { dict } = useDictionary();
@@ -329,25 +353,20 @@ export default function Projects() {
     <section id="projects" className="section-wrapper">
       <SectionHeader title={dict.projects.title} subtitle={dict.projects.subtitle} />
 
-      <div className="space-y-16">
-        {/* Professional & Client Projects Subsection */}
+      <div className="space-y-20 sm:space-y-24">
+        {/* Professional & Client Projects */}
         {professionalProjects.length > 0 && (
-          <div className="space-y-8">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/40">
-              <div className="size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] flex items-center justify-center text-foreground shrink-0">
-                <Briefcase className="size-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">
-                  {dict.projects.professionalTitle}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {dict.projects.professionalSubtitle}
-                </p>
-              </div>
+          <div className="space-y-6">
+            <div className="pb-3 border-b border-border/60">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                {dict.projects.professionalTitle}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {dict.projects.professionalSubtitle}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-12">
+            <div className="flex flex-col gap-12">
               {professionalProjects.map((project, index) => (
                 <FeaturedProjectCard
                   key={project.title}
@@ -359,30 +378,44 @@ export default function Projects() {
           </div>
         )}
 
-        {/* Personal & Open Source Projects Subsection */}
-        {personalProjects.length > 0 && (
-          <div className="space-y-8">
-            <div className="flex items-center gap-3 pb-3 border-b border-border/40">
-              <div className="size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33] flex items-center justify-center text-foreground shrink-0">
-                <Code2 className="size-5" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">
-                  {dict.projects.personalTitle}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {dict.projects.personalSubtitle}
-                </p>
-              </div>
+        {/* Published Sites & Landing Pages */}
+        {landingSites.length > 0 && (
+          <div className="space-y-6">
+            <div className="pb-3 border-b border-border/60">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                {dict.projects.landingPagesTitle}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {dict.projects.landingPagesSubtitle}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+              {landingSites.map((site, index) => (
+                <LandingSiteCard key={site.title} site={site} index={index} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Personal & Open Source Projects */}
+        {personalProjects.length > 0 && (
+          <div className="space-y-6">
+            <div className="pb-3 border-b border-border/60">
+              <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+                {dict.projects.personalTitle}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {dict.projects.personalSubtitle}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
               {personalProjects.map((project, index) => (
                 <ProjectCard
                   key={project.title}
                   project={project}
                   index={professionalProjects.length + index}
-                  isLastOnTablet={index === personalProjects.length - 1}
                 />
               ))}
             </div>

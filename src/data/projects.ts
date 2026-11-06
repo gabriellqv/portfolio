@@ -19,7 +19,7 @@ export const projects: Project[] = [
     role: "Freelance",
     techs: ["Astro", "TypeScript", "TailwindCSS", "Vitest", "Cloudflare"],
     deploy: "https://rafaelnutre.com.br",
-    image: "/mockup-rafaelnutre.webp",
+    image: "/project-rafaelnutre.webp",
     status: "",
   },
   {
@@ -30,7 +30,7 @@ export const projects: Project[] = [
     techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Pinia", "TailwindCSS"],
     github: "https://github.com/gabriellqv/flowerp",
     deploy: "https://flowerp-dashboard.vercel.app/",
-    image: "/mockup-flowerp.webp",
+    image: "/project-flowerp.webp",
     status: "",
   },
   {
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     techs: ["Next.js", "NestJS", "TypeScript", "Prisma", "PostgreSQL", "TailwindCSS"],
     github: "https://github.com/gabriellqv/stocksnap",
     deploy: "https://stocksnap-dashboard.vercel.app/",
-    image: "/mockup-stocksnap.webp",
+    image: "/project-stocksnap.webp",
     status: "",
   },
   {
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     techs: ["Vue 3", "PHP", "Laravel", "TypeScript", "Leaflet", "Pinia"],
     github: "https://github.com/gabriellqv/hydrotrack",
     deploy: "https://hydrotrack-telemetry.vercel.app/",
-    image: "/mockup-hydrotrack.webp",
+    image: "/project-hydrotrack.webp",
     status: "",
   },
 ];

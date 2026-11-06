@@ -43,8 +43,12 @@ export interface Dictionary {
     professionalSubtitle: string;
     personalTitle: string;
     personalSubtitle: string;
+    landingPagesTitle: string;
+    landingPagesSubtitle: string;
     badgeProfessional: string;
     badgePersonal: string;
+    badgeClientSite: string;
+    badgeTemplateSite: string;
     privateRepoNotice: string;
   };
   skills: {
@@ -128,6 +132,13 @@ export interface Dictionary {
       description: string;
       status: string;
       highlights?: string[];
+    }
+  >;
+  siteItems: Record<
+    string,
+    {
+      niche: string;
+      description: string;
     }
   >;
 }

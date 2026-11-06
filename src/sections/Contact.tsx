@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Contact section component.
- * Direct channels for collaboration, professional inquiries, and networking.
- * Interactive form deactivated in favor of direct communication channels.
+ * Open editorial layout for direct communication channels and professional networking.
+ * Replaces disconnected floating cards with an integrated, high-contrast contact showcase.
  */
 export default function Contact() {
   const { dict } = useDictionary();
@@ -23,98 +23,74 @@ export default function Contact() {
     <section id="contact" className="section-wrapper">
       <SectionHeader title={dict.contact.title} subtitle={dict.contact.subtitle} />
 
-      <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-        {/* Direct Email Card */}
-        <div className="card-base p-6 sm:p-8 flex flex-col justify-between reveal-fade-up">
-          <div>
-            <div className="flex items-center gap-3 mb-5">
-              <div className="flex items-center justify-center size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33]">
-                <Mail className="size-5 text-foreground" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">
-                  {dict.contact.sendMessage}
-                </h3>
-                <p className="text-xs text-muted-foreground">{SITE.email}</p>
-              </div>
-            </div>
+      <div
+        ref={ref}
+        className="reveal-fade-up grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start"
+      >
+        {/* Left: Direct Call & Action */}
+        <div className="lg:col-span-6 flex flex-col space-y-6">
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
+            {dict.contact.sendMessage}
+          </h3>
 
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6 font-normal">
-              {dict.contact.subtitle}
-            </p>
-          </div>
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-lg font-normal">
+            {dict.contact.locationDesc}
+          </p>
 
-          <div className="pt-4 border-t border-border/40 dark:border-[#2c2e33]/60 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
             <a
               href={`mailto:${SITE.email}`}
               className={cn(
                 buttonVariants({ variant: "primary", size: "default" }),
-                "w-full sm:w-auto font-medium justify-center",
+                "rounded-md justify-center font-medium",
               )}
             >
               <Mail className="size-4 shrink-0" />
-              <span>{dict.contact.send}</span>
+              <span>{SITE.email}</span>
             </a>
+          </div>
+
+          <div className="flex items-center gap-2.5 pt-4 text-xs sm:text-sm text-muted-foreground">
+            <MapPin className="size-4 text-foreground/80 shrink-0" />
+            <span>
+              {dict.contact.locationValue} — {dict.contact.location}
+            </span>
           </div>
         </div>
 
-        {/* Location & Social Networks */}
-        <div className="flex flex-col gap-6">
-          {/* Location */}
-          <div className="card-base p-6 sm:p-7 reveal-fade-up">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="flex items-center justify-center size-10 rounded-lg bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33]">
-                <MapPin className="size-5 text-foreground" />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-foreground">
-                  {dict.contact.location}
-                </h4>
-                <p className="text-xs text-muted-foreground">
-                  {dict.contact.locationValue}
-                </p>
-              </div>
-            </div>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              {dict.contact.locationDesc}
-            </p>
-          </div>
+        {/* Right: Direct Channels & Social Networks */}
+        <div className="lg:col-span-6 flex flex-col">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 pb-3 border-b border-border/70">
+            {dict.contact.findMe}
+          </h4>
 
-          {/* Social Links */}
-          <div className="card-base p-6 sm:p-7 flex-1 reveal-fade-up">
-            <h4 className="text-sm font-semibold text-foreground mb-4">
-              {dict.contact.findMe}
-            </h4>
-            <div className="flex flex-col gap-2">
-              {socials.map(({ href, icon: Icon, label, handle }) => {
-                const translatedLabel = dict.socialLabels[label] ?? label;
+          <div className="flex flex-col divide-y divide-border/50">
+            {socials.map(({ href, icon: Icon, label, handle }) => {
+              const translatedLabel = dict.socialLabels[label] ?? label;
 
-                return (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith("mailto") ? undefined : "_blank"}
-                    rel="noreferrer"
-                    aria-label={translatedLabel}
-                    className={cn(
-                      "group/link flex items-center gap-3.5 p-2.5 -mx-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-[#141619] transition-colors",
-                      "focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                    )}
-                  >
-                    <div className="flex items-center justify-center size-8 rounded-md bg-neutral-100 dark:bg-[#141619] border border-border/70 dark:border-[#2c2e33]">
-                      <Icon className="size-4 text-foreground/80 dark:text-[#f3f4f6]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs sm:text-sm font-medium text-foreground">
+              return (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noreferrer"
+                  aria-label={translatedLabel}
+                  className="group flex items-center justify-between py-4 transition-colors hover:text-foreground"
+                >
+                  <div className="flex items-center gap-3.5">
+                    <Icon className="size-4.5 text-foreground/80 group-hover:text-foreground transition-colors" />
+                    <div>
+                      <p className="text-sm sm:text-base font-semibold text-foreground">
                         {translatedLabel}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">{handle}</p>
+                      <p className="text-xs text-muted-foreground">{handle}</p>
                     </div>
-                    <ArrowUpRight className="size-4 text-muted-foreground opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
-                  </a>
-                );
-              })}
-            </div>
+                  </div>
+
+                  <ArrowUpRight className="size-4.5 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-foreground" />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

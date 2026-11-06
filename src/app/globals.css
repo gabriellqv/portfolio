@@ -33,32 +33,32 @@
  */
 :root {
   --background: #fafaf9;
-  --foreground: #141619;
-  --muted: #f4f4f5;
-  --muted-foreground: #52525b;
-  --border: #e4e4e7;
-  --accent: #141619;
-  --accent-foreground: #fafafa;
+  --foreground: #111315;
+  --muted: #f3f3f2;
+  --muted-foreground: #5a5f67;
+  --border: #e3e4e6;
+  --accent: #111315;
+  --accent-foreground: #fafaf9;
   --card: #ffffff;
-  --card-foreground: #141619;
-  --radius: 0.625rem;
+  --card-foreground: #111315;
+  --radius: 0.375rem;
 }
 
 /**
  * Dark mode color values.
- * Deep base canvas (#141619) with solid elevated
- * card surfaces (#1e2023) and crisp 1px borders (#2c2e33).
+ * Architectural deep obsidian (#0e1013) with crisp 1px borders (#23262d)
+ * and sharp typography.
  */
 .dark {
-  --background: #141619;
-  --foreground: #f3f4f6;
-  --muted: #1e2023;
-  --muted-foreground: #9ca3af;
-  --border: #2c2e33;
-  --accent: #f3f4f6;
-  --accent-foreground: #141619;
-  --card: #1e2023;
-  --card-foreground: #f3f4f6;
+  --background: #0e1013;
+  --foreground: #f0f2f5;
+  --muted: #17191e;
+  --muted-foreground: #8e94a0;
+  --border: #23262d;
+  --accent: #f0f2f5;
+  --accent-foreground: #0e1013;
+  --card: #14161b;
+  --card-foreground: #f0f2f5;
 }
 
 /**
@@ -215,21 +215,19 @@
 }
 
 /**
- * Shared card styling applied via the `card-base` utility class.
- * Used by project cards, about cards, contact cards, and skill cards
- * to maintain a consistent border, radius, and tactile surface.
+ * Shared card styling kept minimal for backwards compatibility.
+ * Modern editorial sections prefer open layouts with structural dividing lines.
  */
 @utility card-base {
-  @apply bg-card border-border/80 rounded-xl border transition-colors duration-200 hover:border-neutral-400 sm:rounded-2xl dark:hover:border-[#47484c];
+  @apply bg-card/50 border-border/70 rounded-md border transition-colors duration-200 dark:hover:border-neutral-700;
 }
 
 /**
  * Shared section wrapper applied to every page section.
- * Constrains width, centers content, and applies consistent responsive
- * padding across low resolution phones (320px+) up to 4K displays.
+ * Constrains width, centers content, and provides generous editorial spacing.
  */
 @utility section-wrapper {
-  @apply mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16 md:px-8 md:py-24 lg:max-w-6xl;
+  @apply mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28 lg:max-w-6xl;
 }
 
 /**

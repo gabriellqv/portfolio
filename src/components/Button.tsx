@@ -18,7 +18,7 @@ export const buttonVariants = ({
   className,
 }: ButtonVariantsProps = {}) => {
   const base =
-    "inline-flex justify-center items-center gap-2 font-medium transition-colors duration-150 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap rounded-lg";
+    "inline-flex justify-center items-center gap-2 font-medium transition-colors duration-150 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-60 disabled:pointer-events-none whitespace-nowrap rounded-md";
 
   const variants = {
     primary:
